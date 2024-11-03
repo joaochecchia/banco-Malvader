@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexao {
-
     public static Connection conexao() {
         String url = "jdbc:mysql://localhost/banco_malvader";
         String usuario = "root";
@@ -24,11 +23,5 @@ public class Conexao {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        Conexao c = new Conexao();
-
-        Conexao.conexao();
     }
 }
