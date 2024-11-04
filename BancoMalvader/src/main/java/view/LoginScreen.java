@@ -2,7 +2,7 @@ package view;
 import javax.swing.*;
 import dao.RealizarLoginDAO;
 
-public class LoginScreen extends  JFrame{
+public class LoginScreen extends JFrame {
     public LoginScreen() {
         setTitle("Banco Malvader - Login");
         setSize(300, 150);
@@ -33,12 +33,17 @@ public class LoginScreen extends  JFrame{
         loginButton.setBounds(10, 80, 80, 25);
         panel.add(loginButton);
 
+        JCheckBox employeeCheckBox = new JCheckBox("Funcionário");
+        employeeCheckBox.setBounds(100, 80, 100, 25);
+        panel.add(employeeCheckBox);
+
         loginButton.addActionListener(e -> {
             String usuario = userText.getText();
             String senha = new String(passwordText.getPassword());
+            boolean isEmployee = employeeCheckBox.isSelected();
 
             RealizarLoginDAO login = new RealizarLoginDAO();
-            boolean verify = login.realizarLogin(usuario, senha);
+            boolean verify = login.realizarLogin(usuario, senha, isEmployee);
 
             if (verify) {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");

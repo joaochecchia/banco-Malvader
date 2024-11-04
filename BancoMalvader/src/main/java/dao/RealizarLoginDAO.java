@@ -8,12 +8,12 @@ import java.sql.SQLException;
 import util.Conexao;
 
 public class RealizarLoginDAO {
-    public static boolean realizarLogin(String nome, String senha) {
+    public static boolean realizarLogin(String nome, String senha, boolean empregado) {
         //realiza conexao com o banco de dados
         Conexao conexao = new Conexao();
 
-        //comando sql para checar o usuario e senha na tabela
-        String comando_sql = "SELECT * FROM usuario WHERE senha = ? AND nome = ?";
+        //comando sql para checar o usuario , senha e tipo na tabela
+        String comando_sql = "SELECT * FROM usuario WHERE senha = ? AND nome = ? AND tipo_usuario = ?";
 
         try (Connection conn = Conexao.conexao()) {
             //usa a classe PreparedStatement para setar as strings senha e nome
@@ -21,6 +21,7 @@ public class RealizarLoginDAO {
 
             stmt.setString(1, senha);
             stmt.setString(2, nome);
+            stmt.setString(3, !empregado ? "EMPREGADO" : "FUNCIONARIO");
 
             //resultado da busca
             ResultSet resultado = stmt.executeQuery();
