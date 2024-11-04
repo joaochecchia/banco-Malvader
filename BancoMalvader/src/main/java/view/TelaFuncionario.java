@@ -1,4 +1,103 @@
 package view;
 
-public class TelaFuncionario {
+import javax.swing.*;
+import java.awt.*;
+
+public class TelaFuncionario extends JFrame {
+
+    public TelaFuncionario(String usuario, String cargo) {
+        setTitle("Banco Malvader - Sistema");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0, 1)); // Layout em coluna
+
+        // Adicionando a JLabel para mostrar nome do usuário e cargo
+        JLabel usuarioLabel = new JLabel("Usuário: " + usuario + " | Cargo: " + cargo);
+        usuarioLabel.setHorizontalAlignment(SwingConstants.CENTER); // Centraliza o texto
+        panel.add(usuarioLabel);
+
+        // Botões para funcionalidades
+        JButton abrirContaButton = new JButton("Abrir Conta");
+        JButton encerrarContaButton = new JButton("Encerrar Conta");
+        JButton consultarDadosContaButton = new JButton("Consultar Dados da Conta");
+        JButton consultarDadosClienteButton = new JButton("Consultar Dados do Cliente");
+        JButton alterarDadosContaButton = new JButton("Alterar Dados da Conta");
+        JButton alterarDadosClienteButton = new JButton("Alterar Dados do Cliente");
+        JButton cadastrarFuncionarioButton = new JButton("Cadastrar Funcionário");
+        JButton gerarRelatorioButton = new JButton("Gerar Relatório de Movimentação");
+
+        // Adicionar Action Listeners para cada botão
+        abrirContaButton.addActionListener(e -> abrirConta());
+        encerrarContaButton.addActionListener(e -> encerrarConta());
+        consultarDadosContaButton.addActionListener(e -> consultarDadosConta());
+        consultarDadosClienteButton.addActionListener(e -> consultarDadosCliente());
+        alterarDadosContaButton.addActionListener(e -> alterarDadosConta());
+        alterarDadosClienteButton.addActionListener(e -> alterarDadosCliente());
+        cadastrarFuncionarioButton.addActionListener(e -> cadastrarFuncionario());
+        gerarRelatorioButton.addActionListener(e -> gerarRelatorio());
+
+        // Adicionando botões ao painel
+        panel.add(abrirContaButton);
+        panel.add(encerrarContaButton);
+        panel.add(consultarDadosContaButton);
+        panel.add(consultarDadosClienteButton);
+        panel.add(alterarDadosContaButton);
+        panel.add(alterarDadosClienteButton);
+        panel.add(cadastrarFuncionarioButton);
+        panel.add(gerarRelatorioButton);
+
+        // Adicionando painel à janela
+        add(panel);
+    }
+
+    private void abrirConta() {
+        // Lógica para abrir conta
+        JOptionPane.showMessageDialog(this, "Abrir Conta acionado.");
+    }
+
+    private void encerrarConta() {
+        // Lógica para encerrar conta
+        JOptionPane.showMessageDialog(this, "Encerrar Conta acionado.");
+    }
+
+    private void consultarDadosConta() {
+        // Lógica para consultar dados da conta
+        JOptionPane.showMessageDialog(this, "Consultar Dados da Conta acionado.");
+    }
+
+    private void consultarDadosCliente() {
+        // Lógica para consultar dados do cliente
+        JOptionPane.showMessageDialog(this, "Consultar Dados do Cliente acionado.");
+    }
+
+    private void alterarDadosConta() {
+        // Lógica para alterar dados da conta
+        JOptionPane.showMessageDialog(this, "Alterar Dados da Conta acionado.");
+    }
+
+    private void alterarDadosCliente() {
+        // Lógica para alterar dados do cliente
+        JOptionPane.showMessageDialog(this, "Alterar Dados do Cliente acionado.");
+    }
+
+    private void cadastrarFuncionario() {
+        // Lógica para cadastrar funcionário
+        JOptionPane.showMessageDialog(this, "Cadastrar Funcionário acionado.");
+    }
+
+    private void gerarRelatorio() {
+        // Lógica para gerar relatório de movimentação
+        JOptionPane.showMessageDialog(this, "Gerar Relatório de Movimentação acionado.");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            // Exemplo de nome de usuário e cargo
+            TelaFuncionario frame = new TelaFuncionario("João da Silva", "Gerente");
+            frame.setVisible(true);
+        });
+    }
 }
