@@ -7,15 +7,15 @@ import java.sql.SQLException;
 
 import util.Conexao;
 
-public class RealizarLogin {
+public class RealizarLoginDAO {
     public static boolean realizarLogin(String nome, String senha) {
         //realiza conexao com o banco de dados
         Conexao conexao = new Conexao();
 
-        //comando sql para checar o usuario e senha
+        //comando sql para checar o usuario e senha na tabela
         String comando_sql = "SELECT * FROM usuario WHERE senha = ? AND nome = ?";
 
-        try (Connection conn = Conexao.conexao();) {
+        try (Connection conn = Conexao.conexao()) {
             //usa a classe PreparedStatement para setar as strings senha e nome
             PreparedStatement stmt = conn.prepareStatement(comando_sql);
 
