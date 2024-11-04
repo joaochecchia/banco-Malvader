@@ -1,5 +1,6 @@
 package view;
 import javax.swing.*;
+import dao.RealizarLoginDAO;
 
 public class LoginScreen extends  JFrame{
     public LoginScreen() {
@@ -35,7 +36,11 @@ public class LoginScreen extends  JFrame{
         loginButton.addActionListener(e -> {
             String usuario = userText.getText();
             String senha = new String(passwordText.getPassword());
-            if (usuario.equals("admin") && senha.equals("123")) {
+
+            RealizarLoginDAO login = new RealizarLoginDAO();
+            boolean verify = login.realizarLogin(usuario, senha);
+
+            if (verify) {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
             } else {
                 JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos.");

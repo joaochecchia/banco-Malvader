@@ -14,7 +14,7 @@ public class RegistrarFuncionarioDAO {
 
     //diferente do endereco preferi puxar o id quando se coloca a classe na tabela
 
-    public void registrarFuncionarioDAO(Funcionario funcionario){
+    public void registrarFuncionarioDAO(Funcionario funcionario) {
         Conexao conectar = new Conexao();
 
         String comandoSqlUsuario = "INSERT INTO usuario(nome, cpf, data_nascimento, telefone, tipo_usuario, senha)" +
@@ -23,7 +23,7 @@ public class RegistrarFuncionarioDAO {
         String comandoSqlFuncionario = "INSERT INTO funcionario(codigo_funcionario, cargo, id_usuario)" +
                 "VALUES(?, ?, ?)";
 
-        try(Connection conn = Conexao.conexao()){
+        try (Connection conn = Conexao.conexao()) {
             PreparedStatement stmtUsuario = conn.prepareStatement(comandoSqlUsuario, PreparedStatement.RETURN_GENERATED_KEYS);
             PreparedStatement stmtFuncionario = conn.prepareStatement(comandoSqlFuncionario);
 
@@ -51,18 +51,10 @@ public class RegistrarFuncionarioDAO {
 
             stmtFuncionario.executeUpdate();
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
 
-            System.out.println( e.getMessage());
+            System.out.println(e.getMessage());
 
         }
-    }
-
-    public static void main(String[] args) {
-        RegistrarFuncionarioDAO a = new RegistrarFuncionarioDAO();
-
-        Funcionario b = new Funcionario(4,"asdeasdad", "709153", LocalDate.of(2004, 9, 22), "123123-1231231", "Luzania", "131231123", "aaaaaaa", "senha", "FUNCIONARIO");
-
-        a.registrarFuncionarioDAO(b);
     }
 }
