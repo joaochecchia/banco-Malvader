@@ -3,9 +3,14 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+import dao.EnderecoDAO;
+import dao.FuncionarioDAO;
+import model.Endereco;
+import model.Funcionario;
+
 public class TelaFuncionario extends JFrame {
 
-    public TelaFuncionario(String usuario, String cargo) {
+    public TelaFuncionario(Funcionario funcionario) {
         setTitle("Banco Malvader - Sistema");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,7 +20,7 @@ public class TelaFuncionario extends JFrame {
         panel.setLayout(new GridLayout(0, 1)); // Layout em coluna
 
         // Adicionando a JLabel para mostrar nome do usuário e cargo
-        JLabel usuarioLabel = new JLabel("Usuário: " + usuario + " | Cargo: " + cargo);
+        JLabel usuarioLabel = new JLabel("Usuário: " + funcionario.getNome() + " | Cargo: " + funcionario.getCargo());
         usuarioLabel.setHorizontalAlignment(SwingConstants.CENTER); // Centraliza o texto
         panel.add(usuarioLabel);
 
@@ -94,9 +99,13 @@ public class TelaFuncionario extends JFrame {
     }
 
     public static void main(String[] args) {
+        FuncionarioDAO b = new FuncionarioDAO();
+
+        Funcionario a = b.getFuncionario("guilherme");
+
         SwingUtilities.invokeLater(() -> {
             // Exemplo de nome de usuário e cargo
-            TelaFuncionario frame = new TelaFuncionario("João da Silva", "Gerente");
+            TelaFuncionario frame = new TelaFuncionario(a);
             frame.setVisible(true);
         });
     }

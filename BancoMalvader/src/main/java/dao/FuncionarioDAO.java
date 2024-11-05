@@ -93,15 +93,4 @@ public class FuncionarioDAO {
 
         return null;
     }
-
-    public static void main(String[] args) {
-        FuncionarioDAO a = new FuncionarioDAO();
-
-        Funcionario b = a.getFuncionario("guilherme");
-
-        System.out.println("a: "+ b.getDataDeNascimento());
-        System.out.println("b" + b.getCargo());
-        System.out.println("c: "+ b.getEndereco());
-
-    }
 }

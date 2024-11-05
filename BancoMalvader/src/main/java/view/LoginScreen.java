@@ -1,6 +1,9 @@
 package view;
 import javax.swing.*;
+
+import dao.FuncionarioDAO;
 import dao.LoginDAO;
+import model.Funcionario;
 
 public class LoginScreen extends JFrame {
     public LoginScreen() {
@@ -47,6 +50,14 @@ public class LoginScreen extends JFrame {
 
             if (verify) {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
+
+                FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+                Funcionario funcionario = funcionarioDAO.getFuncionario(usuario);
+
+                TelaFuncionario telaFuncionario = new TelaFuncionario(funcionario);
+                telaFuncionario.setVisible(true);
+                dispose();
+
             } else {
                 JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos.");
             }
