@@ -8,9 +8,8 @@ public class Funcionario extends Usuario {
     private String senha;
 
     public Funcionario(int id, String nome, String cpf, LocalDate dataDeNascimento, String telefone,
-                       String endereco, String codigoFuncionario, String cargo, String senha, String tipo) {
-        super(nome, id,cpf, dataDeNascimento, telefone, endereco, tipo);
-
+                       Endereco endereco, String codigoFuncionario, String cargo, String senha, String tipo) {
+        super(id, nome, cpf, dataDeNascimento, telefone, endereco, tipo);
         this.codigoFuncionario = codigoFuncionario;
         this.cargo = cargo;
         this.senha = senha;

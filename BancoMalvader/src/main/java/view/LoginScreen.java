@@ -1,6 +1,6 @@
 package view;
 import javax.swing.*;
-import dao.RealizarLoginDAO;
+import dao.LoginDAO;
 
 public class LoginScreen extends JFrame {
     public LoginScreen() {
@@ -42,7 +42,7 @@ public class LoginScreen extends JFrame {
             String senha = new String(passwordText.getPassword());
             boolean isEmployee = employeeCheckBox.isSelected();
 
-            RealizarLoginDAO login = new RealizarLoginDAO();
+            LoginDAO login = new LoginDAO();
             boolean verify = login.realizarLogin(usuario, senha, isEmployee);
 
             if (verify) {

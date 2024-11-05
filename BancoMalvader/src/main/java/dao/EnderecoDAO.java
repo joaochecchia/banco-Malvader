@@ -3,12 +3,12 @@ package dao;
 import model.Endereco;
 import util.Conexao;
 
-import java.io.Console;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RegistrarEnderecoDAO {
+public class EnderecoDAO {
     //a chave estrangeira vem da classe, pois ela ja foi gerada ao criar usuario e funcionario.
 
     public void registrarEnderecoDAO(Endereco endereco){
@@ -39,5 +39,32 @@ public class RegistrarEnderecoDAO {
             //imprime o erro
             System.out.println(e.getMessage());
         }
+    }
+
+    public Endereco criarClasse(int idUsuario){
+
+        String sql = "SELECT * FROM endereco WHERE id_usuario = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idUsuario);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                Endereco endereco = new Endereco(rs.getInt(1), rs.getString(2)
+                        , rs.getInt(3), rs.getString(4), rs.getString(5)
+                        , rs.getString(6), rs.getInt(7) );
+
+                return endereco;
+            } else{
+                return null;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

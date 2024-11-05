@@ -8,12 +8,12 @@ public class Usuario {
     String cpf;
     LocalDate dataDeNascimento;
     String telefone;
-    String endereco;
+    Endereco endereco;
     String tipo;
 
-    public Usuario(String nome, int id, String cpf, LocalDate dataDeNascimento, String telefone, String endereco, String tipo) {
-        this.nome = nome;
+    public Usuario(int id, String nome, String cpf, LocalDate dataDeNascimento, String telefone, Endereco endereco, String tipo) {
         this.id = id;
+        this.nome = nome;
         this.cpf = cpf;
         this.dataDeNascimento = dataDeNascimento;
         this.telefone = telefone;
@@ -61,11 +61,11 @@ public class Usuario {
         this.telefone = telefone;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
