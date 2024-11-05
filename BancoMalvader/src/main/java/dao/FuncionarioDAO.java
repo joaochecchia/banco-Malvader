@@ -63,27 +63,24 @@ public class FuncionarioDAO {
             if (rsUsuario.next()) {
                 System.out.println("estou aqui 2");
                 int id = rsUsuario.getInt(1);
-                String cpf = rsUsuario.getString(2);
-                String nascimento = rsUsuario.getString(3);
-                String telefone = rsUsuario.getString(4);
-                String tipo = rsUsuario.getString(5);
-                String senha = rsUsuario.getString(6);
-
-                System.out.println("ID: " + id);
+                String cpf = rsUsuario.getString(3);
+                String nascimento = rsUsuario.getString(4);
+                String telefone = rsUsuario.getString(5);
+                String tipo = rsUsuario.getString(6);
+                String senha = rsUsuario.getString(7);
 
                 PreparedStatement stmtFuncionario = conn.prepareStatement(sqlFuncionario);
                 stmtFuncionario.setInt(1, id);
                 ResultSet rsFuncionario = stmtFuncionario.executeQuery();
 
                 if (rsFuncionario.next()) {
-                    System.out.println("estou aqui 3");
                     String codigoFuncionario = rsFuncionario.getString(2);
                     String cargo = rsFuncionario.getString(3);
 
                     EnderecoDAO enderecoDAO = new EnderecoDAO();
                     Endereco endereco = enderecoDAO.criarClasse(id);
 
-                    LocalDate dataNascimento= LocalDate.parse("2024-11-05");
+                    LocalDate dataNascimento= LocalDate.parse(nascimento);
 
                     return new Funcionario(id, nome, cpf, dataNascimento, telefone, endereco,
                             codigoFuncionario, cargo, senha, tipo);
@@ -91,11 +88,9 @@ public class FuncionarioDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("estou aqui 4");
             e.printStackTrace();
         }
 
-        System.out.println("asdasdadasd");
         return null;
     }
 
@@ -104,9 +99,9 @@ public class FuncionarioDAO {
 
         Funcionario b = a.getFuncionario("guilherme");
 
-        System.out.println(b.getDataDeNascimento());
-        System.out.println(b.getCargo());
-        System.out.println(b.getEndereco());
+        System.out.println("a: "+ b.getDataDeNascimento());
+        System.out.println("b" + b.getCargo());
+        System.out.println("c: "+ b.getEndereco());
 
     }
 }
