@@ -1,15 +1,21 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import controller.FuncionarioController;
 import dao.FuncionarioDAO;
 import model.Endereco;
 import model.Funcionario;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class TelaCadastroFuncionario extends JFrame {
+    private JLabel erroLabel; // Rótulo para mostrar erros
+
     public TelaCadastroFuncionario() {
         setTitle("Banco Malvader - Cadastro de Funcionário");
         setSize(400, 600);
@@ -128,26 +134,56 @@ public class TelaCadastroFuncionario extends JFrame {
         cadastrarButton.setBounds(140, 420, 120, 25);
         panel.add(cadastrarButton);
 
+        erroLabel = new JLabel("", SwingConstants.CENTER);
+        erroLabel.setForeground(Color.RED);
+        erroLabel.setBounds(10, 460, 360, 25);
+        panel.add(erroLabel);
+
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Coleta os dados inseridos
-                String nome = nomeText.getText();
-                String cpf = cpfText.getText();
-                LocalDate dataNascimento = LocalDate.parse(dataNascimentoText.getText()); // Formato: YYYY-MM-DD
-                String telefone = telefoneText.getText();
-                String cep = cepText.getText();
-                String local = localText.getText();
-                int numeroCasa = Integer.parseInt(numeroCasaText.getText());
-                String bairro = bairroText.getText();
-                String cidade = cidadeText.getText();
-                String estado = estadoText.getText();
-                String codigoFuncionario = codigoFuncionarioText.getText();
-                String cargo = cargoText.getText();
-                String senha = new String(senhaText.getPassword());
+                erroLabel.setText(""); // Limpa a mensagem de erro
+                try {
+                    // Validações dos campos
+                    if (nomeText.getText().isEmpty() || cpfText.getText().isEmpty() || dataNascimentoText.getText().isEmpty() ||
+                            telefoneText.getText().isEmpty() || cepText.getText().isEmpty() || localText.getText().isEmpty() ||
+                            numeroCasaText.getText().isEmpty() || bairroText.getText().isEmpty() || cidadeText.getText().isEmpty() ||
+                            estadoText.getText().isEmpty() || codigoFuncionarioText.getText().isEmpty() || cargoText.getText().isEmpty() ||
+                            new String(senhaText.getPassword()).isEmpty()) {
+                        erroLabel.setText("Preencha todos os campos corretamente.");
+                        return;
+                    }
 
-                JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
-                dispose(); // Fecha a tela de cadastro
+                    String nome = nomeText.getText();
+                    String cpf = cpfText.getText();
+                    LocalDate dataNascimento = LocalDate.parse(dataNascimentoText.getText()); // Formato: YYYY-MM-DD
+                    String telefone = telefoneText.getText();
+                    String cep = cepText.getText();
+                    String local = localText.getText();
+                    int numeroCasa = Integer.parseInt(numeroCasaText.getText());
+                    String bairro = bairroText.getText();
+                    String cidade = cidadeText.getText();
+                    String estado = estadoText.getText();
+                    String codigoFuncionario = codigoFuncionarioText.getText();
+                    String cargo = cargoText.getText();
+                    String senha = new String(senhaText.getPassword());
+
+                    if(estado.length() > 2){
+                        erroLabel.setText("Preencha o estado com sua UF");
+                        return;
+                    }
+
+                    FuncionarioController funcionarNovo = new FuncionarioController();
+
+                    funcionarNovo.criarFuncionario(nome,cpf, dataNascimento, telefone, codigoFuncionario, cargo, senha, cep, numeroCasa, bairro, cidade, estado);
+
+                    JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
+                    dispose();
+                } catch (NumberFormatException ex) {
+                    erroLabel.setText("Número inválido em campo(s) numérico(s).");
+                } catch (DateTimeParseException ex) {
+                    erroLabel.setText("Data de nascimento em formato inválido. Use AAAA-MM-DD.");
+                }
             }
         });
     }
@@ -159,4 +195,3 @@ public class TelaCadastroFuncionario extends JFrame {
         });
     }
 }
-
