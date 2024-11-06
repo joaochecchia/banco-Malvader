@@ -25,7 +25,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(nomeLabel);
 
         JTextField nomeText = new JTextField(20);
-        nomeText.setBounds(150, 20, 165, 25);
+        nomeText.setBounds(140, 20, 165, 25);
         panel.add(nomeText);
 
         JLabel cpfLabel = new JLabel("CPF:");
@@ -33,15 +33,15 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(cpfLabel);
 
         JTextField cpfText = new JTextField(20);
-        cpfText.setBounds(100, 50, 165, 25);
+        cpfText.setBounds(140, 50, 165, 25);
         panel.add(cpfText);
 
-        JLabel dataNascimentoLabel = new JLabel("Data Nascimento:");
+        JLabel dataNascimentoLabel = new JLabel("Nascimento:");
         dataNascimentoLabel.setBounds(10, 80, 120, 25);
         panel.add(dataNascimentoLabel);
 
         JTextField dataNascimentoText = new JTextField(10); // Formato: YYYY-MM-DD
-        dataNascimentoText.setBounds(140, 80, 125, 25);
+        dataNascimentoText.setBounds(140, 80, 165, 25);
         panel.add(dataNascimentoText);
 
         JLabel telefoneLabel = new JLabel("Telefone:");
@@ -49,7 +49,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(telefoneLabel);
 
         JTextField telefoneText = new JTextField(20);
-        telefoneText.setBounds(100, 110, 165, 25);
+        telefoneText.setBounds(140, 110, 165, 25);
         panel.add(telefoneText);
 
         JLabel cepLabel = new JLabel("CEP:");
@@ -57,7 +57,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(cepLabel);
 
         JTextField cepText = new JTextField(20);
-        cepText.setBounds(100, 140, 165, 25);
+        cepText.setBounds(140, 140, 165, 25);
         panel.add(cepText);
 
         JLabel localLabel = new JLabel("Local:");
@@ -65,7 +65,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(localLabel);
 
         JTextField localText = new JTextField(20);
-        localText.setBounds(100, 170, 165, 25);
+        localText.setBounds(140, 170, 165, 25);
         panel.add(localText);
 
         JLabel numeroCasaLabel = new JLabel("Número:");
@@ -73,7 +73,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(numeroCasaLabel);
 
         JTextField numeroCasaText = new JTextField(5);
-        numeroCasaText.setBounds(100, 200, 50, 25);
+        numeroCasaText.setBounds(140, 200, 165, 25);
         panel.add(numeroCasaText);
 
         JLabel bairroLabel = new JLabel("Bairro:");
@@ -81,7 +81,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(bairroLabel);
 
         JTextField bairroText = new JTextField(20);
-        bairroText.setBounds(100, 230, 165, 25);
+        bairroText.setBounds(140, 230, 165, 25);
         panel.add(bairroText);
 
         JLabel cidadeLabel = new JLabel("Cidade:");
@@ -89,7 +89,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(cidadeLabel);
 
         JTextField cidadeText = new JTextField(20);
-        cidadeText.setBounds(100, 260, 165, 25);
+        cidadeText.setBounds(140, 260, 165, 25);
         panel.add(cidadeText);
 
         JLabel estadoLabel = new JLabel("Estado:");
@@ -97,7 +97,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(estadoLabel);
 
         JTextField estadoText = new JTextField(20);
-        estadoText.setBounds(100, 290, 165, 25);
+        estadoText.setBounds(140, 290, 165, 25);
         panel.add(estadoText);
 
         JLabel codigoFuncionarioLabel = new JLabel("Código Funcionario:");
@@ -105,7 +105,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(codigoFuncionarioLabel);
 
         JTextField codigoFuncionarioText = new JTextField(20);
-        codigoFuncionarioText.setBounds(150, 320, 165, 25);
+        codigoFuncionarioText.setBounds(140, 320, 165, 25);
         panel.add(codigoFuncionarioText);
 
         JLabel cargoLabel = new JLabel("Cargo:");
@@ -113,7 +113,7 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(cargoLabel);
 
         JTextField cargoText = new JTextField(20);
-        cargoText.setBounds(100, 350, 165, 25);
+        cargoText.setBounds(140, 350, 165, 25);
         panel.add(cargoText);
 
         JLabel senhaLabel = new JLabel("Senha:");
@@ -121,11 +121,11 @@ public class TelaCadastroFuncionario extends JFrame {
         panel.add(senhaLabel);
 
         JPasswordField senhaText = new JPasswordField(20);
-        senhaText.setBounds(100, 380, 165, 25);
+        senhaText.setBounds(140, 380, 165, 25);
         panel.add(senhaText);
 
         JButton cadastrarButton = new JButton("Cadastrar");
-        cadastrarButton.setBounds(10, 420, 120, 25);
+        cadastrarButton.setBounds(140, 420, 120, 25);
         panel.add(cadastrarButton);
 
         cadastrarButton.addActionListener(new ActionListener() {
