@@ -52,7 +52,7 @@ public class LoginScreen extends JFrame {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
 
                 FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-                Funcionario funcionario = funcionarioDAO.getFuncionario(usuario);
+                Funcionario funcionario = funcionarioDAO.getClassFuncionario(usuario);
 
                 TelaFuncionario telaFuncionario = new TelaFuncionario(funcionario);
                 telaFuncionario.setVisible(true);

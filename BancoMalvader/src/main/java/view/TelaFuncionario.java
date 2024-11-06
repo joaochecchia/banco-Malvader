@@ -3,9 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-import dao.EnderecoDAO;
 import dao.FuncionarioDAO;
-import model.Endereco;
 import model.Funcionario;
 
 public class TelaFuncionario extends JFrame {
@@ -89,8 +87,18 @@ public class TelaFuncionario extends JFrame {
     }
 
     private void cadastrarFuncionario() {
-        // Lógica para cadastrar funcionário
-        JOptionPane.showMessageDialog(this, "Cadastrar Funcionário acionado.");
+        String senha = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
+
+        if ("admin".equals(senha)) {
+            JOptionPane.showMessageDialog(this, "Acesso concedido. Cadastro de Funcionário permitido.");
+
+            TelaCadastroFuncionario cadastroFuncionario = new TelaCadastroFuncionario();
+            cadastroFuncionario.setVisible(true);
+
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void gerarRelatorio() {
@@ -101,7 +109,7 @@ public class TelaFuncionario extends JFrame {
     public static void main(String[] args) {
         FuncionarioDAO b = new FuncionarioDAO();
 
-        Funcionario a = b.getFuncionario("guilherme");
+        Funcionario a = b.getClassFuncionario("guilherme");
 
         SwingUtilities.invokeLater(() -> {
             // Exemplo de nome de usuário e cargo

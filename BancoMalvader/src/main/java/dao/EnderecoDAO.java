@@ -41,7 +41,7 @@ public class EnderecoDAO {
         }
     }
 
-    public Endereco criarClasse(int idUsuario){
+    public Endereco getClassEndereco(int idUsuario){
 
         String sql = "SELECT * FROM endereco WHERE id_usuario = ?";
 

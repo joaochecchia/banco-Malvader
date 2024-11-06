@@ -49,7 +49,7 @@ public class FuncionarioDAO {
         }
     }
 
-    public Funcionario getFuncionario(String nome) {
+    public Funcionario getClassFuncionario(String nome) {
         String sqlUsuario = "SELECT * FROM usuario WHERE nome = ?";
         String sqlFuncionario = "SELECT * FROM funcionario WHERE id_usuario = ?";
 
@@ -78,7 +78,7 @@ public class FuncionarioDAO {
                     String cargo = rsFuncionario.getString(3);
 
                     EnderecoDAO enderecoDAO = new EnderecoDAO();
-                    Endereco endereco = enderecoDAO.criarClasse(id);
+                    Endereco endereco = enderecoDAO.getClassEndereco(id);
 
                     LocalDate dataNascimento= LocalDate.parse(nascimento);
 
