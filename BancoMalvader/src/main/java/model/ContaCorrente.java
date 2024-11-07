@@ -7,7 +7,7 @@ public class ContaCorrente extends Conta {
     private LocalDate dataVencimento;
 
     public ContaCorrente(int numero, String agencia, double saldo, Cliente cliente, double limite, LocalDate dataVencimento) {
-        super(numero, agencia, saldo, cliente); // Chama o construtor da classe pai (Conta)
+        super(numero, agencia, saldo, cliente);
         this.limite = limite;
         this.dataVencimento = dataVencimento;
     }
