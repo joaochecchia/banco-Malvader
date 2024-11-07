@@ -1,6 +1,8 @@
 package controller;
 
+import dao.EnderecoDAO;
 import dao.FuncionarioDAO;
+import dao.UsuarioDAO;
 import model.Endereco;
 import model.Funcionario;
 
@@ -17,7 +19,10 @@ public class FuncionarioController {
                 endereco, codigoFuncionario, cargo, senha, "FUNCIONARIO");
 
         FuncionarioDAO registrarFuncionario = new FuncionarioDAO();
+        EnderecoDAO registrarEndereco = new EnderecoDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
 
         registrarFuncionario.registrarFuncionarioDAO(funcionarioNovo);
+        registrarEndereco.registrarEnderecoDAO(endereco, usuarioDAO.usuarioGetId(nome));
     }
 }

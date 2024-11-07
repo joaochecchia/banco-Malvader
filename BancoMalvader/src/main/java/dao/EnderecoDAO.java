@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class EnderecoDAO {
     //a chave estrangeira vem da classe, pois ela ja foi gerada ao criar usuario e funcionario.
 
-    public void registrarEnderecoDAO(Endereco endereco){
+    public void registrarEnderecoDAO(Endereco endereco, int id_usuario){
         //conecta no banco de dados
         Conexao conectar = new Conexao();
 
@@ -30,7 +30,7 @@ public class EnderecoDAO {
             stmt.setString(3, endereco.getBairro());
             stmt.setString(4, endereco.getCidade());
             stmt.setString(5, endereco.getEstado());
-            stmt.setInt(6, endereco.getIdUsuario());
+            stmt.setInt(6, id_usuario);
 
             //executa o update
             stmt.executeUpdate();
