@@ -88,24 +88,44 @@ public class TelaFuncionario extends JFrame {
                     boolean verificar = clienteDAO.verificarCliente(cpfUsuario);
 
                     if (verificar) {
+                        // Caixa de diálogo para selecionar o tipo de conta
+                        Object[] opcoesConta = {"Poupança", "Corrente"};
+                        int escolhaConta = JOptionPane.showOptionDialog(
+                                null,
+                                "Escolha o tipo de conta:",
+                                "Seleção de Tipo de Conta",
+                                JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.PLAIN_MESSAGE,
+                                null,
+                                opcoesConta,
+                                opcoesConta[0]);
 
+                        if (escolhaConta == 0) {
+                            TelaCriarContaPoupanca telaCriarContaPoupanca = new TelaCriarContaPoupanca();
+                            telaCriarContaPoupanca.setVisible(true);
+
+                            System.out.println("Usuário escolheu Poupança.");
+                        } else if (escolhaConta == 1) {
+                            TelaCriarContaCorrente telaCriarContaCorrente = new TelaCriarContaCorrente();
+                            telaCriarContaCorrente.setVisible(true);
+
+                            System.out.println("Usuário escolheu Corrente.");
+                        }
 
                     }
 
                 } else {
-
                     System.out.println("O campo CPF está vazio.");
                 }
                 break;
             case JOptionPane.CANCEL_OPTION: // botao de criar nova conta
-                    TelaCadastroCliente telaCadastroCliente = new TelaCadastroCliente();
-                    telaCadastroCliente.setVisible(true);
+                TelaCadastroCliente telaCadastroCliente = new TelaCadastroCliente();
+                telaCadastroCliente.setVisible(true);
                 break;
             default:
                 System.out.println("Diálogo fechado.");
         }
     }
-
 
     private void encerrarConta() {
 
