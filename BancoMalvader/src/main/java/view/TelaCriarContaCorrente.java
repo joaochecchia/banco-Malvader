@@ -12,7 +12,7 @@ import model.Cliente;
 import model.ContaCorrente;
 
 public class TelaCriarContaCorrente extends JFrame {
-    private JLabel erroLabel; 
+    private JLabel erroLabel;
 
     public TelaCriarContaCorrente() {
         setTitle("Banco Malvader - Cadastro de Conta Corrente");
