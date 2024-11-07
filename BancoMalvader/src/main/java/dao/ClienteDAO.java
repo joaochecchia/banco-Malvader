@@ -1,9 +1,11 @@
 package dao;
 
 import model.Cliente;
+import model.Endereco;
 import util.Conexao;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class ClienteDAO {
     public void criarCliente(Cliente cliente){
@@ -42,8 +44,43 @@ public class ClienteDAO {
         }
     }
 
+    public Cliente getClasseCliente(String nomeCliente){
+        String sqlUsuario = "SELECT * FROM usuario WHERE nome = ?";
+        String sqlCliente = "SELECT * FROM cliente WHERE id_usuario = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmtUsuario = conn.prepareStatement(sqlUsuario, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            stmtUsuario.setString(1, nomeCliente);
+            ResultSet rsUsuario = stmtUsuario.executeQuery();
+
+            if(rsUsuario.next()){
+                int id = rsUsuario.getInt(1);
+                String cpf = rsUsuario.getString(3);
+                String nascimento = rsUsuario.getString(4);
+                String telefone = rsUsuario.getString(5);
+                String tipo = rsUsuario.getString(6);
+                String senha = rsUsuario.getString(7);
+
+                EnderecoDAO enderecoDAO = new EnderecoDAO();
+                Endereco enderecoCliente = enderecoDAO.getClassEndereco(id);
+
+                LocalDate dataNascimento= LocalDate.parse(nascimento);
+
+                Cliente cliente = new Cliente(id, nomeCliente, cpf, dataNascimento, telefone
+                        , enderecoCliente, tipo, senha);
+
+                return cliente;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public Boolean verificarCliente(String cpf){
-        String sql = "SELECT * FROM usuario WHERE cpf = ?";
+        String sql = "SELECT * FROM usuario WHERE nome = ?";
 
         try(Connection conn = Conexao.conexao()){
             PreparedStatement stmt = conn.prepareStatement(sql);

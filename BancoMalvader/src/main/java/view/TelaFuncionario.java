@@ -55,7 +55,7 @@ public class TelaFuncionario extends JFrame {
     private void abrirConta() {
         JTextField nomeUsuarioField = new JTextField();
 
-        JLabel cpfLabel = new JLabel("CPF do Usuário:");
+        JLabel cpfLabel = new JLabel("Nome completo do Usuário:");
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(5, 5));
@@ -74,7 +74,7 @@ public class TelaFuncionario extends JFrame {
                 options,
                 options[1]);
 
-        String cpfUsuario = nomeUsuarioField.getText();
+        String nomeUsuario = nomeUsuarioField.getText();
 
         switch (escolha) {
             case JOptionPane.YES_OPTION: // botao de voltar
@@ -82,10 +82,10 @@ public class TelaFuncionario extends JFrame {
                 break;
             case JOptionPane.NO_OPTION: // botao de criar conta
 
-                cpfUsuario = nomeUsuarioField.getText();
-                if (!cpfUsuario.isEmpty()) {
+                nomeUsuario = nomeUsuarioField.getText();
+                if (!nomeUsuario.isEmpty()) {
                     ClienteDAO clienteDAO = new ClienteDAO();
-                    boolean verificar = clienteDAO.verificarCliente(cpfUsuario);
+                    boolean verificar = clienteDAO.verificarCliente(nomeUsuario);
 
                     if (verificar) {
                         // Caixa de diálogo para selecionar o tipo de conta
