@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class TelaCriarContaPoupanca extends JFrame {
     private JLabel erroLabel; // Rótulo para mostrar erros
 
-    public TelaCriarContaPoupanca() {
+    public TelaCriarContaPoupanca(String nomeUsuario) {
         setTitle("Banco Malvader - Cadastro de Conta Poupança");
         setSize(350, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +90,7 @@ public class TelaCriarContaPoupanca extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TelaCriarContaPoupanca frame = new TelaCriarContaPoupanca();
+            TelaCriarContaPoupanca frame = new TelaCriarContaPoupanca("Lucas");
             frame.setVisible(true);
         });
     }

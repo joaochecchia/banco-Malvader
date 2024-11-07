@@ -101,12 +101,12 @@ public class TelaFuncionario extends JFrame {
                                 opcoesConta[0]);
 
                         if (escolhaConta == 0) {
-                            TelaCriarContaPoupanca telaCriarContaPoupanca = new TelaCriarContaPoupanca();
+                            TelaCriarContaPoupanca telaCriarContaPoupanca = new TelaCriarContaPoupanca(nomeUsuario);
                             telaCriarContaPoupanca.setVisible(true);
 
                             System.out.println("Usuário escolheu Poupança.");
                         } else if (escolhaConta == 1) {
-                            TelaCriarContaCorrente telaCriarContaCorrente = new TelaCriarContaCorrente();
+                            TelaCriarContaCorrente telaCriarContaCorrente = new TelaCriarContaCorrente(nomeUsuario);
                             telaCriarContaCorrente.setVisible(true);
 
                             System.out.println("Usuário escolheu Corrente.");

@@ -8,13 +8,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 import controller.ContaCorrenteController;
+import dao.ClienteDAO;
 import model.Cliente;
 import model.ContaCorrente;
 
 public class TelaCriarContaCorrente extends JFrame {
     private JLabel erroLabel;
 
-    public TelaCriarContaCorrente() {
+    public TelaCriarContaCorrente(String nomeUsuario) {
         setTitle("Banco Malvader - Cadastro de Conta Corrente");
         setSize(350, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,9 +84,8 @@ public class TelaCriarContaCorrente extends JFrame {
                     LocalDate dataVencimento = LocalDate.parse(dataVencimentoText.getText()); // Formato: YYYY-MM-DD
                     String cpfCliente = cpfClienteText.getText();
 
-
-
-
+                    ContaCorrenteController contaCorrenteController = new ContaCorrenteController();
+                    contaCorrenteController.contaCorrenteController(13131, saldo, limite, dataVencimento ,nomeUsuario);
 
                     JOptionPane.showMessageDialog(null, "Conta Corrente cadastrada com sucesso!");
                     dispose();
@@ -100,7 +100,7 @@ public class TelaCriarContaCorrente extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TelaCriarContaCorrente frame = new TelaCriarContaCorrente();
+            TelaCriarContaCorrente frame = new TelaCriarContaCorrente("Lucas");
             frame.setVisible(true);
         });
     }
