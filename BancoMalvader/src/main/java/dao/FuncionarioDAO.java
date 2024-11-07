@@ -58,10 +58,7 @@ public class FuncionarioDAO {
             stmtUsuario.setString(1, nome);
             ResultSet rsUsuario = stmtUsuario.executeQuery();
 
-            System.out.println("estou aqui 1");
-
             if (rsUsuario.next()) {
-                System.out.println("estou aqui 2");
                 int id = rsUsuario.getInt(1);
                 String cpf = rsUsuario.getString(3);
                 String nascimento = rsUsuario.getString(4);

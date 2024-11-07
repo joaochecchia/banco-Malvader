@@ -3,11 +3,9 @@ package model;
 import java.time.LocalDate;
 
 public class ContaCorrente extends Conta {
-    // Atributos específicos de ContaCorrente
     private double limite;
     private LocalDate dataVencimento;
 
-    // Construtor
     public ContaCorrente(int numero, String agencia, double saldo, Cliente cliente, double limite, LocalDate dataVencimento) {
         super(numero, agencia, saldo, cliente); // Chama o construtor da classe pai (Conta)
         this.limite = limite;

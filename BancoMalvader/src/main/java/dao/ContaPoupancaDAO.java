@@ -1,32 +1,31 @@
 package dao;
 
 import model.Cliente;
-import model.ContaCorrente;
-import model.Conta;
+import model.ContaPoupanca;
 import util.Conexao;
-import util.GerarNumeroConta;
 import util.GerarAgencia;
+import util.GerarNumeroConta;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ContaCorrenteDAO {
-    public void registrarContaCorrente(ContaCorrente conta, Cliente cliente){
+public class ContaPoupancaDAO {
+    public void registrarContaPoupanca(ContaPoupanca conta, Cliente cliente){
 
         String sqlConta = "INSERT INTO conta(numero_conta, agencia, saldo, tipo_conta, id_cliente)" +
                 "values (?, ?, ?, ?, ?)";
 
-        String sqlCorrente = "INSERT INTO conta_corrente(limite, data_vencimento, id_conta)" +
-                "values(?, ?, ?)";
+        String sqlPoupanca = "INSERT INTO conta_poupanca(taxa_rendimento, id_conta)" +
+                "values(?, ?)";
 
         try(Connection conn = Conexao.conexao()){
             GerarNumeroConta numeroConta = new GerarNumeroConta();
             GerarAgencia numeroAgencia = new GerarAgencia();
 
             PreparedStatement stmtConta = conn.prepareStatement(sqlConta, PreparedStatement.RETURN_GENERATED_KEYS);
-            PreparedStatement stmtCorrente = conn.prepareStatement(sqlCorrente);
+            PreparedStatement stmtPoupanca = conn.prepareStatement(sqlPoupanca);
 
             stmtConta.setString(1, numeroConta.gerarNumero("CORRENTE"));
             stmtConta.setString(2, numeroAgencia.gerarAgencia(cliente.getEndereco().getEstado()));
@@ -43,11 +42,10 @@ public class ContaCorrenteDAO {
             }
             rs.close();
 
-            stmtCorrente.setDouble(1, conta.getLimite());
-            stmtCorrente.setString(2, conta.getDataVencimento().toString());
-            stmtCorrente.setInt(3, idconta);
+            stmtPoupanca.setDouble(1, conta.getTaxaDeRendimento());
+            stmtPoupanca.setInt(2, idconta);
 
-            stmtCorrente.executeUpdate();
+            stmtPoupanca.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
         }

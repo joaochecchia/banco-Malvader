@@ -41,4 +41,26 @@ public class ClienteDAO {
             e.printStackTrace();
         }
     }
+
+    public Boolean verificarCliente(String cpf){
+        String sql = "SELECT * FROM usuario WHERE cpf = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, cpf);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                return  true;
+            } else{
+                return false;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

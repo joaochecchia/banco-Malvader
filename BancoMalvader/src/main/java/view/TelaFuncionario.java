@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+import dao.ClienteDAO;
 import dao.FuncionarioDAO;
 import model.Funcionario;
 
@@ -17,12 +18,10 @@ public class TelaFuncionario extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1)); // Layout em coluna
 
-        // Adicionando a JLabel para mostrar nome do usuário e cargo
         JLabel usuarioLabel = new JLabel("Usuário: " + funcionario.getNome() + " | Cargo: " + funcionario.getCargo());
         usuarioLabel.setHorizontalAlignment(SwingConstants.CENTER); // Centraliza o texto
         panel.add(usuarioLabel);
 
-        // Botões para funcionalidades
         JButton abrirContaButton = new JButton("Abrir Conta");
         JButton encerrarContaButton = new JButton("Encerrar Conta");
         JButton consultarDadosContaButton = new JButton("Consultar Dados da Conta");
@@ -32,7 +31,6 @@ public class TelaFuncionario extends JFrame {
         JButton cadastrarFuncionarioButton = new JButton("Cadastrar Funcionário");
         JButton gerarRelatorioButton = new JButton("Gerar Relatório de Movimentação");
 
-        // Adicionar Action Listeners para cada botão
         abrirContaButton.addActionListener(e -> abrirConta());
         encerrarContaButton.addActionListener(e -> encerrarConta());
         consultarDadosContaButton.addActionListener(e -> consultarDadosConta());
@@ -42,7 +40,6 @@ public class TelaFuncionario extends JFrame {
         cadastrarFuncionarioButton.addActionListener(e -> cadastrarFuncionario());
         gerarRelatorioButton.addActionListener(e -> gerarRelatorio());
 
-        // Adicionando botões ao painel
         panel.add(abrirContaButton);
         panel.add(encerrarContaButton);
         panel.add(consultarDadosContaButton);
@@ -52,37 +49,86 @@ public class TelaFuncionario extends JFrame {
         panel.add(cadastrarFuncionarioButton);
         panel.add(gerarRelatorioButton);
 
-        // Adicionando painel à janela
         add(panel);
     }
 
     private void abrirConta() {
-        // Lógica para abrir conta
-        JOptionPane.showMessageDialog(this, "Abrir Conta acionado.");
+        JTextField nomeUsuarioField = new JTextField();
+
+        JLabel cpfLabel = new JLabel("CPF do Usuário:");
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout(5, 5));
+        panel.add(cpfLabel, BorderLayout.NORTH);
+        panel.add(nomeUsuarioField, BorderLayout.CENTER);
+
+        Object[] options = {"Voltar", "Confirmar", "Novo cliente"};
+
+        int escolha = JOptionPane.showOptionDialog(
+                null,
+                panel,
+                "Abrir Conta",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options,
+                options[1]);
+
+        String cpfUsuario = nomeUsuarioField.getText();
+
+        switch (escolha) {
+            case JOptionPane.YES_OPTION: // botao de voltar
+                System.out.println("Usuário clicou em Voltar.");
+                break;
+            case JOptionPane.NO_OPTION: // botao de criar conta
+
+                cpfUsuario = nomeUsuarioField.getText();
+                if (!cpfUsuario.isEmpty()) {
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    boolean verificar = clienteDAO.verificarCliente(cpfUsuario);
+
+                    if (verificar) {
+
+
+                    }
+
+                } else {
+
+                    System.out.println("O campo CPF está vazio.");
+                }
+                break;
+            case JOptionPane.CANCEL_OPTION: // botao de criar nova conta
+                    TelaCadastroCliente telaCadastroCliente = new TelaCadastroCliente();
+                    telaCadastroCliente.setVisible(true);
+                break;
+            default:
+                System.out.println("Diálogo fechado.");
+        }
     }
 
+
     private void encerrarConta() {
-        // Lógica para encerrar conta
+
         JOptionPane.showMessageDialog(this, "Encerrar Conta acionado.");
     }
 
     private void consultarDadosConta() {
-        // Lógica para consultar dados da conta
+
         JOptionPane.showMessageDialog(this, "Consultar Dados da Conta acionado.");
     }
 
     private void consultarDadosCliente() {
-        // Lógica para consultar dados do cliente
+
         JOptionPane.showMessageDialog(this, "Consultar Dados do Cliente acionado.");
     }
 
     private void alterarDadosConta() {
-        // Lógica para alterar dados da conta
+
         JOptionPane.showMessageDialog(this, "Alterar Dados da Conta acionado.");
     }
 
     private void alterarDadosCliente() {
-        // Lógica para alterar dados do cliente
+
         JOptionPane.showMessageDialog(this, "Alterar Dados do Cliente acionado.");
     }
 
@@ -102,7 +148,7 @@ public class TelaFuncionario extends JFrame {
     }
 
     private void gerarRelatorio() {
-        // Lógica para gerar relatório de movimentação
+
         JOptionPane.showMessageDialog(this, "Gerar Relatório de Movimentação acionado.");
     }
 
@@ -112,7 +158,7 @@ public class TelaFuncionario extends JFrame {
         Funcionario a = b.getClassFuncionario("guilherme");
 
         SwingUtilities.invokeLater(() -> {
-            // Exemplo de nome de usuário e cargo
+
             TelaFuncionario frame = new TelaFuncionario(a);
             frame.setVisible(true);
         });
