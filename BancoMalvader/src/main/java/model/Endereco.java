@@ -3,15 +3,18 @@ package model;
 public class Endereco {
     int idEndereco;
     String cep;
+    String local;
     int numeroCasa;
     String bairro;
     String cidade;
     String estado;
     int idUsuario;
 
-    public Endereco(int idEndereco, String cep, int numeroCasa, String bairro, String cidade, String estado, int idUsuario) {
+    public Endereco(int idEndereco,  String cep, String local, int numeroCasa, String bairro
+            , String cidade, String estado, int idUsuario) {
         this.idEndereco = idEndereco;
         this.cep = cep;
+        this.local = local;
         this.numeroCasa = numeroCasa;
         this.bairro = bairro;
         this.cidade = cidade;
@@ -33,6 +36,14 @@ public class Endereco {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
     }
 
     public int getNumeroCasa() {

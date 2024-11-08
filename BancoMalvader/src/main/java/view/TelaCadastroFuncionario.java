@@ -175,7 +175,7 @@ public class TelaCadastroFuncionario extends JFrame {
 
                     FuncionarioController funcionarNovo = new FuncionarioController();
 
-                    funcionarNovo.criarFuncionario(nome,cpf, dataNascimento, telefone, codigoFuncionario, cargo, senha, cep, numeroCasa, bairro, cidade, estado);
+                    funcionarNovo.criarFuncionario(nome,cpf, dataNascimento, telefone, codigoFuncionario, cargo, senha, cep, local,numeroCasa, bairro, cidade, estado);
 
                     JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
                     dispose();

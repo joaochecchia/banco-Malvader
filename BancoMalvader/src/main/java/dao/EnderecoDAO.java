@@ -16,8 +16,8 @@ public class EnderecoDAO {
         Conexao conectar = new Conexao();
 
         //comando sql
-        String comandoSql = "INSERT INTO endereco(cep, numero_casa, bairro, cidade, estado, id_usuario) " +
-                "VALUES(?, ?, ?, ?, ?, ?)";
+        String comandoSql = "INSERT INTO endereco(cep, local, numero_casa, bairro, cidade, estado, id_usuario) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         //tratamento de erros
         try(Connection conn = Conexao.conexao()){
@@ -26,11 +26,12 @@ public class EnderecoDAO {
 
             //substitui as interrogacoes
             stmt.setString(1, endereco.getCep());
-            stmt.setInt(2, endereco.getNumeroCasa());
-            stmt.setString(3, endereco.getBairro());
-            stmt.setString(4, endereco.getCidade());
-            stmt.setString(5, endereco.getEstado());
-            stmt.setInt(6, id_usuario);
+            stmt.setString(2, endereco.getLocal());
+            stmt.setInt(3, endereco.getNumeroCasa());
+            stmt.setString(4, endereco.getBairro());
+            stmt.setString(5, endereco.getCidade());
+            stmt.setString(6, endereco.getEstado());
+            stmt.setInt(7, id_usuario);
 
             //executa o update
             stmt.executeUpdate();
@@ -54,8 +55,8 @@ public class EnderecoDAO {
 
             if(rs.next()){
                 Endereco endereco = new Endereco(rs.getInt(1), rs.getString(2)
-                        , rs.getInt(3), rs.getString(4), rs.getString(5)
-                        , rs.getString(6), rs.getInt(7) );
+                        , rs.getString(3), rs.getInt(4), rs.getString(5)
+                        , rs.getString(6), rs.getString(7), rs.getInt(8) );
 
                 return endereco;
             } else{

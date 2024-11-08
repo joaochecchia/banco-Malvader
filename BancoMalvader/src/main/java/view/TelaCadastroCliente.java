@@ -4,12 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import controller.ClienteController;
-import dao.ClienteDAO;
-import model.Cliente;
-import model.Endereco;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -18,7 +13,7 @@ public class TelaCadastroCliente extends JFrame {
 
     public TelaCadastroCliente() {
         setTitle("Banco Malvader - Cadastro de Cliente");
-        setSize(400, 550);  // Ajuste do tamanho da janela
+        setSize(400, 580); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -46,7 +41,7 @@ public class TelaCadastroCliente extends JFrame {
         dataNascimentoLabel.setBounds(10, 80, 120, 25);
         panel.add(dataNascimentoLabel);
 
-        JTextField dataNascimentoText = new JTextField(10); // Formato: YYYY-MM-DD
+        JTextField dataNascimentoText = new JTextField(10);
         dataNascimentoText.setBounds(140, 80, 165, 25);
         panel.add(dataNascimentoText);
 
@@ -66,53 +61,61 @@ public class TelaCadastroCliente extends JFrame {
         cepText.setBounds(140, 140, 165, 25);
         panel.add(cepText);
 
+        JLabel localLabel = new JLabel("Local:");
+        localLabel.setBounds(10, 170, 80, 25);
+        panel.add(localLabel);
+
+        JTextField localText = new JTextField(20);
+        localText.setBounds(140, 170, 165, 25);
+        panel.add(localText);
+
         JLabel numeroCasaLabel = new JLabel("Número:");
-        numeroCasaLabel.setBounds(10, 170, 80, 25);
+        numeroCasaLabel.setBounds(10, 200, 80, 25);
         panel.add(numeroCasaLabel);
 
         JTextField numeroCasaText = new JTextField(5);
-        numeroCasaText.setBounds(140, 170, 165, 25);
+        numeroCasaText.setBounds(140, 200, 165, 25);
         panel.add(numeroCasaText);
 
         JLabel bairroLabel = new JLabel("Bairro:");
-        bairroLabel.setBounds(10, 200, 80, 25);
+        bairroLabel.setBounds(10, 230, 80, 25);
         panel.add(bairroLabel);
 
         JTextField bairroText = new JTextField(20);
-        bairroText.setBounds(140, 200, 165, 25);
+        bairroText.setBounds(140, 230, 165, 25);
         panel.add(bairroText);
 
         JLabel cidadeLabel = new JLabel("Cidade:");
-        cidadeLabel.setBounds(10, 230, 80, 25);
+        cidadeLabel.setBounds(10, 260, 80, 25);
         panel.add(cidadeLabel);
 
         JTextField cidadeText = new JTextField(20);
-        cidadeText.setBounds(140, 230, 165, 25);
+        cidadeText.setBounds(140, 260, 165, 25);
         panel.add(cidadeText);
 
         JLabel estadoLabel = new JLabel("Estado:");
-        estadoLabel.setBounds(10, 260, 80, 25);
+        estadoLabel.setBounds(10, 290, 80, 25);
         panel.add(estadoLabel);
 
         JTextField estadoText = new JTextField(20);
-        estadoText.setBounds(140, 260, 165, 25);
+        estadoText.setBounds(140, 290, 165, 25);
         panel.add(estadoText);
 
         JLabel senhaLabel = new JLabel("Senha:");
-        senhaLabel.setBounds(10, 290, 80, 25);
+        senhaLabel.setBounds(10, 320, 80, 25);
         panel.add(senhaLabel);
 
         JPasswordField senhaText = new JPasswordField(20);
-        senhaText.setBounds(140, 290, 165, 25);
+        senhaText.setBounds(140, 320, 165, 25);
         panel.add(senhaText);
 
         JButton cadastrarButton = new JButton("Cadastrar");
-        cadastrarButton.setBounds(140, 330, 120, 25);
+        cadastrarButton.setBounds(140, 360, 120, 25);
         panel.add(cadastrarButton);
 
         erroLabel = new JLabel("", SwingConstants.CENTER);
         erroLabel.setForeground(Color.RED);
-        erroLabel.setBounds(10, 370, 360, 25);
+        erroLabel.setBounds(10, 400, 360, 25);
         panel.add(erroLabel);
 
         cadastrarButton.addActionListener(new ActionListener() {
@@ -121,8 +124,8 @@ public class TelaCadastroCliente extends JFrame {
                 erroLabel.setText("");
                 try {
                     if (nomeText.getText().isEmpty() || cpfText.getText().isEmpty() || dataNascimentoText.getText().isEmpty() ||
-                            telefoneText.getText().isEmpty() || cepText.getText().isEmpty() || numeroCasaText.getText().isEmpty() ||
-                            bairroText.getText().isEmpty() || cidadeText.getText().isEmpty() ||
+                            telefoneText.getText().isEmpty() || cepText.getText().isEmpty() || localText.getText().isEmpty() ||
+                            numeroCasaText.getText().isEmpty() || bairroText.getText().isEmpty() || cidadeText.getText().isEmpty() ||
                             estadoText.getText().isEmpty() || new String(senhaText.getPassword()).isEmpty()) {
                         erroLabel.setText("Preencha todos os campos corretamente.");
                         return;
@@ -133,6 +136,7 @@ public class TelaCadastroCliente extends JFrame {
                     LocalDate dataNascimento = LocalDate.parse(dataNascimentoText.getText());
                     String telefone = telefoneText.getText();
                     String cep = cepText.getText();
+                    String local = localText.getText();
                     int numero = Integer.parseInt(numeroCasaText.getText());
                     String bairro = bairroText.getText();
                     String cidade = cidadeText.getText();
@@ -146,8 +150,8 @@ public class TelaCadastroCliente extends JFrame {
 
                     ClienteController clienteNovo = new ClienteController();
 
-                    clienteNovo.criarCliente(nome, cpf, dataNascimento, telefone, senha
-                            , cep, numero, bairro, cidade, estado);
+                    clienteNovo.criarCliente(nome, cpf, dataNascimento, telefone, senha,
+                            cep, local, numero, bairro, cidade, estado);
 
                     JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
                     dispose();

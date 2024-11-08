@@ -9,10 +9,10 @@ import java.time.LocalDate;
 
 public class ClienteController {
     public void criarCliente(String nome, String cpf, LocalDate dataNascimento
-            , String telefone, String senha, String cep, int numero
+            , String telefone, String senha, String cep, String local,int numero
             , String bairro, String cidade, String estado){
 
-        Endereco endereco = new Endereco(0, cep, numero, bairro
+        Endereco endereco = new Endereco(0, cep, local,numero, bairro
                 , cidade, estado, 0);
 
         Cliente clienteNovo = new Cliente(0, nome, cpf, dataNascimento
