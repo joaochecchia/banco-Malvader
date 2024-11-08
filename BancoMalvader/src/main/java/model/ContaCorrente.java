@@ -6,7 +6,7 @@ public class ContaCorrente extends Conta {
     private double limite;
     private LocalDate dataVencimento;
 
-    public ContaCorrente(int numeroConta, String agencia, double saldo, Cliente cliente, double limite, LocalDate dataVencimento) {
+    public ContaCorrente(String numeroConta, String agencia, double saldo, Cliente cliente, double limite, LocalDate dataVencimento) {
         super(numeroConta, agencia, saldo, cliente);
         this.limite = limite;
         this.dataVencimento = dataVencimento;

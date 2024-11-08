@@ -19,7 +19,7 @@ public class ContaPoupancaController {
         GerarNumeroConta gerarNumeroConta = new GerarNumeroConta();
         String numeroConta = gerarNumeroConta.gerarNumero("POUPANCA");
 
-        ContaPoupanca contaPoupanca = new ContaPoupanca(9999999, agencia, saldo, cliente, taxaDeRendimeto);
+        ContaPoupanca contaPoupanca = new ContaPoupanca(numeroConta, agencia, saldo, cliente, taxaDeRendimeto);
 
         ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
         contaPoupancaDAO.registrarContaPoupanca(contaPoupanca, cliente);

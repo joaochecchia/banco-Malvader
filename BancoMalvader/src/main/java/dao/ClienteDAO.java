@@ -50,6 +50,7 @@ public class ClienteDAO {
 
         try(Connection conn = Conexao.conexao()){
             PreparedStatement stmtUsuario = conn.prepareStatement(sqlUsuario, PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmtCliente = conn.prepareStatement(sqlCliente, PreparedStatement.RETURN_GENERATED_KEYS);
 
             stmtUsuario.setString(1, nomeCliente);
             ResultSet rsUsuario = stmtUsuario.executeQuery();
@@ -62,13 +63,22 @@ public class ClienteDAO {
                 String tipo = rsUsuario.getString(6);
                 String senha = rsUsuario.getString(7);
 
+                stmtCliente.setInt(1, id);
+
+                int idCliente = 0;
+                ResultSet rs = stmtCliente.executeQuery();
+
+                if(rs.next()){
+                    idCliente = rs.getInt(1);
+                }
+
                 EnderecoDAO enderecoDAO = new EnderecoDAO();
                 Endereco enderecoCliente = enderecoDAO.getClassEndereco(id);
 
                 LocalDate dataNascimento= LocalDate.parse(nascimento);
 
                 Cliente cliente = new Cliente(id, nomeCliente, cpf, dataNascimento, telefone
-                        , enderecoCliente, tipo, senha);
+                        , enderecoCliente, tipo, senha, idCliente);
 
                 return cliente;
             }

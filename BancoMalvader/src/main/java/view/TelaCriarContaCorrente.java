@@ -85,7 +85,7 @@ public class TelaCriarContaCorrente extends JFrame {
                     String cpfCliente = cpfClienteText.getText();
 
                     ContaCorrenteController contaCorrenteController = new ContaCorrenteController();
-                    contaCorrenteController.contaCorrenteController(13131, saldo, limite, dataVencimento ,nomeUsuario);
+                    contaCorrenteController.contaCorrenteController(saldo, limite, dataVencimento ,nomeUsuario);
 
                     JOptionPane.showMessageDialog(null, "Conta Corrente cadastrada com sucesso!");
                     dispose();

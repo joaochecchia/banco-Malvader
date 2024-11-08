@@ -16,7 +16,7 @@ public class ClienteController {
                 , cidade, estado, 0);
 
         Cliente clienteNovo = new Cliente(0, nome, cpf, dataNascimento
-                , telefone, endereco, "CLIENTE",senha);
+                , telefone, endereco, "CLIENTE",senha, 0);
 
         ClienteDAO clienteDAO = new ClienteDAO();
         EnderecoDAO enderecoDAO = new EnderecoDAO();
