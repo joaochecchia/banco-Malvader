@@ -45,32 +45,13 @@ public class ContaCorrenteDAO {
             }
             rs.close();
 
-            System.out.println("get id: " + cliente.getIdCliente());
-
             stmtCorrente.setDouble(1, conta.getLimite());
             stmtCorrente.setString(2, conta.getDataVencimento().toString());
-            stmtCorrente.setInt(3, cliente.getIdCliente());
+            stmtCorrente.setInt(3, idconta);
 
             stmtCorrente.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        LocalDate l = LocalDate.parse("2004-05-09");
-
-        ClienteDAO i = new ClienteDAO();
-        Cliente en = i.getClasseCliente("lukas");
-
-        ContaCorrente c = new ContaCorrente("n", "a", 123, en, 200, l);
-
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.getClasseCliente("lukas");
-
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaa: " + cliente.getIdCliente());
-
-        ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
-        contaCorrenteDAO.registrarContaCorrente(c, en);
     }
 }

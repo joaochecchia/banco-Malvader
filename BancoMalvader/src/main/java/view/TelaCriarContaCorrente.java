@@ -81,11 +81,11 @@ public class TelaCriarContaCorrente extends JFrame {
 
                     double saldo = Double.parseDouble(saldoText.getText());
                     double limite = Double.parseDouble(limiteText.getText());
-                    LocalDate dataVencimento = LocalDate.parse(dataVencimentoText.getText()); // Formato: YYYY-MM-DD
+                    LocalDate dataVencimento = LocalDate.parse(dataVencimentoText.getText());
                     String cpfCliente = cpfClienteText.getText();
 
                     ContaCorrenteController contaCorrenteController = new ContaCorrenteController();
-                    contaCorrenteController.contaCorrenteController(saldo, limite, dataVencimento ,nomeUsuario);
+                    contaCorrenteController.contaCorrenteController(saldo, limite, dataVencimento , nomeUsuario);
 
                     JOptionPane.showMessageDialog(null, "Conta Corrente cadastrada com sucesso!");
                     dispose();
@@ -100,7 +100,7 @@ public class TelaCriarContaCorrente extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TelaCriarContaCorrente frame = new TelaCriarContaCorrente("Lucas");
+            TelaCriarContaCorrente frame = new TelaCriarContaCorrente("lukas");
             frame.setVisible(true);
         });
     }

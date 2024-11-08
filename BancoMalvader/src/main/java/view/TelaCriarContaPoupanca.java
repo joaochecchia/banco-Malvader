@@ -1,5 +1,8 @@
 package view;
 
+import controller.ContaPoupancaController;
+import dao.ContaCorrenteDAO;
+import dao.ContaPoupancaDAO;
 import model.ContaPoupanca;
 
 import javax.swing.*;
@@ -20,13 +23,7 @@ public class TelaCriarContaPoupanca extends JFrame {
         add(panel);
         panel.setLayout(null);
 
-        JLabel nomeLabel = new JLabel("Nome Cliente:");
-        nomeLabel.setBounds(10, 20, 100, 25);
-        panel.add(nomeLabel);
 
-        JTextField nomeText = new JTextField(20);
-        nomeText.setBounds(140, 20, 165, 25);
-        panel.add(nomeText);
 
         JLabel cpfLabel = new JLabel("CPF Cliente:");
         cpfLabel.setBounds(10, 50, 100, 25);
@@ -64,20 +61,20 @@ public class TelaCriarContaPoupanca extends JFrame {
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                erroLabel.setText(""); // Limpa a mensagem de erro
+                erroLabel.setText("");
                 try {
-                    // Validações dos campos
-                    if (nomeText.getText().isEmpty() || cpfText.getText().isEmpty() || saldoText.getText().isEmpty() || taxaText.getText().isEmpty()) {
+
+                    if (cpfText.getText().isEmpty() || saldoText.getText().isEmpty() || taxaText.getText().isEmpty()) {
                         erroLabel.setText("Preencha todos os campos corretamente.");
                         return;
                     }
 
-                    String nomeCliente = nomeText.getText();
                     String cpfCliente = cpfText.getText();
                     double saldoInicial = Double.parseDouble(saldoText.getText());
                     double taxaRendimento = Double.parseDouble(taxaText.getText());
 
-
+                    ContaPoupancaController contaPoupancaController = new ContaPoupancaController();
+                    contaPoupancaController.criarContaPoupanca(saldoInicial, taxaRendimento, nomeUsuario);
 
                     JOptionPane.showMessageDialog(null, "Conta Poupança cadastrada com sucesso!");
                     dispose();
@@ -90,7 +87,7 @@ public class TelaCriarContaPoupanca extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TelaCriarContaPoupanca frame = new TelaCriarContaPoupanca("Lucas");
+            TelaCriarContaPoupanca frame = new TelaCriarContaPoupanca("lukas");
             frame.setVisible(true);
         });
     }

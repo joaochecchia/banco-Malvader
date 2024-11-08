@@ -27,11 +27,11 @@ public class ContaPoupancaDAO {
             PreparedStatement stmtConta = conn.prepareStatement(sqlConta, PreparedStatement.RETURN_GENERATED_KEYS);
             PreparedStatement stmtPoupanca = conn.prepareStatement(sqlPoupanca);
 
-            stmtConta.setString(1, numeroConta.gerarNumero("CORRENTE"));
+            stmtConta.setString(1, "dasd");
             stmtConta.setString(2, numeroAgencia.gerarAgencia(cliente.getEndereco().getEstado()));
             stmtConta.setDouble(3, conta.getSaldo());
             stmtConta.setString(4, "CORRENTE");
-            stmtConta.setInt(5, cliente.getId());
+            stmtConta.setInt(5, cliente.getIdCliente());
 
             stmtConta.executeUpdate();
             ResultSet rs = stmtConta.getGeneratedKeys();
@@ -41,6 +41,8 @@ public class ContaPoupancaDAO {
                 idconta = rs.getInt(1);
             }
             rs.close();
+
+            System.out.println(idconta);
 
             stmtPoupanca.setDouble(1, conta.getTaxaDeRendimento());
             stmtPoupanca.setInt(2, idconta);
