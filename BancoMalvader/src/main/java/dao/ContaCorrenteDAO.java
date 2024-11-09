@@ -59,10 +59,6 @@ public class ContaCorrenteDAO {
 
             ResultSet rsCorrente = stmt.executeQuery();
 
-            System.out.println(rs.next());
-            System.out.println(rs.getString("numero_conta"));
-
-
             if (rsCorrente.next()) {
                 LocalDate dataVencimento = LocalDate.parse(rsCorrente.getString("data_vencimento"));
                 return new ContaCorrente(

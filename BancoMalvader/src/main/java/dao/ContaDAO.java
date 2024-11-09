@@ -21,22 +21,19 @@ public class ContaDAO {
             stmt.setInt(1, cliente.getIdCliente());
 
             ResultSet rs = stmt.executeQuery();
-            Conta conta = null;
 
             ArrayList<Conta> contas = new ArrayList<>();
-            
 
             while (rs.next()) {
-                System.out.println("agencia" + rs.getString("agencia"));
-
                 if ("CORRENTE".equals(rs.getString("tipo_conta"))) {
                     ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
                     contas.add(contaCorrenteDAO.getContaCorrente(rs, cliente));
-                } else {
+                } else if ("POUPANCA".equals(rs.getString("tipo_conta"))) {
                     ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
                     contas.add(contaPoupancaDAO.getContaPoupanca(rs, cliente));
                 }
             }
+
             return contas;
 
         } catch (SQLException e) {
