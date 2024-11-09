@@ -1,9 +1,6 @@
 package dao;
 
-import model.Cliente;
-import model.ContaCorrente;
-import model.Conta;
-import model.Endereco;
+import model.*;
 import util.Conexao;
 import util.GerarNumeroConta;
 import util.GerarAgencia;
@@ -30,11 +27,11 @@ public class ContaCorrenteDAO {
             PreparedStatement stmtConta = conn.prepareStatement(sqlConta, PreparedStatement.RETURN_GENERATED_KEYS);
             PreparedStatement stmtCorrente = conn.prepareStatement(sqlCorrente);
 
-            stmtConta.setString(1, "a");
+            stmtConta.setString(1, numeroConta.gerarNumero("CORRENTE"));
             stmtConta.setString(2, numeroAgencia.gerarAgencia(cliente.getEndereco().getEstado()));
             stmtConta.setDouble(3, conta.getSaldo());
             stmtConta.setString(4, "CORRENTE");
-            stmtConta.setInt(5, 9);
+            stmtConta.setInt(5, cliente.getIdCliente());
 
             stmtConta.executeUpdate();
             ResultSet rs = stmtConta.getGeneratedKeys();
@@ -51,6 +48,58 @@ public class ContaCorrenteDAO {
 
             stmtCorrente.executeUpdate();
         } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public ContaCorrente getContaCorrente(ResultSet rs, Cliente cliente) {
+        try (Connection conn = Conexao.conexao()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM conta_corrente WHERE id_conta = ?");
+            stmt.setInt(1, rs.getInt("id_conta"));
+
+            ResultSet rsCorrente = stmt.executeQuery();
+
+            System.out.println(rs.next());
+            System.out.println(rs.getString("numero_conta"));
+
+
+            if (rsCorrente.next()) {
+                LocalDate dataVencimento = LocalDate.parse(rsCorrente.getString("data_vencimento"));
+                return new ContaCorrente(
+                        rs.getString("numero_conta"),
+                        rs.getString("agencia"),
+                        rs.getDouble("saldo"),
+                        cliente,
+                        rsCorrente.getDouble("limite"),
+                        dataVencimento
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void deletarContaCorrente(ContaCorrente conta){
+
+        String sqlCorrente = "DELTE * FROM conta_corrente WHERE id_conta= ?";
+        String sqlConta = "DELETE * FROM conta WHERE id_conta = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmtCorrente = conn.prepareStatement(sqlCorrente);
+            PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
+
+            ContaDAO contaDAO = new ContaDAO();
+            int idConta = contaDAO.getIDConta(conta.getNumeroConta());
+
+            stmtCorrente.setInt(1, idConta);
+            stmtCorrente.executeUpdate();
+
+            stmtConta.setInt(1, idConta);
+            stmtConta.executeUpdate();
+
+        } catch(SQLException e){
             e.printStackTrace();
         }
     }

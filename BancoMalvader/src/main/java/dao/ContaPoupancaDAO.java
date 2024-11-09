@@ -1,6 +1,7 @@
 package dao;
 
 import model.Cliente;
+import model.ContaCorrente;
 import model.ContaPoupanca;
 import util.Conexao;
 import util.GerarAgencia;
@@ -10,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Locale;
 
 public class ContaPoupancaDAO {
     public void registrarContaPoupanca(ContaPoupanca conta, Cliente cliente){
@@ -27,7 +30,7 @@ public class ContaPoupancaDAO {
             PreparedStatement stmtConta = conn.prepareStatement(sqlConta, PreparedStatement.RETURN_GENERATED_KEYS);
             PreparedStatement stmtPoupanca = conn.prepareStatement(sqlPoupanca);
 
-            stmtConta.setString(1, "dasd");
+            stmtConta.setString(1, numeroConta.gerarNumero("POUPANCA"));
             stmtConta.setString(2, numeroAgencia.gerarAgencia(cliente.getEndereco().getEstado()));
             stmtConta.setDouble(3, conta.getSaldo());
             stmtConta.setString(4, "CORRENTE");
@@ -49,6 +52,51 @@ public class ContaPoupancaDAO {
 
             stmtPoupanca.executeUpdate();
         } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public ContaPoupanca getContaPoupanca(ResultSet rs, Cliente cliente) {
+        try (Connection conn = Conexao.conexao()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM conta_poupanca WHERE id_conta = ?");
+            stmt.setInt(1, rs.getInt("id_conta"));
+
+            ResultSet rsPoupanca = stmt.executeQuery();
+            if (rsPoupanca.next()) {
+                return new ContaPoupanca(
+                        rs.getString("numero_conta"),
+                        rs.getString("agencia"),
+                        rs.getDouble("saldo"),
+                        cliente,
+                        rsPoupanca.getDouble("taxa_rendimento")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void deletarContaPoupanca(ContaPoupanca conta){
+
+        String sqlpoupanca = "DELTE * FROM conta_poupanca WHERE id_conta= ?";
+        String sqlConta = "DELETE * FROM conta WHERE id_conta = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmtCorrente = conn.prepareStatement(sqlpoupanca);
+            PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
+
+            ContaDAO contaDAO = new ContaDAO();
+            int idConta = contaDAO.getIDConta(conta.getNumeroConta());
+
+            stmtCorrente.setInt(1, idConta);
+            stmtCorrente.executeUpdate();
+
+            stmtConta.setInt(1, idConta);
+            stmtConta.executeUpdate();
+
+        } catch(SQLException e){
             e.printStackTrace();
         }
     }

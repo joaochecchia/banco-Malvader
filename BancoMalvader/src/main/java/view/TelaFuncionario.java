@@ -5,6 +5,7 @@ import java.awt.*;
 
 import dao.ClienteDAO;
 import dao.FuncionarioDAO;
+import dao.LoginDAO;
 import model.Funcionario;
 
 public class TelaFuncionario extends JFrame {
@@ -77,10 +78,10 @@ public class TelaFuncionario extends JFrame {
         String nomeUsuario = nomeUsuarioField.getText();
 
         switch (escolha) {
-            case JOptionPane.YES_OPTION: // botao de voltar
+            case JOptionPane.YES_OPTION:
                 System.out.println("Usuário clicou em Voltar.");
                 break;
-            case JOptionPane.NO_OPTION: // botao de criar conta
+            case JOptionPane.NO_OPTION:
 
                 nomeUsuario = nomeUsuarioField.getText();
                 if (!nomeUsuario.isEmpty()) {
@@ -88,7 +89,7 @@ public class TelaFuncionario extends JFrame {
                     boolean verificar = clienteDAO.verificarCliente(nomeUsuario);
 
                     if (verificar) {
-                        // Caixa de diálogo para selecionar o tipo de conta
+
                         Object[] opcoesConta = {"Poupança", "Corrente"};
                         int escolhaConta = JOptionPane.showOptionDialog(
                                 null,
@@ -118,7 +119,7 @@ public class TelaFuncionario extends JFrame {
                     System.out.println("O campo CPF está vazio.");
                 }
                 break;
-            case JOptionPane.CANCEL_OPTION: // botao de criar nova conta
+            case JOptionPane.CANCEL_OPTION:
                 TelaCadastroCliente telaCadastroCliente = new TelaCadastroCliente();
                 telaCadastroCliente.setVisible(true);
                 break;
@@ -127,9 +128,83 @@ public class TelaFuncionario extends JFrame {
         }
     }
 
+
     private void encerrarConta() {
 
-        JOptionPane.showMessageDialog(this, "Encerrar Conta acionado.");
+        String senha = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
+
+        if ("admin".equals(senha)) {
+            JOptionPane.showMessageDialog(this, "Acesso concedido. Deleção de conta permitido.");
+
+            // Criação do JDialog para inserir usuário e senha
+            JDialog dialog = new JDialog(this, "Confirmação de Deleção", true);
+            dialog.setSize(300, 200);
+            dialog.setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.insets = new Insets(5, 5, 5, 5);
+
+            // Campo de Usuário
+            JLabel lblUsuario = new JLabel("Usuário:");
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            dialog.add(lblUsuario, gbc);
+
+            JTextField txtUsuario = new JTextField(15);
+            gbc.gridx = 1;
+            gbc.gridy = 0;
+            dialog.add(txtUsuario, gbc);
+
+            // Campo de Senha
+            JLabel lblSenha = new JLabel("Senha:");
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            dialog.add(lblSenha, gbc);
+
+            JPasswordField txtSenha = new JPasswordField(15);
+            gbc.gridx = 1;
+            gbc.gridy = 1;
+            dialog.add(txtSenha, gbc);
+
+            // Botões Confirmar e Fechar
+            JButton btnConfirmar = new JButton("Confirmar");
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            gbc.gridwidth = 1;
+            dialog.add(btnConfirmar, gbc);
+
+            JButton btnFechar = new JButton("Fechar");
+            gbc.gridx = 1;
+            gbc.gridy = 2;
+            dialog.add(btnFechar, gbc);
+
+            // Ação ao clicar no botão "Confirmar"
+            btnConfirmar.addActionListener(e -> {
+                String usuario = txtUsuario.getText();
+                String senhaDigitada = new String(txtSenha.getPassword());
+                // Aqui você pode adicionar a lógica para confirmar a conta
+                JOptionPane.showMessageDialog(dialog, "Conta confirmada para: " + usuario);
+                dialog.dispose();
+
+                LoginDAO validarUsuario = new LoginDAO();
+
+                if(!validarUsuario.realizarLogin(usuario, senhaDigitada, false)){
+                    //TelaDeletarConta telaDeletarConta = new TelaDeletarConta();
+                } else{
+                    JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+
+            });
+
+            // Ação ao clicar no botão "Fechar"
+            btnFechar.addActionListener(e -> dialog.dispose());
+
+            dialog.setLocationRelativeTo(this);  // Posiciona o JDialog centralizado na tela principal
+            dialog.setVisible(true);  // Exibe a janela de confirmação
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void consultarDadosConta() {
@@ -161,7 +236,6 @@ public class TelaFuncionario extends JFrame {
             TelaCadastroFuncionario cadastroFuncionario = new TelaCadastroFuncionario();
             cadastroFuncionario.setVisible(true);
 
-            dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -175,7 +249,7 @@ public class TelaFuncionario extends JFrame {
     public static void main(String[] args) {
         FuncionarioDAO b = new FuncionarioDAO();
 
-        Funcionario a = b.getClassFuncionario("guilherme");
+        Funcionario a = b.getClassFuncionario("João da Silva");
 
         SwingUtilities.invokeLater(() -> {
 
