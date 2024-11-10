@@ -4,9 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class TelaEditarConta extends JFrame {
-    private JLabel erroLabel; // Rótulo para mostrar erros
+    private JLabel erroLabel;
 
     public TelaEditarConta() {
         setTitle("Banco Malvader - Editar Conta");
@@ -64,24 +66,32 @@ public class TelaEditarConta extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 erroLabel.setText(""); // Limpa a mensagem de erro
 
-                try {
-                    // Validações dos campos
-                    if (tipoContaText.getText().isEmpty() || limiteText.getText().isEmpty() ||
-                            vencimentoText.getText().isEmpty() || numeroContaText.getText().isEmpty()) {
-                        erroLabel.setText("Preencha todos os campos corretamente.");
+                String tipoConta = tipoContaText.getText().isEmpty() ? null : tipoContaText.getText();
+                Double limite = limiteText.getText().isEmpty() ? null : Double.parseDouble(limiteText.getText());
+                LocalDate vencimento = null;
+                String numeroConta = numeroContaText.getText().isEmpty() ? null : numeroContaText.getText();
+
+                if (tipoConta == null && limite == null && vencimentoText.getText().isEmpty() && numeroConta == null) {
+                    erroLabel.setText("Preencha algum campo.");
+                    return;
+                }
+                
+                if (!vencimentoText.getText().isEmpty()) {
+                    try {
+                        vencimento = LocalDate.parse(vencimentoText.getText());
+                    } catch (DateTimeParseException ex) {
+                        erroLabel.setText("Data de vencimento em formato inválido. Use AAAA-MM-DD.");
                         return;
                     }
-
-                    String tipoConta = tipoContaText.getText();
-                    double limite = Double.parseDouble(limiteText.getText());
-                    String vencimento = vencimentoText.getText(); // Assumindo formato AAAA-MM-DD
-                    String numeroConta = numeroContaText.getText();
-
-                    JOptionPane.showMessageDialog(null, "Dados da conta atualizados com sucesso!");
-                    dispose();
-                } catch (NumberFormatException ex) {
-                    erroLabel.setText("Valor inválido em campo numérico.");
                 }
+
+                System.out.println("Tipo de Conta: " + tipoConta);
+                System.out.println("Limite: " + (limite != null ? limite : "null"));
+                System.out.println("Vencimento: " + (vencimento != null ? vencimento : "null"));
+                System.out.println("Número da Conta: " + numeroConta);
+
+                JOptionPane.showMessageDialog(null, "Dados da conta atualizados com sucesso!");
+                dispose();
             }
         });
     }
