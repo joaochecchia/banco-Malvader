@@ -77,10 +77,10 @@ public class ContaCorrenteDAO {
         return null;
     }
 
-    public void deletarContaCorrente(ContaCorrente conta){
+    public void deletarContaCorrente(Conta conta){
 
-        String sqlCorrente = "DELTE * FROM conta_corrente WHERE id_conta= ?";
-        String sqlConta = "DELETE * FROM conta WHERE id_conta = ?";
+        String sqlCorrente = "DELETE FROM conta_corrente WHERE id_conta = ?";
+        String sqlConta = "DELETE FROM conta WHERE id_conta = ?";
 
         try(Connection conn = Conexao.conexao()){
             PreparedStatement stmtCorrente = conn.prepareStatement(sqlCorrente);

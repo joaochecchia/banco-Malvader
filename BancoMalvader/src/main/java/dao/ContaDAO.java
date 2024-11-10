@@ -42,6 +42,26 @@ public class ContaDAO {
         return null;
     }
 
+    public String getTipo(String numero){
+        String sql = "SELECT tipo_conta FROM conta WHERE numero_conta = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, numero);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()){
+                return rs.getString("tipo_conta");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public int getIDConta(String numeroConta){
         String sql = "SELECT id_conta FROM conta WHERE numero_conta = ?";
 

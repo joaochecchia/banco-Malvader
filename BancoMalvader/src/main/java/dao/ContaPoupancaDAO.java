@@ -1,6 +1,7 @@
 package dao;
 
 import model.Cliente;
+import model.Conta;
 import model.ContaCorrente;
 import model.ContaPoupanca;
 import util.Conexao;
@@ -78,10 +79,10 @@ public class ContaPoupancaDAO {
         return null;
     }
 
-    public void deletarContaPoupanca(ContaPoupanca conta){
+    public void deletarContaPoupanca(Conta conta){
 
-        String sqlpoupanca = "DELTE * FROM conta_poupanca WHERE id_conta= ?";
-        String sqlConta = "DELETE * FROM conta WHERE id_conta = ?";
+        String sqlpoupanca = "DELETE FROM conta_poupanca WHERE id_conta= ?";
+        String sqlConta = "DELETE FROM conta WHERE id_conta = ?";
 
         try(Connection conn = Conexao.conexao()){
             PreparedStatement stmtCorrente = conn.prepareStatement(sqlpoupanca);

@@ -1,5 +1,6 @@
 package view;
 
+import controller.RemoverContaController;
 import dao.ClienteDAO;
 import dao.ContaDAO;
 import model.Cliente;
@@ -18,7 +19,7 @@ public class TelaDeletarConta extends JFrame {
     public TelaDeletarConta(ArrayList<Conta> contas) {
 
         setTitle("Banco Malvader - Deletar Conta");
-        setSize(400, 300);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -65,10 +66,16 @@ public class TelaDeletarConta extends JFrame {
             // Botão de deletar para cada conta
             JButton deletarButton = new JButton("Deletar Conta");
             deletarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            // Passar a conta atual para o ActionListener
+            Conta conta = contas.get(i);
             deletarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Ação de deletar conta (backend necessário)
+
+                    RemoverContaController removerContaController = new RemoverContaController();
+                    removerContaController.removerContaController(conta);
+
                     JOptionPane.showMessageDialog(
                             TelaDeletarConta.this,
                             "Conta deletada com sucesso!",
@@ -77,14 +84,13 @@ public class TelaDeletarConta extends JFrame {
                     );
                 }
             });
+
             panel.add(deletarButton);
             panel.add(Box.createVerticalStrut(15));
         }
 
-        // Adicionando o painel na janela
         add(panel);
-
-        // Tornar a janela visível
+        
         setVisible(true);
     }
 
