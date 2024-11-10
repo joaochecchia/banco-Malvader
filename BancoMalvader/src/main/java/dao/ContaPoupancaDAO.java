@@ -95,6 +95,7 @@ public class ContaPoupancaDAO {
             stmtCorrente.executeUpdate();
 
             stmtConta.setInt(1, idConta);
+            System.out.println("ID conta: " + idConta);
             stmtConta.executeUpdate();
 
         } catch(SQLException e){

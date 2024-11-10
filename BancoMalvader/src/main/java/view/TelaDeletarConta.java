@@ -90,7 +90,7 @@ public class TelaDeletarConta extends JFrame {
         }
 
         add(panel);
-        
+
         setVisible(true);
     }
 
