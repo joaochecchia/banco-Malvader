@@ -1,24 +1,20 @@
 package view;
 
-import controller.RemoverContaController;
-import dao.ClienteDAO;
-import dao.ContaDAO;
 import model.Cliente;
 import model.Conta;
+import model.ContaPoupanca;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
-public class TelaDeletarConta extends JFrame {
+public class TelaVisualizarConta extends JFrame {
 
-    public TelaDeletarConta(ArrayList<Conta> contas) {
+    public TelaVisualizarConta(ArrayList<Conta> contas) {
 
-        setTitle("Banco Malvader - Deletar Conta");
+        setTitle("Banco Malvader - Visualizar Conta");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -35,7 +31,6 @@ public class TelaDeletarConta extends JFrame {
         panel.add(clienteLabel);
         panel.add(Box.createVerticalStrut(15));
 
-        // Exibir informações de cada conta do cliente
         for (int i = 0; i < contas.size(); i++) {
             String agencia = contas.get(i).getAgencia();
             String numeroConta = contas.get(i).getNumeroConta();
@@ -63,29 +58,36 @@ public class TelaDeletarConta extends JFrame {
             panel.add(contaPanel);
             panel.add(Box.createVerticalStrut(10));
 
-            // Botão de deletar para cada conta
-            JButton deletarButton = new JButton("Deletar Conta");
-            deletarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            // Botão para visualizar informações detalhadas da conta
+            JButton visualizarButton = new JButton("Visualizar Informações");
+            visualizarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            // Passar a conta atual para o ActionListener
             Conta conta = contas.get(i);
-            deletarButton.addActionListener(new ActionListener() {
+            visualizarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    String tipo = "";
+                    if(conta instanceof ContaPoupanca){
+                        tipo = "Poupança";
+                    } else{
+                        tipo = "Corrente";
+                    }
 
-                    RemoverContaController removerContaController = new RemoverContaController();
-                    removerContaController.removerContaController(conta);
-
+                    // Exibir um diálogo com todas as informações detalhadas da conta
                     JOptionPane.showMessageDialog(
-                            TelaDeletarConta.this,
-                            "Conta deletada com sucesso!",
-                            "Sucesso",
+                            TelaVisualizarConta.this,
+                            "Agência: " + conta.getAgencia() + "\n" +
+                                    "Número da Conta: " + conta.getNumeroConta() + "\n" +
+                                    "Saldo: " + conta.getSaldo() + "\n" + // Exemplo de campo adicional
+                                    "Tipo: " + tipo + "\n" +
+                                    "Senha: " + conta.getCliente().getSenha(), // Mostra a senha real
+                            "Informações da Conta",
                             JOptionPane.INFORMATION_MESSAGE
                     );
                 }
             });
 
-            panel.add(deletarButton);
+            panel.add(visualizarButton);
             panel.add(Box.createVerticalStrut(15));
         }
 

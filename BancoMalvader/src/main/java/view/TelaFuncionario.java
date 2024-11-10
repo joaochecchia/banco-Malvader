@@ -198,7 +198,7 @@ public class TelaFuncionario extends JFrame {
                     Cliente cliente = clienteDAO.getClasseCliente(usuario);
 
                     ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
-                    if(contas.size() > 0){
+                    if(!contas.isEmpty()){
                         TelaDeletarConta telaDeletarConta = new TelaDeletarConta(contas);
                     } else{
                         JOptionPane.showMessageDialog(this, "O cliente não tem contas registradas.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -223,7 +223,46 @@ public class TelaFuncionario extends JFrame {
 
     private void consultarDadosConta() {
 
-        JOptionPane.showMessageDialog(this, "Consultar Dados da Conta acionado.");
+        JPanel dialogPanel = new JPanel();
+        dialogPanel.setLayout(new GridLayout(3, 2, 5, 5)); // 3 linhas e 2 colunas com espaço de 5 pixels
+
+        JLabel userLabel = new JLabel("Usuário:");
+        JTextField userField = new JTextField(15);
+        JLabel passLabel = new JLabel("Senha:");
+        JPasswordField passField = new JPasswordField(15);
+
+        dialogPanel.add(userLabel);
+        dialogPanel.add(userField);
+        dialogPanel.add(passLabel);
+        dialogPanel.add(passField);
+
+        int result = JOptionPane.showConfirmDialog(null, dialogPanel, "Digite Usuário e Senha", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            String usuario = userField.getText();
+            System.out.println("USIUARIO: " + usuario);
+            String senha = new String(passField.getPassword());
+            System.out.println("Senha: " + senha);
+
+            LoginDAO loginDAO = new LoginDAO();
+
+            if(!loginDAO.realizarLogin(usuario, senha, false)){
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Cliente cliente = clienteDAO.getClasseCliente(usuario);
+
+                ContaDAO contaDAO = new ContaDAO();
+                ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
+
+                if(!contas.isEmpty()){
+                    TelaVisualizarConta telaVisualizarConta = new TelaVisualizarConta(contas);
+                } else{
+                    JOptionPane.showMessageDialog(this, "Cliente não possui contas.");
+                }
+
+            } else{
+                JOptionPane.showMessageDialog(this, "Cliente não encontrado.");
+            }
+        }
     }
 
     private void consultarDadosCliente() {
