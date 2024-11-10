@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,30 @@ public class ContaDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void editarConta(String tipoConta, double limite, LocalDate vencimento, String numeroConta){
+        String sqlConta = "UPDATE conta SET tipo_conta = ? WHERE id_conta = ?";
+        String sqlCorrente = "UPDATE conta_corrente SET limite = ?, data_vencimento = ?" +
+                "WHERE id_conta = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
+            PreparedStatement stmtCorrente = conn.prepareStatement(sqlCorrente);
+
+            ContaDAO contaDAO = new ContaDAO();
+            int idConta = contaDAO.getIDConta(numeroConta);
+
+            stmtConta.setString(1, tipoConta);
+            stmtConta.setInt(2, idConta);
+
+            stmtCorrente.setDouble(1, limite);
+            stmtCorrente.setString(2, vencimento.toString());
+            stmtCorrente.setString(3, numeroConta);
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public int getIDConta(String numeroConta){

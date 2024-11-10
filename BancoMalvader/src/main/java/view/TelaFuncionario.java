@@ -132,7 +132,6 @@ public class TelaFuncionario extends JFrame {
         }
     }
 
-
     private void encerrarConta() {
 
         String senha = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
@@ -212,8 +211,8 @@ public class TelaFuncionario extends JFrame {
 
             btnFechar.addActionListener(e -> dialog.dispose());
 
-            dialog.setLocationRelativeTo(this);  // Posiciona o JDialog centralizado na tela principal
-            dialog.setVisible(true);  // Exibe a janela de confirmação
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
 
         } else {
             JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -302,7 +301,16 @@ public class TelaFuncionario extends JFrame {
 
     private void alterarDadosConta() {
 
-        JOptionPane.showMessageDialog(this, "Alterar Dados da Conta acionado.");
+        String senha = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
+
+        if ("admin".equals(senha)) {
+            JOptionPane.showMessageDialog(this, "Acesso concedido. Cadastro de Funcionário permitido.");
+
+
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void alterarDadosCliente() {

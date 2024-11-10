@@ -2,12 +2,15 @@ package controller;
 
 import dao.ClienteDAO;
 import dao.ContaCorrenteDAO;
+import dao.ContaDAO;
 import model.Cliente;
 import model.ContaCorrente;
+import model.Conta;
 import util.GerarAgencia;
 import util.GerarNumeroConta;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
 
 public class ContaCorrenteController {
     public void contaCorrenteController(double saldo, double limite
