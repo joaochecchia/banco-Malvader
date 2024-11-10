@@ -2,7 +2,6 @@ package dao;
 
 import model.Cliente;
 import model.Conta;
-import model.ContaCorrente;
 import model.ContaPoupanca;
 import util.Conexao;
 import util.GerarAgencia;
@@ -12,8 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Locale;
 
 public class ContaPoupancaDAO {
     public void registrarContaPoupanca(ContaPoupanca conta, Cliente cliente){
@@ -79,27 +76,63 @@ public class ContaPoupancaDAO {
         return null;
     }
 
+    public void editarContaPoupanca(ContaPoupanca conta, int idConta){
+        String sqlConta = "UPDATE conta SET numero_conta = ?, agencia = ?, saldo = ? " +
+                "WHERE id_conta = ?";
+        String sqlContaPoupanca = "UPDATE conta_poupanca SET taxa_rendimento = ? WHERE id_conta = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
+            PreparedStatement stmtCorrente = conn.prepareStatement(sqlContaPoupanca);
+
+            ContaDAO contaDao = new ContaDAO();
+
+            stmtConta.setString(1, conta.getNumeroConta());
+            stmtConta.setString(2, conta.getAgencia());
+            stmtConta.setDouble(3, conta.getSaldo());
+            stmtConta.setInt(4, idConta);
+
+            stmtConta.executeUpdate();
+
+            stmtCorrente.setDouble(1, conta.getTaxaDeRendimento());
+            stmtCorrente.setInt(2, idConta);
+
+            stmtCorrente.executeUpdate();
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public void deletarContaPoupanca(Conta conta){
 
         String sqlpoupanca = "DELETE FROM conta_poupanca WHERE id_conta= ?";
         String sqlConta = "DELETE FROM conta WHERE id_conta = ?";
 
         try(Connection conn = Conexao.conexao()){
-            PreparedStatement stmtCorrente = conn.prepareStatement(sqlpoupanca);
+            PreparedStatement stmtPoupanca = conn.prepareStatement(sqlpoupanca);
             PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
 
             ContaDAO contaDAO = new ContaDAO();
             int idConta = contaDAO.getIDConta(conta.getNumeroConta());
 
-            stmtCorrente.setInt(1, idConta);
-            stmtCorrente.executeUpdate();
+            stmtPoupanca.setInt(1, idConta);
+            stmtPoupanca.executeUpdate();
 
             stmtConta.setInt(1, idConta);
-            System.out.println("ID conta: " + idConta);
             stmtConta.executeUpdate();
 
         } catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        ClienteDAO a = new ClienteDAO();
+        Cliente cliente = a.getClasseCliente("hugo12");
+        ContaPoupanca conta = new ContaPoupanca("legalo", "003", 1500.00, cliente,10);
+
+        ContaPoupancaDAO b = new ContaPoupancaDAO();
+        b.editarContaPoupanca(conta, 15);
     }
 }

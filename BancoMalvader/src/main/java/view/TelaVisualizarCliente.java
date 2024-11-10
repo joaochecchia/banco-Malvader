@@ -1,6 +1,7 @@
 package view;
 
 import model.Cliente;
+import model.Endereco;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,9 +31,9 @@ public class TelaVisualizarCliente extends JFrame {
         JPanel clientePanel = new JPanel(new GridLayout(0, 2, 10, 5));
         clientePanel.setBorder(BorderFactory.createTitledBorder("Informações do Cliente"));
 
+        // Labels e valores do cliente
         JLabel nomeLabel = new JLabel("Nome:");
         JLabel cpfLabel = new JLabel("CPF:");
-        JLabel enderecoLabel = new JLabel("Endereço:");
         JLabel telefoneLabel = new JLabel("Telefone:");
 
         JLabel nomeValor = new JLabel(cliente.getNome());
@@ -43,9 +44,37 @@ public class TelaVisualizarCliente extends JFrame {
         clientePanel.add(nomeValor);
         clientePanel.add(cpfLabel);
         clientePanel.add(cpfValor);
-        clientePanel.add(enderecoLabel);
         clientePanel.add(telefoneLabel);
         clientePanel.add(telefoneValor);
+
+        // Adicionando informações de endereço
+        Endereco endereco = cliente.getEndereco();
+        JLabel cepLabel = new JLabel("CEP:");
+        JLabel localLabel = new JLabel("Local:");
+        JLabel numeroCasaLabel = new JLabel("Número da Casa:");
+        JLabel bairroLabel = new JLabel("Bairro:");
+        JLabel cidadeLabel = new JLabel("Cidade:");
+        JLabel estadoLabel = new JLabel("Estado:");
+
+        JLabel cepValor = new JLabel(endereco.getCep());
+        JLabel localValor = new JLabel(endereco.getLocal());
+        JLabel numeroCasaValor = new JLabel(String.valueOf(endereco.getNumeroCasa()));
+        JLabel bairroValor = new JLabel(endereco.getBairro());
+        JLabel cidadeValor = new JLabel(endereco.getCidade());
+        JLabel estadoValor = new JLabel(endereco.getEstado());
+
+        clientePanel.add(cepLabel);
+        clientePanel.add(cepValor);
+        clientePanel.add(localLabel);
+        clientePanel.add(localValor);
+        clientePanel.add(numeroCasaLabel);
+        clientePanel.add(numeroCasaValor);
+        clientePanel.add(bairroLabel);
+        clientePanel.add(bairroValor);
+        clientePanel.add(cidadeLabel);
+        clientePanel.add(cidadeValor);
+        clientePanel.add(estadoLabel);
+        clientePanel.add(estadoValor);
 
         panel.add(clientePanel);
         panel.add(Box.createVerticalStrut(10));

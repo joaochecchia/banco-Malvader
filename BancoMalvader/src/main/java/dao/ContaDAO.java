@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ContaDAO {
     public ArrayList<Conta> getClasConta(Cliente cliente) {
@@ -39,26 +41,6 @@ public class ContaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
-    }
-
-    public String getTipo(String numero){
-        String sql = "SELECT tipo_conta FROM conta WHERE numero_conta = ?";
-
-        try(Connection conn = Conexao.conexao()){
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            stmt.setString(1, numero);
-
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()){
-                return rs.getString("tipo_conta");
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-
         return null;
     }
 

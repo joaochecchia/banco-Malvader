@@ -77,6 +77,63 @@ public class ContaCorrenteDAO {
         return null;
     }
 
+    public void editarContaCorrente(ContaCorrente conta){
+        String sqlConta = "UPDATE conta SET numero_conta = ?, agencia = ?, saldo = ? " +
+                "WHERE id_conta = ?";
+        String sqlContaCorrente = "UPDATE conta_corrente SET limite = ?, data_vencimento = ?" +
+                "WHERE id_conta = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
+            PreparedStatement stmtCorrente = conn.prepareStatement(sqlContaCorrente);
+
+            ContaDAO contaDao = new ContaDAO();
+            int idConta = contaDao.getIDConta(conta.getNumeroConta());
+
+            stmtConta.setString(1, conta.getNumeroConta());
+            stmtConta.setString(2, conta.getAgencia());
+            stmtConta.setDouble(3, conta.getSaldo());
+            stmtConta.setInt(4, idConta);
+
+            stmtCorrente.setDouble(1, conta.getLimite());
+            stmtCorrente.setString(2, conta.getDataVencimento().toString());
+            stmtCorrente.setInt(3, idConta);
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void editarContaPoupanca(ContaCorrente conta, int idConta){
+        String sqlConta = "UPDATE conta SET numero_conta = ?, agencia = ?, saldo = ? " +
+                "WHERE id_conta = ?";
+        String sqlContaCorrente = "UPDATE conta_poupanca SET limite = ?, data_vencimento = ?" +
+                "WHERE id_conta = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
+            PreparedStatement stmtCorrente = conn.prepareStatement(sqlContaCorrente);
+
+            ContaDAO contaDao = new ContaDAO();
+
+            stmtConta.setString(1, conta.getNumeroConta());
+            stmtConta.setString(2, conta.getAgencia());
+            stmtConta.setDouble(3, conta.getSaldo());
+            stmtConta.setInt(4, idConta);
+
+            stmtConta.executeUpdate();
+
+            stmtCorrente.setDouble(1, conta.getLimite());
+            stmtCorrente.setString(2, conta.getNumeroConta().toString());
+            stmtCorrente.setInt(3, idConta);
+
+            stmtCorrente.executeUpdate();
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public void deletarContaCorrente(Conta conta){
 
         String sqlCorrente = "DELETE FROM conta_corrente WHERE id_conta = ?";
