@@ -2,10 +2,14 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 import dao.ClienteDAO;
+import dao.ContaDAO;
 import dao.FuncionarioDAO;
 import dao.LoginDAO;
+import model.Cliente;
+import model.Conta;
 import model.Funcionario;
 
 public class TelaFuncionario extends JFrame {
@@ -189,7 +193,17 @@ public class TelaFuncionario extends JFrame {
                 LoginDAO validarUsuario = new LoginDAO();
 
                 if(!validarUsuario.realizarLogin(usuario, senhaDigitada, false)){
-                    //TelaDeletarConta telaDeletarConta = new TelaDeletarConta();
+                    ContaDAO contaDAO = new ContaDAO();
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    Cliente cliente = clienteDAO.getClasseCliente(usuario);
+
+                    ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
+                    if(contas.size() > 0){
+                        TelaDeletarConta telaDeletarConta = new TelaDeletarConta(contas);
+                    } else{
+                        JOptionPane.showMessageDialog(this, "O cliente não tem contas registradas.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 } else{
                     JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
