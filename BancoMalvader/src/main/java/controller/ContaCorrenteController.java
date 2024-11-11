@@ -29,4 +29,8 @@ public class ContaCorrenteController {
         ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
         contaCorrenteDAO.registrarContaCorrente(contaCorrenteNova, cliente);
     }
+
+    public void editarContaController(Conta conta){
+
+    }
 }

@@ -1,105 +1,117 @@
 package view;
 
+import dao.ClienteDAO;
+import dao.ContaCorrenteDAO;
+import dao.ContaDAO;
+import model.Cliente;
+import model.Conta;
+import model.ContaCorrente;
+import model.ContaPoupanca;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 public class TelaEditarConta extends JFrame {
-    private JLabel erroLabel;
 
-    public TelaEditarConta() {
+    public TelaEditarConta(ArrayList<Conta> contas) {
         setTitle("Banco Malvader - Editar Conta");
-        setSize(350, 270);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel clienteLabel = new JLabel("Cliente: " + contas.get(0).getCliente().getNome());
+        clienteLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        clienteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(clienteLabel);
+        panel.add(Box.createVerticalStrut(15));
+
+        for (int i = 0; i < contas.size(); i++) {
+            Conta conta = contas.get(i);
+
+            JPanel contaPanel = new JPanel(new GridLayout(0, 2, 10, 5));
+            contaPanel.setBorder(BorderFactory.createTitledBorder("Conta " + (i + 1)));
+
+            JLabel agenciaLabel = new JLabel("Agência:");
+            JLabel numeroContaLabel = new JLabel("Número da Conta:");
+            JLabel senhaLabel = new JLabel("Senha:");
+
+            JLabel agenciaValor = new JLabel(conta.getAgencia());
+            JLabel numeroContaValor = new JLabel(conta.getNumeroConta());
+            JLabel senhaValor = new JLabel(conta.getCliente().getSenha().replaceAll(".", "*"));
+
+            contaPanel.add(agenciaLabel);
+            contaPanel.add(agenciaValor);
+            contaPanel.add(numeroContaLabel);
+            contaPanel.add(numeroContaValor);
+            contaPanel.add(senhaLabel);
+            contaPanel.add(senhaValor);
+
+            panel.add(contaPanel);
+            panel.add(Box.createVerticalStrut(10));
+
+            JButton editarButton = new JButton("Editar Dados");
+            editarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            editarButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    editarDadosConta(conta);
+                }
+            });
+
+            panel.add(editarButton);
+            panel.add(Box.createVerticalStrut(15));
+        }
+
         add(panel);
-        panel.setLayout(null);
+        setVisible(true);
+    }
 
-        JLabel tipoContaLabel = new JLabel("Tipo de Conta:");
-        tipoContaLabel.setBounds(10, 20, 120, 25);
-        panel.add(tipoContaLabel);
+    private void editarDadosConta(Conta conta) {
+        String novoNumeroConta = JOptionPane.showInputDialog(this, "Novo Número da Conta:", conta.getNumeroConta());
+        String novaSenha = JOptionPane.showInputDialog(this, "Nova Senha:", conta.getCliente().getSenha());
+        String novaDataVencimento = JOptionPane.showInputDialog(this, "Nova Data de Vencimento:", conta.getCliente().getSenha());
 
-        JTextField tipoContaText = new JTextField(20);
-        tipoContaText.setBounds(140, 20, 165, 25);
-        panel.add(tipoContaText);
-
-        JLabel limiteLabel = new JLabel("Limite:");
-        limiteLabel.setBounds(10, 50, 120, 25);
-        panel.add(limiteLabel);
-
-        JTextField limiteText = new JTextField(20);
-        limiteText.setBounds(140, 50, 165, 25);
-        panel.add(limiteText);
-
-        JLabel vencimentoLabel = new JLabel("Vencimento:");
-        vencimentoLabel.setBounds(10, 80, 120, 25);
-        panel.add(vencimentoLabel);
-
-        JTextField vencimentoText = new JTextField(10); // Formato: AAAA-MM-DD
-        vencimentoText.setBounds(140, 80, 165, 25);
-        panel.add(vencimentoText);
-
-        JLabel numeroContaLabel = new JLabel("Número da Conta:");
-        numeroContaLabel.setBounds(10, 110, 120, 25);
-        panel.add(numeroContaLabel);
-
-        JTextField numeroContaText = new JTextField(20);
-        numeroContaText.setBounds(140, 110, 165, 25);
-        panel.add(numeroContaText);
-
-        JButton editarButton = new JButton("Salvar Alterações");
-        editarButton.setBounds(140, 150, 160, 25);
-        panel.add(editarButton);
-
-        erroLabel = new JLabel("", SwingConstants.CENTER);
-        erroLabel.setForeground(Color.RED);
-        erroLabel.setBounds(10, 190, 360, 25);
-        panel.add(erroLabel);
-
-        editarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                erroLabel.setText(""); // Limpa a mensagem de erro
-
-                String tipoConta = tipoContaText.getText().isEmpty() ? null : tipoContaText.getText();
-                Double limite = limiteText.getText().isEmpty() ? null : Double.parseDouble(limiteText.getText());
-                LocalDate vencimento = null;
-                String numeroConta = numeroContaText.getText().isEmpty() ? null : numeroContaText.getText();
-
-                if (tipoConta == null && limite == null && vencimentoText.getText().isEmpty() && numeroConta == null) {
-                    erroLabel.setText("Preencha algum campo.");
-                    return;
-                }
-                
-                if (!vencimentoText.getText().isEmpty()) {
-                    try {
-                        vencimento = LocalDate.parse(vencimentoText.getText());
-                    } catch (DateTimeParseException ex) {
-                        erroLabel.setText("Data de vencimento em formato inválido. Use AAAA-MM-DD.");
-                        return;
-                    }
-                }
-
-                System.out.println("Tipo de Conta: " + tipoConta);
-                System.out.println("Limite: " + (limite != null ? limite : "null"));
-                System.out.println("Vencimento: " + (vencimento != null ? vencimento : "null"));
-                System.out.println("Número da Conta: " + numeroConta);
-
-                JOptionPane.showMessageDialog(null, "Dados da conta atualizados com sucesso!");
-                dispose();
+        try {
+            if (novoNumeroConta != null && !novoNumeroConta.isEmpty()) {
+                conta.setNumeroConta(novoNumeroConta);
             }
-        });
+            if (novaSenha != null && !novaSenha.isEmpty()) {
+                conta.getCliente().setSenha(novaSenha);
+            }
+            if (conta instanceof ContaCorrente && novaDataVencimento != null && !novaDataVencimento.isEmpty()) {
+                ContaCorrente contaCorrente = (ContaCorrente) conta;
+                LocalDate vencimento = LocalDate.parse(novaDataVencimento);
+
+                contaCorrente.setDataVencimento(vencimento);
+            }
+
+
+
+            JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar os dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            TelaEditarConta frame = new TelaEditarConta();
-            frame.setVisible(true);
-        });
+        ContaDAO contaDAO = new ContaDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente cliente = clienteDAO.getClasseCliente("hugo12");
+
+        ArrayList<Conta> a = contaDAO.getClasConta(cliente);
+
+        System.out.println("dadad: " + a.size());
+
+        TelaEditarConta tela = new TelaEditarConta(a);
+        tela.setVisible(true);
     }
 }
+
