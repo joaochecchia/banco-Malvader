@@ -53,17 +53,23 @@ public class ContaDAO {
             PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
             PreparedStatement stmtCorrente = conn.prepareStatement(sqlCorrente);
 
+
+
             ContaDAO contaDAO = new ContaDAO();
-            int idConta = contaDAO.getIDConta(numeroConta);  // Obtém o ID da conta
+            int idConta = contaDAO.getIDConta("1234567891");
+
+            System.out.println(idConta);
 
             stmtConta.setString(1, tipoConta);
-            stmtConta.setInt(2, idConta);  // Usa o ID da conta na tabela 'conta'
+            stmtConta.setInt(2, idConta);
+            
             stmtConta.executeUpdate();
 
             if(tipoConta.equals("Corrente")){
                 stmtCorrente.setDouble(1, limite);
                 stmtCorrente.setString(2, vencimento.toString());
-                stmtCorrente.setInt(3, idConta);  // Usa o ID da conta na tabela 'conta_corrente'
+                stmtCorrente.setInt(3, idConta);
+
                 stmtCorrente.executeUpdate();
             }
 
@@ -71,7 +77,6 @@ public class ContaDAO {
             e.printStackTrace();
         }
     }
-
 
     public int getIDConta(String numeroConta){
         String sql = "SELECT id_conta FROM conta WHERE numero_conta = ?";
@@ -100,8 +105,9 @@ public class ContaDAO {
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente c = clienteDAO.getClasseCliente("hugo12");
 
-        System.out.println("adsada" + c.getIdCliente());
-        System.out.println(contaDAO.getClasConta(c).size());
+        LocalDate localDate = LocalDate.parse("1972-02-02");
+
+        contaDAO.editarConta("POUPANCA", 72000, localDate, "numeroFantastico");
     }
 }
 
