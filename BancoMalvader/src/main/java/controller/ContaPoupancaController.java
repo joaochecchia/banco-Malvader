@@ -1,8 +1,11 @@
 package controller;
 
 import dao.ClienteDAO;
+import dao.ContaDAO;
 import dao.ContaPoupancaDAO;
 import model.Cliente;
+import model.Conta;
+import model.ContaCorrente;
 import model.ContaPoupanca;
 import util.GerarNumeroConta;
 import util.GerarAgencia;
@@ -24,4 +27,6 @@ public class ContaPoupancaController {
         ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
         contaPoupancaDAO.registrarContaPoupanca(contaPoupanca, cliente);
     }
+
+
 }

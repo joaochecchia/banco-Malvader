@@ -1,5 +1,6 @@
 package view;
 
+import controller.ContaCorrenteController;
 import dao.ClienteDAO;
 import dao.ContaCorrenteDAO;
 import dao.ContaDAO;
@@ -77,6 +78,7 @@ public class TelaEditarConta extends JFrame {
     private void editarDadosConta(Conta conta) {
         String novoNumeroConta = JOptionPane.showInputDialog(this, "Novo Número da Conta:", conta.getNumeroConta());
         String novaSenha = JOptionPane.showInputDialog(this, "Nova Senha:", conta.getCliente().getSenha());
+        String tipoConta = JOptionPane.showInputDialog(this, "Novo Tipo", conta instanceof ContaPoupanca? "CORRENTE" : "POUPANCA");
         String novaDataVencimento = JOptionPane.showInputDialog(this, "Nova Data de Vencimento:", conta.getCliente().getSenha());
 
         try {
@@ -87,8 +89,13 @@ public class TelaEditarConta extends JFrame {
                 conta.getCliente().setSenha(novaSenha);
             }
             if (conta instanceof ContaCorrente && novaDataVencimento != null && !novaDataVencimento.isEmpty()) {
+                System.out.println("");
+
                 ContaCorrente contaCorrente = (ContaCorrente) conta;
                 LocalDate vencimento = LocalDate.parse(novaDataVencimento);
+
+                ContaCorrenteController contaCorrenteController = new ContaCorrenteController();
+                contaCorrenteController.editarContaController(contaCorrente, tipoConta.toUpperCase());
 
                 contaCorrente.setDataVencimento(vencimento);
             }

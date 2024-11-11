@@ -47,27 +47,31 @@ public class ContaDAO {
 
     public void editarConta(String tipoConta, double limite, LocalDate vencimento, String numeroConta){
         String sqlConta = "UPDATE conta SET tipo_conta = ? WHERE id_conta = ?";
-        String sqlCorrente = "UPDATE conta_corrente SET limite = ?, data_vencimento = ?" +
-                "WHERE id_conta = ?";
+        String sqlCorrente = "UPDATE conta_corrente SET limite = ?, data_vencimento = ? WHERE id_conta = ?";
 
         try(Connection conn = Conexao.conexao()){
             PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
             PreparedStatement stmtCorrente = conn.prepareStatement(sqlCorrente);
 
             ContaDAO contaDAO = new ContaDAO();
-            int idConta = contaDAO.getIDConta(numeroConta);
+            int idConta = contaDAO.getIDConta(numeroConta);  // Obtém o ID da conta
 
             stmtConta.setString(1, tipoConta);
-            stmtConta.setInt(2, idConta);
+            stmtConta.setInt(2, idConta);  // Usa o ID da conta na tabela 'conta'
+            stmtConta.executeUpdate();
 
-            stmtCorrente.setDouble(1, limite);
-            stmtCorrente.setString(2, vencimento.toString());
-            stmtCorrente.setString(3, numeroConta);
+            if(tipoConta.equals("Corrente")){
+                stmtCorrente.setDouble(1, limite);
+                stmtCorrente.setString(2, vencimento.toString());
+                stmtCorrente.setInt(3, idConta);  // Usa o ID da conta na tabela 'conta_corrente'
+                stmtCorrente.executeUpdate();
+            }
 
         } catch(SQLException e){
             e.printStackTrace();
         }
     }
+
 
     public int getIDConta(String numeroConta){
         String sql = "SELECT id_conta FROM conta WHERE numero_conta = ?";
