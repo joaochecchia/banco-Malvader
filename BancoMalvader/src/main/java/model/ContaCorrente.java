@@ -37,4 +37,16 @@ public class ContaCorrente extends Conta {
     public void setDataVencimento(LocalDate dataVencimento) {
         this.dataVencimento = dataVencimento;
     }
+
+    @Override
+    public String toString() {
+        return "ContaCorrente{" +
+                "limite=" + limite +
+                ", dataVencimento=" + dataVencimento +
+                ", numeroConta='" + numeroConta + '\'' +
+                ", agencia='" + agencia + '\'' +
+                ", saldo=" + saldo +
+                ", cliente=" + cliente +
+                '}';
+    }
 }

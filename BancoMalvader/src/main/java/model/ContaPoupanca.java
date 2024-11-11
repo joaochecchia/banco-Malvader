@@ -25,4 +25,15 @@ public class ContaPoupanca extends Conta {
     public void setTaxaDeRendimento(double taxaDeRendimento) {
         this.taxaDeRendimento = taxaDeRendimento;
     }
+
+    @Override
+    public String toString() {
+        return "ContaPoupanca{" +
+                "taxaDeRendimento=" + taxaDeRendimento +
+                ", numeroConta='" + numeroConta + '\'' +
+                ", agencia='" + agencia + '\'' +
+                ", saldo=" + saldo +
+                ", cliente=" + cliente +
+                '}';
+    }
 }

@@ -45,23 +45,22 @@ public class ContaDAO {
         return null;
     }
 
-    public void editarConta(String tipoConta, double limite, LocalDate vencimento, String numeroConta){
-        String sqlConta = "UPDATE conta SET tipo_conta = ? WHERE id_conta = ?";
+    public void editarConta(String tipoConta, double limite, LocalDate vencimento, String numeroConta, String numeroContaOriginal){
+        String sqlConta = "UPDATE conta SET tipo_conta = ?, numero_conta = ? WHERE id_conta = ?";
         String sqlCorrente = "UPDATE conta_corrente SET limite = ?, data_vencimento = ? WHERE id_conta = ?";
 
         try(Connection conn = Conexao.conexao()){
             PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
             PreparedStatement stmtCorrente = conn.prepareStatement(sqlCorrente);
 
-
-
             ContaDAO contaDAO = new ContaDAO();
-            int idConta = contaDAO.getIDConta("1234567891");
+            int idConta = contaDAO.getIDConta(numeroContaOriginal);
 
             System.out.println(idConta);
 
             stmtConta.setString(1, tipoConta);
-            stmtConta.setInt(2, idConta);
+            stmtConta.setString(2, numeroConta);
+            stmtConta.setInt(3, idConta);
             
             stmtConta.executeUpdate();
 
@@ -98,16 +97,6 @@ public class ContaDAO {
         }
 
         return 0;
-    }
-    public static void main(String[] args) {
-        ContaDAO contaDAO = new ContaDAO();
-
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente c = clienteDAO.getClasseCliente("hugo12");
-
-        LocalDate localDate = LocalDate.parse("1972-02-02");
-
-        contaDAO.editarConta("POUPANCA", 72000, localDate, "numeroFantastico");
     }
 }
 

@@ -42,18 +42,15 @@ public class TelaEditarConta extends JFrame {
 
             JLabel agenciaLabel = new JLabel("Agência:");
             JLabel numeroContaLabel = new JLabel("Número da Conta:");
-            JLabel senhaLabel = new JLabel("Senha:");
 
             JLabel agenciaValor = new JLabel(conta.getAgencia());
             JLabel numeroContaValor = new JLabel(conta.getNumeroConta());
-            JLabel senhaValor = new JLabel(conta.getCliente().getSenha().replaceAll(".", "*"));
+
 
             contaPanel.add(agenciaLabel);
             contaPanel.add(agenciaValor);
             contaPanel.add(numeroContaLabel);
             contaPanel.add(numeroContaValor);
-            contaPanel.add(senhaLabel);
-            contaPanel.add(senhaValor);
 
             panel.add(contaPanel);
             panel.add(Box.createVerticalStrut(10));
@@ -76,18 +73,17 @@ public class TelaEditarConta extends JFrame {
     }
 
     private void editarDadosConta(Conta conta) {
+        System.out.println(conta.toString());
+        String numeroContaOriginal = conta.getNumeroConta();
         String novoNumeroConta = JOptionPane.showInputDialog(this, "Novo Número da Conta:", conta.getNumeroConta());
-        String novaSenha = JOptionPane.showInputDialog(this, "Nova Senha:", conta.getCliente().getSenha());
-        String tipoConta = JOptionPane.showInputDialog(this, "Novo Tipo", conta instanceof ContaPoupanca? "CORRENTE" : "POUPANCA");
-        String novaDataVencimento = JOptionPane.showInputDialog(this, "Nova Data de Vencimento:", conta.getCliente().getSenha());
+        String tipoConta = JOptionPane.showInputDialog(this, "Novo Tipo", conta instanceof ContaPoupanca? "POUPANCA" : "CORRENTE");
+        String novaDataVencimento = JOptionPane.showInputDialog(this, "Nova Data de Vencimento:" );
 
         try {
             if (novoNumeroConta != null && !novoNumeroConta.isEmpty()) {
                 conta.setNumeroConta(novoNumeroConta);
             }
-            if (novaSenha != null && !novaSenha.isEmpty()) {
-                conta.getCliente().setSenha(novaSenha);
-            }
+
             if (conta instanceof ContaCorrente && novaDataVencimento != null && !novaDataVencimento.isEmpty()) {
                 System.out.println("");
 
@@ -95,12 +91,10 @@ public class TelaEditarConta extends JFrame {
                 LocalDate vencimento = LocalDate.parse(novaDataVencimento);
 
                 ContaCorrenteController contaCorrenteController = new ContaCorrenteController();
-                contaCorrenteController.editarContaController(contaCorrente, tipoConta.toUpperCase());
+                contaCorrenteController.editarContaController(contaCorrente, tipoConta.toUpperCase(), numeroContaOriginal);
 
                 contaCorrente.setDataVencimento(vencimento);
             }
-
-
 
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
