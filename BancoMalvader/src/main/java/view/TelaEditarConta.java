@@ -2,9 +2,7 @@ package view;
 
 import controller.ContaCorrenteController;
 import dao.ClienteDAO;
-import dao.ContaCorrenteDAO;
 import dao.ContaDAO;
-import model.Cliente;
 import model.Conta;
 import model.ContaCorrente;
 import model.ContaPoupanca;
@@ -59,7 +57,7 @@ public class TelaEditarConta extends JFrame {
             editarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editarDadosConta(conta);
+                    new TelaEdicaoDadosConta(conta);
                 }
             });
 
@@ -71,46 +69,75 @@ public class TelaEditarConta extends JFrame {
         setVisible(true);
     }
 
-    private void editarDadosConta(Conta conta) {
+    private class TelaEdicaoDadosConta extends JFrame {
+        public TelaEdicaoDadosConta(Conta conta) {
+            setTitle("Banco Malvader - Edição de Conta");
+            setSize(400, 200);
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            setLocationRelativeTo(null);
 
-        String numeroContaOriginal = conta.getNumeroConta();
-        String novoNumeroConta = JOptionPane.showInputDialog(this, "Novo Número da Conta:", conta.getNumeroConta());
-        String tipoConta = JOptionPane.showInputDialog(this, "Novo Tipo", conta instanceof ContaPoupanca? "POUPANCA" : "CORRENTE");
-        String novaDataVencimento = JOptionPane.showInputDialog(this, "Nova Data de Vencimento:" );
+            JPanel panel = new JPanel();
+            add(panel);
+            panel.setLayout(null);
 
-        try {
-            if (novoNumeroConta != null && !novoNumeroConta.isEmpty()) {
-                conta.setNumeroConta(novoNumeroConta);
+            JLabel numeroContaLabel = new JLabel("Número da Conta:");
+            numeroContaLabel.setBounds(10, 20, 120, 25);
+            panel.add(numeroContaLabel);
+
+            JTextField numeroContaText = new JTextField(conta.getNumeroConta());
+            numeroContaText.setBounds(140, 20, 165, 25);
+            panel.add(numeroContaText);
+
+            JLabel tipoContaLabel = new JLabel("Tipo da Conta:");
+            tipoContaLabel.setBounds(10, 50, 120, 25);
+            panel.add(tipoContaLabel);
+
+            JTextField tipoContaText = new JTextField(conta instanceof ContaPoupanca ? "Poupança" : "Corrente");
+            tipoContaText.setBounds(140, 50, 165, 25);
+            panel.add(tipoContaText);
+
+            JTextField vencimentoText = null;
+            if (conta instanceof ContaCorrente) {
+                JLabel vencimentoLabel = new JLabel("Vencimento:");
+                vencimentoLabel.setBounds(10, 80, 120, 25);
+                panel.add(vencimentoLabel);
+
+                vencimentoText = new JTextField(((ContaCorrente) conta).getDataVencimento().toString());
+                vencimentoText.setBounds(140, 80, 165, 25);
+                panel.add(vencimentoText);
             }
 
-            if (conta instanceof ContaCorrente && novaDataVencimento != null && !novaDataVencimento.isEmpty()) {
+            JButton salvarButton = new JButton("Salvar");
+            salvarButton.setBounds(140, 120, 120, 25);
+            panel.add(salvarButton);
 
-                ContaCorrente contaCorrente = (ContaCorrente) conta;
-                LocalDate vencimento = LocalDate.parse(novaDataVencimento);
+            JTextField finalVencimentoText = vencimentoText;
+            salvarButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    conta.setNumeroConta(numeroContaText.getText());
 
-                ContaCorrenteController contaCorrenteController = new ContaCorrenteController();
-                contaCorrenteController.editarContaController(contaCorrente, tipoConta.toUpperCase(), numeroContaOriginal);
+                    if (conta instanceof ContaCorrente && finalVencimentoText != null) {
+                        ContaCorrente contaCorrente = (ContaCorrente) conta;
+                        contaCorrente.setDataVencimento(LocalDate.parse(finalVencimentoText.getText()));
+                        ContaCorrenteController controller = new ContaCorrenteController();
+                        controller.editarContaController(contaCorrente, tipoContaText.getText().toUpperCase(), conta.getNumeroConta());
+                    }
 
-                contaCorrente.setDataVencimento(vencimento);
-            }
+                    JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
+                    dispose();
+                }
+            });
 
-            JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao atualizar os dados: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            setVisible(true);
         }
     }
 
     public static void main(String[] args) {
         ContaDAO contaDAO = new ContaDAO();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.getClasseCliente("hugo12");
+        ArrayList<Conta> contas = contaDAO.getClasConta(new ClienteDAO().getClasseCliente("hugo12"));
 
-        ArrayList<Conta> a = contaDAO.getClasConta(cliente);
-
-        System.out.println("dadad: " + a.size());
-
-        TelaEditarConta tela = new TelaEditarConta(a);
+        TelaEditarConta tela = new TelaEditarConta(contas);
         tela.setVisible(true);
     }
 }
-
