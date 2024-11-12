@@ -25,4 +25,12 @@ public class ClienteController {
         clienteDAO.criarCliente(clienteNovo);
         enderecoDAO.registrarEnderecoDAO(endereco, usuarioDAO.usuarioGetId(nome));
     }
+
+    public void editarClienteController(Cliente cliente){
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        int idUsuario = usuarioDAO.usuarioGetId(cliente.getNome());
+
+        ClienteDAO clienteDAO = new ClienteDAO();
+        clienteDAO.editarCliente(cliente, idUsuario);
+    }
 }

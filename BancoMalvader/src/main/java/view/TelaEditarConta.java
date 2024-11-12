@@ -46,7 +46,6 @@ public class TelaEditarConta extends JFrame {
             JLabel agenciaValor = new JLabel(conta.getAgencia());
             JLabel numeroContaValor = new JLabel(conta.getNumeroConta());
 
-
             contaPanel.add(agenciaLabel);
             contaPanel.add(agenciaValor);
             contaPanel.add(numeroContaLabel);
@@ -73,7 +72,7 @@ public class TelaEditarConta extends JFrame {
     }
 
     private void editarDadosConta(Conta conta) {
-        System.out.println(conta.toString());
+
         String numeroContaOriginal = conta.getNumeroConta();
         String novoNumeroConta = JOptionPane.showInputDialog(this, "Novo Número da Conta:", conta.getNumeroConta());
         String tipoConta = JOptionPane.showInputDialog(this, "Novo Tipo", conta instanceof ContaPoupanca? "POUPANCA" : "CORRENTE");
@@ -85,7 +84,6 @@ public class TelaEditarConta extends JFrame {
             }
 
             if (conta instanceof ContaCorrente && novaDataVencimento != null && !novaDataVencimento.isEmpty()) {
-                System.out.println("");
 
                 ContaCorrente contaCorrente = (ContaCorrente) conta;
                 LocalDate vencimento = LocalDate.parse(novaDataVencimento);

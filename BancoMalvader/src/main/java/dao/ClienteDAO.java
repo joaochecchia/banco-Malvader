@@ -44,6 +44,42 @@ public class ClienteDAO {
         }
     }
 
+    public void editarCliente(Cliente cliente, int idUsuario){
+        String sqlUsuario = "UPDATE usuario SET nome = ?, cpf = ?, data_nascimento = ?," +
+                "telefone = ?, senha = ? WHERE id_usuario = ?";
+
+        String sqlEndereco = "UPDATE endereco SET cep = ?, local = ?, numero_casa = ?, " +
+                "bairro = ?, cidade = ?, estado = ? WHERE id_usuario = ?";
+
+        try(Connection conn = Conexao.conexao()) {
+            PreparedStatement stmtUsuario = conn.prepareStatement(sqlUsuario);
+            PreparedStatement stmtEndereco = conn.prepareStatement(sqlEndereco);
+
+            stmtUsuario.setString(1, cliente.getNome());
+            stmtUsuario.setString(2, cliente.getCpf());
+            stmtUsuario.setString(3, cliente.getDataDeNascimento().toString());
+            stmtUsuario.setString(4, cliente.getTelefone());
+            stmtUsuario.setString(5, cliente.getSenha());
+            stmtUsuario.setInt(6, idUsuario);
+
+            Endereco endereco = cliente.getEndereco();
+
+            stmtEndereco.setString(1, endereco.getCep());
+            stmtEndereco.setString(2, endereco.getLocal());
+            stmtEndereco.setInt(3, endereco.getNumeroCasa());
+            stmtEndereco.setString(4, endereco.getBairro());
+            stmtEndereco.setString(5, endereco.getCidade());
+            stmtEndereco.setString(6, endereco.getEstado());
+            stmtEndereco.setInt(7, idUsuario);
+
+            stmtUsuario.executeUpdate();
+            stmtEndereco.executeUpdate();
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public Cliente getClasseCliente(String nomeCliente){
         String sqlUsuario = "SELECT * FROM usuario WHERE nome = ?";
         String sqlCliente = "SELECT * FROM cliente WHERE id_usuario = ?";
