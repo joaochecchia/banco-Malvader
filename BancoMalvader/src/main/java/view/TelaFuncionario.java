@@ -322,7 +322,7 @@ public class TelaFuncionario extends JFrame {
             } else{
                 JOptionPane.showMessageDialog(this, "Cliente não cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -330,7 +330,25 @@ public class TelaFuncionario extends JFrame {
 
     private void alterarDadosCliente() {
 
-        JOptionPane.showMessageDialog(this, "Alterar Dados do Cliente acionado.");
+        String senha = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
+
+        if(senha.equals("admin")){
+            String nome = JOptionPane.showInputDialog(this, "Digite o nome do cliente:");
+
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente cliente = clienteDAO.getClasseCliente(nome);
+
+            if(cliente != null){
+                TelaEditarCliente telaEditarCliente = new TelaEditarCliente(cliente);
+                telaEditarCliente.setVisible(true);
+
+            } else{
+                JOptionPane.showMessageDialog(this, "Cliente não cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else{
+            JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void cadastrarFuncionario() {
