@@ -309,17 +309,20 @@ public class TelaFuncionario extends JFrame {
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente cliente = clienteDAO.getClasseCliente(nome);
 
-            ContaDAO contaDAO = new ContaDAO();
-            ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
+            if(cliente != null){
+                ContaDAO contaDAO = new ContaDAO();
+                ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
 
-            if(!contas.isEmpty()){
-                TelaEditarConta telaEditarConta = new TelaEditarConta(contas);
-                telaEditarConta.setVisible(true);
+                if(!contas.isEmpty()){
+                    TelaEditarConta telaEditarConta = new TelaEditarConta(contas);
+                    telaEditarConta.setVisible(true);
+                } else{
+                    JOptionPane.showMessageDialog(this, "Usuario nao tem contas cadastradas.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             } else{
-                JOptionPane.showMessageDialog(this, "Usuario nao tem contas cadastradas.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Cliente não cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-
-
+            
         } else {
             JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
