@@ -2,6 +2,10 @@ package controller;
 
 import dao.ContaDAO;
 import dao.TransacaoDAO;
+import model.Conta;
+import model.Transacao;
+
+import java.util.ArrayList;
 
 public class TransacaoController {
     public void depositoController(String numeroConta, double valor){
@@ -20,6 +24,10 @@ public class TransacaoController {
         return  transacaoDAO.saqueDAO(valor, idConta);
 
     }
+
+    //public ArrayList<Transacao> transacao(Conta conta){
+
+    //}
 
     public static void main(String[] args) {
         TransacaoController transacaoController = new TransacaoController();

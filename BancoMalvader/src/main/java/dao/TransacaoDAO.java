@@ -1,11 +1,15 @@
 package dao;
 
+import model.Transacao;
 import util.Conexao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class TransacaoDAO {
 
@@ -74,8 +78,32 @@ public class TransacaoDAO {
         return false;
     }
 
-    public static void main(String[] args) {
-        TransacaoDAO transacaoDAO = new TransacaoDAO();
-        transacaoDAO.saqueDAO(200.0, 19);
+    public ArrayList<Transacao> extratoDAO(int idConta){
+        String sql = "SELECT * FROM transacao WHERE id_conta = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idConta);
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Transacao> transacoes = new ArrayList<>();
+            while (rs.next()){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+                Transacao transacao = new Transacao(
+                        rs.getInt(1), rs.getString(2), rs.getDouble(3),
+                        LocalDateTime.parse(rs.getString(4), formatter)
+                );
+
+                transacoes.add(transacao);
+            }
+
+            return transacoes;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

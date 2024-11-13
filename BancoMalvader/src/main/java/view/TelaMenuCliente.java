@@ -2,159 +2,172 @@ package view;
 
 import controller.TransacaoController;
 import dao.ClienteDAO;
+import dao.ContaDAO;
 import model.Cliente;
-import model.Funcionario;
+import model.Conta;
+import model.ContaPoupanca;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class TelaMenuCliente extends JFrame {
-    public TelaMenuCliente(Cliente cliente) {
-        setTitle("Banco Malvader - Sistema");
+
+    public TelaMenuCliente(ArrayList<Conta> contas) {
+        setTitle("Banco Malvader - Visualizar Conta");
         setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 1)); // Layout em coluna
+        // Criando o painel de abas
+        JTabbedPane tabbedPane = new JTabbedPane();
 
-        //JLabel usuarioLabel = new JLabel("Usuário: " + funcionario.getNome() + " | Cargo: " + funcionario.getCargo());
-        //usuarioLabel.setHorizontalAlignment(SwingConstants.CENTER); // Centraliza o texto
-        //panel.add(usuarioLabel);
+        for (int i = 0; i < contas.size(); i++) {
+            Conta conta = contas.get(i);
 
-        JButton consultarSaldoButton = new JButton("Consultar saldo");
-        JButton depositarButton = new JButton("Depositar");
-        JButton sacarButton = new JButton("Realizar saque");
-        JButton consultarExtratoButton = new JButton("Consultar extrato");
-        JButton consultarLimiteButton = new JButton("Consultar Limite");
-        JButton sairButton = new JButton("Sair");
+            // Painel da conta
+            JPanel contaPanel = new JPanel();
+            contaPanel.setLayout(new BoxLayout(contaPanel, BoxLayout.Y_AXIS));
+            contaPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        consultarSaldoButton.addActionListener(e -> consultarSaldo());
-        depositarButton.addActionListener(e -> depositar());
-        sacarButton.addActionListener(e -> sacar());
-        consultarExtratoButton.addActionListener(e -> consultarExtrato());
-        consultarLimiteButton.addActionListener(e -> consultarLimite());
-        sairButton.addActionListener(e -> sair());
+            // Label do cliente
+            JLabel clienteLabel = new JLabel("Cliente: " + conta.getCliente().getNome());
+            clienteLabel.setFont(new Font("Arial", Font.BOLD, 16));
+            clienteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            contaPanel.add(clienteLabel);
+            contaPanel.add(Box.createVerticalStrut(15));
 
-        panel.add(consultarSaldoButton);
-        panel.add(depositarButton);
-        panel.add(sacarButton);
-        panel.add(consultarExtratoButton);
-        panel.add(sairButton);
+            String agencia = conta.getAgencia();
+            String numeroConta = conta.getNumeroConta();
+            String senha = conta.getCliente().getSenha().replaceAll(".", "*");
 
-        add(panel);
+            // Labels e valores da conta
+            JPanel infoPanel = new JPanel(new GridLayout(0, 2, 10, 5));
+            infoPanel.setBorder(BorderFactory.createTitledBorder("Informações da Conta"));
+
+            infoPanel.add(new JLabel("Agência:"));
+            infoPanel.add(new JLabel(agencia));
+            infoPanel.add(new JLabel("Número da Conta:"));
+            infoPanel.add(new JLabel(numeroConta));
+            infoPanel.add(new JLabel("Senha:"));
+            infoPanel.add(new JLabel(senha));
+
+            contaPanel.add(infoPanel);
+            contaPanel.add(Box.createVerticalStrut(10));
+
+            // Painel de botões
+            JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+            Dimension buttonSize = new Dimension(120, 30);
+
+            // Botão para visualizar informações detalhadas da conta
+            JButton visualizarButton = new JButton("Visualizar Info");
+            visualizarButton.setPreferredSize(buttonSize);
+            visualizarButton.addActionListener(e -> {
+                String tipo = conta instanceof ContaPoupanca ? "Poupança" : "Corrente";
+
+                JOptionPane.showMessageDialog(
+                        TelaMenuCliente.this,
+                        "Agência: " + conta.getAgencia() + "\n" +
+                                "Número da Conta: " + conta.getNumeroConta() + "\n" +
+                                "Saldo: " + conta.getSaldo() + "\n" +
+                                "Tipo: " + tipo + "\n" +
+                                "Senha: " + conta.getCliente().getSenha(),
+                        "Informações da Conta",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            });
+
+            // Botão para depósito
+            JButton depositoButton = new JButton("Depósito");
+            depositoButton.setPreferredSize(buttonSize);
+            depositoButton.addActionListener(e -> depositar(conta));
+
+            // Botão para saque
+            JButton saqueButton = new JButton("Saque");
+            saqueButton.setPreferredSize(buttonSize);
+            saqueButton.addActionListener(e -> sacar(conta));
+
+            // Botão para sair
+            JButton sairButton = new JButton("Sair");
+            sairButton.setPreferredSize(buttonSize);
+            sairButton.addActionListener(e -> dispose());
+
+            // Adicionando os botões ao painel de botões
+            buttonsPanel.add(visualizarButton);
+            buttonsPanel.add(depositoButton);
+            buttonsPanel.add(saqueButton);
+            buttonsPanel.add(sairButton);
+
+            // Adiciona o painel de botões ao painel da conta
+            contaPanel.add(buttonsPanel);
+
+            // Adiciona o painel de cada conta como uma aba
+            tabbedPane.addTab("Conta " + (i + 1), contaPanel);
+        }
+
+        // Adiciona o painel de abas à janela
+        add(tabbedPane);
+        setVisible(true);
     }
 
-    private void consultarSaldo(){
+    private void depositar(Conta conta) {
+        // Caixa de diálogo para inserir o valor do depósito
+        String input = JOptionPane.showInputDialog(this, "Insira o valor do depósito:", "Depósito", JOptionPane.PLAIN_MESSAGE);
 
-    }
-
-    private void depositar() {
-        // Criando o painel da janela de depósito
-        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
-
-        // Criando os rótulos e campos de entrada
-        JLabel labelValor = new JLabel("Valor do depósito:");
-        JTextField campoValor = new JTextField();
-
-        JLabel labelNumeroConta = new JLabel("Número da conta:");
-        JTextField campoNumeroConta = new JTextField();
-
-        panel.add(labelValor);
-        panel.add(campoValor);
-
-        panel.add(labelNumeroConta);
-        panel.add(campoNumeroConta);
-
-        // Botão para confirmar o depósito
-        int resultado = JOptionPane.showConfirmDialog(null, panel, "Depósito", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (resultado == JOptionPane.OK_OPTION) {
+        if (input != null) {
             try {
-                double valor = Double.parseDouble(campoValor.getText());
-                String numeroConta = campoNumeroConta.getText().trim();
+                double valor = Double.parseDouble(input);
 
                 if (valor <= 0) {
-                    JOptionPane.showMessageDialog(null, "Erro: O valor deve ser maior que 0.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
+                    JOptionPane.showMessageDialog(this, "Erro: O valor deve ser maior que 0.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Chama o controlador de transação para realizar o depósito
+                    TransacaoController transacaoController = new TransacaoController();
+                    transacaoController.depositoController(conta.getNumeroConta(), valor);
+                    JOptionPane.showMessageDialog(this, "Depósito realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 }
-
-
-
-                if (numeroConta.isEmpty() || !numeroConta.matches("\\d+")) {
-                    JOptionPane.showMessageDialog(null, "Erro: Número da conta inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Aqui você pode adicionar a lógica para realizar o depósito usando valor e numeroConta
-                JOptionPane.showMessageDialog(null, "Depósito realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Erro: O valor inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro: O valor inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    private void sacar(){
-        // Criando o painel da janela de depósito
-        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
+    public void sacar(Conta conta) {
+        // Caixa de diálogo para inserir o valor do depósito
+        String input = JOptionPane.showInputDialog(this, "Insira o valor do saque:", "Saque", JOptionPane.PLAIN_MESSAGE);
 
-        // Criando os rótulos e campos de entrada
-        JLabel labelValor = new JLabel("Valor do saque:");
-        JTextField campoValor = new JTextField();
-
-        JLabel labelNumeroConta = new JLabel("Número da conta:");
-        JTextField campoNumeroConta = new JTextField();
-
-        panel.add(labelValor);
-        panel.add(campoValor);
-
-        panel.add(labelNumeroConta);
-        panel.add(campoNumeroConta);
-
-        // Botão para confirmar o depósito
-        int resultado = JOptionPane.showConfirmDialog(null, panel, "Depósito", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (resultado == JOptionPane.OK_OPTION) {
+        if (input != null) {
             try {
-                double valor = Double.parseDouble(campoValor.getText());
-                String numeroConta = campoNumeroConta.getText().trim();
+                double valor = Double.parseDouble(input);
 
                 if (valor <= 0) {
-                    JOptionPane.showMessageDialog(null, "Erro: O valor deve ser maior que 0.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
+                    JOptionPane.showMessageDialog(this, "Erro: O valor deve ser maior que 0.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // Chama o controlador de transação para realizar o depósito
+                    TransacaoController transacaoController = new TransacaoController();
+                    boolean saque = transacaoController.saque(conta.getNumeroConta(), valor);
+
+                    if(saque){
+                        JOptionPane.showMessageDialog(this, "Saque realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    } else{
+                        JOptionPane.showMessageDialog(this, "Fundos insuficientes.", "Erro", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
                 }
-
-                if (numeroConta.isEmpty() || !numeroConta.matches("\\d+")) {
-                    JOptionPane.showMessageDialog(null, "Erro: Número da conta inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Aqui você pode adicionar a lógica para realizar o depósito usando valor e numeroConta
-                JOptionPane.showMessageDialog(null, "Depósito realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Erro: O valor inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro: O valor inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
-
-    private void consultarExtrato(){
-
-    }
-
-    private void consultarLimite(){
-
-    }
-    private void sair(){
-
     }
 
     public static void main(String[] args) {
+        ContaDAO contaDAO = new ContaDAO();
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.getClasseCliente("hugo12");
 
-        TelaMenuCliente telaMenuCliente = new TelaMenuCliente(cliente);
-        telaMenuCliente.setVisible(true);
+        ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
+
+        TelaMenuCliente telaTeste = new TelaMenuCliente(contas);
+        telaTeste.setVisible(true);
     }
 }
