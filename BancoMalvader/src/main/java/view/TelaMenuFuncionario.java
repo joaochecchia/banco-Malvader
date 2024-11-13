@@ -12,9 +12,9 @@ import model.Cliente;
 import model.Conta;
 import model.Funcionario;
 
-public class TelaFuncionario extends JFrame {
+public class TelaMenuFuncionario extends JFrame {
 
-    public TelaFuncionario(Funcionario funcionario) {
+    public TelaMenuFuncionario(Funcionario funcionario) {
         setTitle("Banco Malvader - Sistema");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -238,9 +238,7 @@ public class TelaFuncionario extends JFrame {
 
         if (result == JOptionPane.OK_OPTION) {
             String usuario = userField.getText();
-            System.out.println("USIUARIO: " + usuario);
             String senha = new String(passField.getPassword());
-            System.out.println("Senha: " + senha);
 
             LoginDAO loginDAO = new LoginDAO();
 
@@ -377,7 +375,7 @@ public class TelaFuncionario extends JFrame {
 
         SwingUtilities.invokeLater(() -> {
 
-            TelaFuncionario frame = new TelaFuncionario(a);
+            TelaMenuFuncionario frame = new TelaMenuFuncionario(a);
             frame.setVisible(true);
         });
     }
