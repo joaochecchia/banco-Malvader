@@ -40,8 +40,23 @@ public class ContaCorrenteController {
 
             contaDAO.editarConta(tipo, contaCorrente.getLimite(), contaCorrente.getDataVencimento(), contaCorrente.getNumeroConta(), numeroContaOriginal);
         } else{
-            LocalDate vazio = LocalDate.parse("0000-00-00");
+            LocalDate vazio = LocalDate.parse("1001-01-01");
             contaDAO.editarConta(tipo, 0, vazio, conta.getNumeroConta(), numeroContaOriginal);
         }
+    }
+
+    public static void main(String[] args) {
+        ContaDAO contaDAO = new ContaDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente cliente = clienteDAO.getClasseCliente("hugo12");
+        ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
+        Conta conta = contas.get(2);
+
+        System.out.println("numero conta: " + conta.getNumeroConta());
+
+        ContaCorrenteController controller = new ContaCorrenteController();
+        conta.setNumeroConta("numero legal");
+        controller.editarContaController(conta, "CORRENTE", "numeroLEGAL");
+
     }
 }

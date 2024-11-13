@@ -115,13 +115,14 @@ public class TelaEditarConta extends JFrame {
             salvarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    String numeroOriginal = conta.getNumeroConta();
                     conta.setNumeroConta(numeroContaText.getText());
 
                     if (conta instanceof ContaCorrente && finalVencimentoText != null) {
                         ContaCorrente contaCorrente = (ContaCorrente) conta;
                         contaCorrente.setDataVencimento(LocalDate.parse(finalVencimentoText.getText()));
                         ContaCorrenteController controller = new ContaCorrenteController();
-                        controller.editarContaController(contaCorrente, tipoContaText.getText().toUpperCase(), conta.getNumeroConta());
+                        controller.editarContaController(contaCorrente, tipoContaText.getText().toUpperCase(), numeroOriginal);
                     }
 
                     JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");

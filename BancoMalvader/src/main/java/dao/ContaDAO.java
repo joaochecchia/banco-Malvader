@@ -98,6 +98,12 @@ public class ContaDAO {
 
         return 0;
     }
+
+    public static void main(String[] args) {
+        ContaDAO contaDAO = new ContaDAO();
+        LocalDate localDate = LocalDate.parse("2002-02-02");
+        contaDAO.editarConta("POUPANCA", 72200, localDate, "1234567892", "numeroLegal");
+    }
 }
 
 
