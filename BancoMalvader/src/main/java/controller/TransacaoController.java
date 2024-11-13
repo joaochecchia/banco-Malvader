@@ -25,9 +25,13 @@ public class TransacaoController {
 
     }
 
-    //public ArrayList<Transacao> transacao(Conta conta){
+    public ArrayList<Transacao> transacao(Conta conta){
+        TransacaoDAO transacaoDAO = new TransacaoDAO();
+        ContaDAO contaDAO = new ContaDAO();
+        int idConta = contaDAO.getIDConta(conta.getNumeroConta());
 
-    //}
+        return transacaoDAO.extratoDAO(idConta);
+    }
 
     public static void main(String[] args) {
         TransacaoController transacaoController = new TransacaoController();
