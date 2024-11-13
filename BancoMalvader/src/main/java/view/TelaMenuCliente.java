@@ -1,12 +1,15 @@
 package view;
 
+import controller.TransacaoController;
+import dao.ClienteDAO;
+import model.Cliente;
 import model.Funcionario;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class TelaMenuCliente extends JFrame {
-    public TelaMenuCliente() {
+    public TelaMenuCliente(Cliente cliente) {
         setTitle("Banco Malvader - Sistema");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,25 +50,93 @@ public class TelaMenuCliente extends JFrame {
     }
 
     private void depositar() {
-        String input = JOptionPane.showInputDialog(this, "Depósito", "Digite o valor do depósito", JOptionPane.PLAIN_MESSAGE);
+        // Criando o painel da janela de depósito
+        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
 
-        if (input != null) { // Verifica se o usuário não cancelou a entrada
+        // Criando os rótulos e campos de entrada
+        JLabel labelValor = new JLabel("Valor do depósito:");
+        JTextField campoValor = new JTextField();
+
+        JLabel labelNumeroConta = new JLabel("Número da conta:");
+        JTextField campoNumeroConta = new JTextField();
+
+        panel.add(labelValor);
+        panel.add(campoValor);
+
+        panel.add(labelNumeroConta);
+        panel.add(campoNumeroConta);
+
+        // Botão para confirmar o depósito
+        int resultado = JOptionPane.showConfirmDialog(null, panel, "Depósito", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (resultado == JOptionPane.OK_OPTION) {
             try {
-                double valor = Double.parseDouble(input);
+                double valor = Double.parseDouble(campoValor.getText());
+                String numeroConta = campoNumeroConta.getText().trim();
+
                 if (valor <= 0) {
-                    JOptionPane.showMessageDialog(this, "Erro: O valor deve ser maior que zero.", "Erro", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    // Código para realizar o depósito
-                    JOptionPane.showMessageDialog(this, "Depósito realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Erro: O valor deve ser maior que 0.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+
+
+
+                if (numeroConta.isEmpty() || !numeroConta.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(null, "Erro: Número da conta inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Aqui você pode adicionar a lógica para realizar o depósito usando valor e numeroConta
+                JOptionPane.showMessageDialog(null, "Depósito realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Erro: Por favor, insira um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro: O valor inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     private void sacar(){
+        // Criando o painel da janela de depósito
+        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
 
+        // Criando os rótulos e campos de entrada
+        JLabel labelValor = new JLabel("Valor do saque:");
+        JTextField campoValor = new JTextField();
+
+        JLabel labelNumeroConta = new JLabel("Número da conta:");
+        JTextField campoNumeroConta = new JTextField();
+
+        panel.add(labelValor);
+        panel.add(campoValor);
+
+        panel.add(labelNumeroConta);
+        panel.add(campoNumeroConta);
+
+        // Botão para confirmar o depósito
+        int resultado = JOptionPane.showConfirmDialog(null, panel, "Depósito", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (resultado == JOptionPane.OK_OPTION) {
+            try {
+                double valor = Double.parseDouble(campoValor.getText());
+                String numeroConta = campoNumeroConta.getText().trim();
+
+                if (valor <= 0) {
+                    JOptionPane.showMessageDialog(null, "Erro: O valor deve ser maior que 0.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (numeroConta.isEmpty() || !numeroConta.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(null, "Erro: Número da conta inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Aqui você pode adicionar a lógica para realizar o depósito usando valor e numeroConta
+                JOptionPane.showMessageDialog(null, "Depósito realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Erro: O valor inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     private void consultarExtrato(){
@@ -80,7 +151,10 @@ public class TelaMenuCliente extends JFrame {
     }
 
     public static void main(String[] args) {
-        TelaMenuCliente telaMenuCliente = new TelaMenuCliente();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente cliente = clienteDAO.getClasseCliente("hugo12");
+
+        TelaMenuCliente telaMenuCliente = new TelaMenuCliente(cliente);
         telaMenuCliente.setVisible(true);
     }
 }

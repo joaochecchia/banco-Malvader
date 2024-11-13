@@ -12,12 +12,13 @@ public class TransacaoController {
         transacaoDAO.depositoDAO(valor, idConta);
     }
 
-    public void saque(String numeroContaDestino, double valor){
+    public boolean saque(String numeroContaDestino, double valor){
         ContaDAO contaDAO = new ContaDAO();
         int idConta = contaDAO.getIDConta(numeroContaDestino);
 
         TransacaoDAO transacaoDAO = new TransacaoDAO();
-        transacaoDAO.saqueDAO(valor, idConta);
+        return  transacaoDAO.saqueDAO(valor, idConta);
+
     }
 
     public static void main(String[] args) {
