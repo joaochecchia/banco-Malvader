@@ -60,22 +60,9 @@ public class TelaMenuCliente extends JFrame {
             Dimension buttonSize = new Dimension(120, 30);
 
             // Botão para visualizar informações detalhadas da conta
-            JButton visualizarButton = new JButton("Visualizar Info");
+            JButton visualizarButton = new JButton("Extrato");
             visualizarButton.setPreferredSize(buttonSize);
-            visualizarButton.addActionListener(e -> {
-                String tipo = conta instanceof ContaPoupanca ? "Poupança" : "Corrente";
-
-                JOptionPane.showMessageDialog(
-                        TelaMenuCliente.this,
-                        "Agência: " + conta.getAgencia() + "\n" +
-                                "Número da Conta: " + conta.getNumeroConta() + "\n" +
-                                "Saldo: " + conta.getSaldo() + "\n" +
-                                "Tipo: " + tipo + "\n" +
-                                "Senha: " + conta.getCliente().getSenha(),
-                        "Informações da Conta",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-            });
+            visualizarButton.addActionListener(e -> extrato());
 
             // Botão para depósito
             JButton depositoButton = new JButton("Depósito");
@@ -158,6 +145,10 @@ public class TelaMenuCliente extends JFrame {
                 JOptionPane.showMessageDialog(this, "Erro: O valor inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    public void extrato(){
+
     }
 
     public static void main(String[] args) {
