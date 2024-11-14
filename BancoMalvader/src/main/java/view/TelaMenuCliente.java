@@ -3,9 +3,11 @@ package view;
 import controller.TransacaoController;
 import dao.ClienteDAO;
 import dao.ContaDAO;
+import dao.TransacaoDAO;
 import model.Cliente;
 import model.Conta;
 import model.ContaPoupanca;
+import model.Transacao;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 
 public class TelaMenuCliente extends JFrame {
 
-    public TelaMenuCliente(ArrayList<Conta> contas) {
+    public TelaMenuCliente(Cliente cliente) {
         setTitle("Banco Malvader - Visualizar Conta");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -21,6 +23,9 @@ public class TelaMenuCliente extends JFrame {
 
         // Criando o painel de abas
         JTabbedPane tabbedPane = new JTabbedPane();
+
+        ContaDAO contaDAO = new ContaDAO();
+        ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
 
         for (int i = 0; i < contas.size(); i++) {
             Conta conta = contas.get(i);
@@ -62,7 +67,7 @@ public class TelaMenuCliente extends JFrame {
             // Botão para visualizar informações detalhadas da conta
             JButton visualizarButton = new JButton("Extrato");
             visualizarButton.setPreferredSize(buttonSize);
-            visualizarButton.addActionListener(e -> extrato());
+            visualizarButton.addActionListener(e -> extrato(conta, conta.getSaldo()));
 
             // Botão para depósito
             JButton depositoButton = new JButton("Depósito");
@@ -147,8 +152,14 @@ public class TelaMenuCliente extends JFrame {
         }
     }
 
-    public void extrato(){
+    public void extrato(Conta conta, double saldo){
+        TransacaoDAO transacaoDAO = new TransacaoDAO();
+        ContaDAO contaDAO = new ContaDAO();
 
+        int idConta = contaDAO.getIDConta(conta.getNumeroConta());
+        ArrayList<Transacao> transacaos = transacaoDAO.extratoDAO(idConta);
+
+        TelaExtrato telaExtrato = new TelaExtrato(transacaos ,saldo);
     }
 
     public static void main(String[] args) {
@@ -156,9 +167,7 @@ public class TelaMenuCliente extends JFrame {
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.getClasseCliente("hugo12");
 
-        ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
-
-        TelaMenuCliente telaTeste = new TelaMenuCliente(contas);
+        TelaMenuCliente telaTeste = new TelaMenuCliente(cliente);
         telaTeste.setVisible(true);
     }
 }

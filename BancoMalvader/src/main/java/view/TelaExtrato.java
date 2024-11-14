@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class TelaExtrato extends JFrame {
 
-    public TelaExtrato(ArrayList<Transacao> transacoes) {
+    public TelaExtrato(ArrayList<Transacao> transacoes, double saldo) {
         setTitle("Banco Malvader - Extrato de Transações");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -58,7 +58,6 @@ public class TelaExtrato extends JFrame {
             panel.add(transacaoPanel);
             panel.add(Box.createVerticalStrut(10));
 
-            // Botão para visualizar detalhes da transação
             JButton visualizarButton = new JButton("Visualizar Detalhes");
             visualizarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             visualizarButton.addActionListener(new ActionListener() {
@@ -95,7 +94,7 @@ public class TelaExtrato extends JFrame {
         TransacaoDAO transacaoDAO = new TransacaoDAO();
         ArrayList<Transacao> a = transacaoDAO.extratoDAO(19);
 
-        TelaExtrato telaExtrato = new TelaExtrato(a);
+        TelaExtrato telaExtrato = new TelaExtrato(a, 3700);
         telaExtrato.setVisible(true);
     }
 }
