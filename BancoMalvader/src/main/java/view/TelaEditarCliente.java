@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import controller.ClienteController;
 import dao.ClienteDAO;
 import model.Cliente;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -17,8 +16,18 @@ public class TelaEditarCliente extends JFrame {
     public TelaEditarCliente(Cliente cliente) {
         setTitle("Banco Malvader - Edição de Cliente");
         setSize(400, 580);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        // Não fechar a aplicação ao clicar no "X" da tela
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        // Ouvinte para a ação de fechar a janela
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                // Apenas fechar esta janela e voltar para a anterior (se houver)
+                dispose();
+            }
+        });
 
         JPanel panel = new JPanel();
         add(panel);

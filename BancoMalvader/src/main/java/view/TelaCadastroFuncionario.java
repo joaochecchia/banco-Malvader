@@ -4,12 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import controller.FuncionarioController;
-import dao.FuncionarioDAO;
-import model.Endereco;
 import model.Funcionario;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -19,13 +15,14 @@ public class TelaCadastroFuncionario extends JFrame {
     public TelaCadastroFuncionario() {
         setTitle("Banco Malvader - Cadastro de Funcionário");
         setSize(400, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // Alterado para DISPOSE_ON_CLOSE
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         add(panel);
         panel.setLayout(null);
 
+        // Definição dos campos
         JLabel nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(10, 20, 80, 25);
         panel.add(nomeLabel);
@@ -139,6 +136,7 @@ public class TelaCadastroFuncionario extends JFrame {
         erroLabel.setBounds(10, 460, 360, 25);
         panel.add(erroLabel);
 
+        // Ação de clique no botão de cadastro
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -168,21 +166,23 @@ public class TelaCadastroFuncionario extends JFrame {
                     String cargo = cargoText.getText();
                     String senha = new String(senhaText.getPassword());
 
-                    if(estado.length() > 2){
-                        erroLabel.setText("Preencha o estado com sua UF");
+                    // Validações de formato de dados
+                    if (estado.length() > 2) {
+                        erroLabel.setText("Preencha o estado com sua UF.");
                         return;
                     }
 
-                    FuncionarioController funcionarNovo = new FuncionarioController();
-
-                    funcionarNovo.criarFuncionario(nome,cpf, dataNascimento, telefone, codigoFuncionario, cargo, senha, cep, local,numeroCasa, bairro, cidade, estado);
+                    FuncionarioController funcionarioController = new FuncionarioController();
+                    funcionarioController.criarFuncionario(nome, cpf, dataNascimento, telefone, codigoFuncionario, cargo, senha, cep, local, numeroCasa, bairro, cidade, estado);
 
                     JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
-                    dispose();
+                    dispose(); // Fecha a tela após o cadastro
                 } catch (NumberFormatException ex) {
                     erroLabel.setText("Número inválido em campo(s) numérico(s).");
                 } catch (DateTimeParseException ex) {
                     erroLabel.setText("Data de nascimento em formato inválido. Use AAAA-MM-DD.");
+                } catch (Exception ex) {
+                    erroLabel.setText("Erro ao cadastrar funcionário: " + ex.getMessage());
                 }
             }
         });

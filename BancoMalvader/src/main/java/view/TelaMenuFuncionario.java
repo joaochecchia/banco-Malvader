@@ -133,65 +133,84 @@ public class TelaMenuFuncionario extends JFrame {
     private void encerrarConta() {
         String admin = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
 
-        if(admin.equals("admin")){
+        if (admin != null && admin.equals("admin")) {
             String usuario = JOptionPane.showInputDialog(this, "Digite o nome do usuário:");
 
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
-            if(usuarioDAO.hasUsuario(usuario)){
-                ContaDAO contaDAO = new ContaDAO();
-                ClienteDAO clienteDAO = new ClienteDAO();
-                Cliente cliente = clienteDAO.getClasseCliente(usuario);
+            if (usuario != null && !usuario.isEmpty()) {
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-                ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
+                if (usuarioDAO.hasUsuario(usuario)) {
+                    ContaDAO contaDAO = new ContaDAO();
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    Cliente cliente = clienteDAO.getClasseCliente(usuario);
 
-                TelaDeletarConta telaDeletarConta = new TelaDeletarConta(contas);
-                telaDeletarConta.setVisible(true);
+                    ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
+
+                    TelaDeletarConta telaDeletarConta = new TelaDeletarConta(contas);
+                    telaDeletarConta.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Nome do usuário não pode estar vazio.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Senha de administrador incorreta.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void consultarDadosConta() {
-
         String admin = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
 
-        if(admin.equals("admin")){
+        if (admin != null && admin.equals("admin")) {
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             String usuario = JOptionPane.showInputDialog(this, "Digite o nome do cliente:");
 
-            if(usuarioDAO.hasUsuario(usuario)){
+            if (usuario != null && !usuario.isEmpty()) {
+                if (usuarioDAO.hasUsuario(usuario)) {
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    Cliente cliente = clienteDAO.getClasseCliente(usuario);
 
-                ClienteDAO clienteDAO = new ClienteDAO();
-                Cliente cliente = clienteDAO.getClasseCliente(usuario);
+                    ContaDAO contaDAO = new ContaDAO();
+                    ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
 
-                ContaDAO contaDAO = new ContaDAO();
-                ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
-
-                if(!contas.isEmpty()){
-                    TelaVisualizarConta telaVisualizarConta = new TelaVisualizarConta(contas);
-                } else{
-                    JOptionPane.showMessageDialog(this, "Cliente não possui contas.");
+                    if (contas != null && !contas.isEmpty()) {
+                        TelaVisualizarConta telaVisualizarConta = new TelaVisualizarConta(contas);
+                        telaVisualizarConta.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Cliente não possui contas.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
-
-            } else{
-                JOptionPane.showMessageDialog(this, "Cliente não encontrado.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Nome do cliente não pode estar vazio.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Senha de administrador incorreta ou operação cancelada.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void consultarDadosCliente() {
-
         String usuario = JOptionPane.showInputDialog(this, "Digite o nome do cliente:");
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-        if(usuarioDAO.hasUsuario(usuario)){
-            ClienteDAO clienteDAO = new ClienteDAO();
-            Cliente cliente = clienteDAO.getClasseCliente(usuario);
+        if (usuario != null && !usuario.isEmpty()) {
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-            TelaVisualizarCliente telaVisualizarCliente = new TelaVisualizarCliente(cliente);
-        } else{
-            JOptionPane.showMessageDialog(this, "Cliente não encontrado.");
+            if (usuarioDAO.hasUsuario(usuario)) {
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Cliente cliente = clienteDAO.getClasseCliente(usuario);
+
+                TelaVisualizarCliente telaVisualizarCliente = new TelaVisualizarCliente(cliente);
+                telaVisualizarCliente.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Nome do cliente não pode estar vazio.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
+
 
     private void alterarDadosConta() {
 
@@ -223,24 +242,25 @@ public class TelaMenuFuncionario extends JFrame {
     }
 
     private void alterarDadosCliente() {
-
         String senha = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
 
-        if(senha.equals("admin")){
+        if (senha != null && senha.equals("admin")) {
             String nome = JOptionPane.showInputDialog(this, "Digite o nome do cliente:");
 
-            ClienteDAO clienteDAO = new ClienteDAO();
-            Cliente cliente = clienteDAO.getClasseCliente(nome);
+            if (nome != null && !nome.trim().isEmpty()) {
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Cliente cliente = clienteDAO.getClasseCliente(nome);
 
-            if(cliente != null){
-                TelaEditarCliente telaEditarCliente = new TelaEditarCliente(cliente);
-                telaEditarCliente.setVisible(true);
-
-            } else{
-                JOptionPane.showMessageDialog(this, "Cliente não cadastrado", "Erro", JOptionPane.ERROR_MESSAGE);
+                if (cliente != null) {
+                    TelaEditarCliente telaEditarCliente = new TelaEditarCliente(cliente);
+                    telaEditarCliente.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Cliente não cadastrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Nome do cliente não pode estar vazio.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
