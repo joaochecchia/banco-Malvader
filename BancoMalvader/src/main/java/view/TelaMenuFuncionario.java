@@ -4,13 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import dao.ClienteDAO;
-import dao.ContaDAO;
-import dao.FuncionarioDAO;
-import dao.LoginDAO;
+import dao.*;
 import model.Cliente;
 import model.Conta;
 import model.Funcionario;
+import model.Usuario;
 
 public class TelaMenuFuncionario extends JFrame {
 
@@ -133,116 +131,35 @@ public class TelaMenuFuncionario extends JFrame {
     }
 
     private void encerrarConta() {
+        String admin = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
 
-        String senha = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
+        if(admin.equals("admin")){
+            String usuario = JOptionPane.showInputDialog(this, "Digite o nome do usuário:");
 
-        if ("admin".equals(senha)) {
-            JOptionPane.showMessageDialog(this, "Acesso concedido. Deleção de conta permitido.");
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            if(usuarioDAO.hasUsuario(usuario)){
+                ContaDAO contaDAO = new ContaDAO();
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Cliente cliente = clienteDAO.getClasseCliente(usuario);
 
-            // Criação do JDialog para inserir usuário e senha
-            JDialog dialog = new JDialog(this, "Confirmação de Deleção", true);
-            dialog.setSize(300, 200);
-            dialog.setLayout(new GridBagLayout());
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.insets = new Insets(5, 5, 5, 5);
+                ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
 
-            // Campo de Usuário
-            JLabel lblUsuario = new JLabel("Usuário:");
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            dialog.add(lblUsuario, gbc);
-
-            JTextField txtUsuario = new JTextField(15);
-            gbc.gridx = 1;
-            gbc.gridy = 0;
-            dialog.add(txtUsuario, gbc);
-
-            // Campo de Senha
-            JLabel lblSenha = new JLabel("Senha:");
-            gbc.gridx = 0;
-            gbc.gridy = 1;
-            dialog.add(lblSenha, gbc);
-
-            JPasswordField txtSenha = new JPasswordField(15);
-            gbc.gridx = 1;
-            gbc.gridy = 1;
-            dialog.add(txtSenha, gbc);
-
-            // Botões Confirmar e Fechar
-            JButton btnConfirmar = new JButton("Confirmar");
-            gbc.gridx = 0;
-            gbc.gridy = 2;
-            gbc.gridwidth = 1;
-            dialog.add(btnConfirmar, gbc);
-
-            JButton btnFechar = new JButton("Fechar");
-            gbc.gridx = 1;
-            gbc.gridy = 2;
-            dialog.add(btnFechar, gbc);
-
-            // Ação ao clicar no botão "Confirmar"
-            btnConfirmar.addActionListener(e -> {
-                String usuario = txtUsuario.getText();
-                String senhaDigitada = new String(txtSenha.getPassword());
-                // Aqui você pode adicionar a lógica para confirmar a conta
-                JOptionPane.showMessageDialog(dialog, "Conta confirmada para: " + usuario);
-                dialog.dispose();
-
-                LoginDAO validarUsuario = new LoginDAO();
-
-                if(!validarUsuario.realizarLogin(usuario, senhaDigitada, false)){
-                    ContaDAO contaDAO = new ContaDAO();
-                    ClienteDAO clienteDAO = new ClienteDAO();
-                    Cliente cliente = clienteDAO.getClasseCliente(usuario);
-
-                    ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
-                    if(!contas.isEmpty()){
-                        TelaDeletarConta telaDeletarConta = new TelaDeletarConta(contas);
-                    } else{
-                        JOptionPane.showMessageDialog(this, "O cliente não tem contas registradas.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    }
-
-                } else{
-                    JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-
-            });
-
-            btnFechar.addActionListener(e -> dialog.dispose());
-
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                TelaDeletarConta telaDeletarConta = new TelaDeletarConta(contas);
+                telaDeletarConta.setVisible(true);
+            }
         }
     }
 
     private void consultarDadosConta() {
 
-        JPanel dialogPanel = new JPanel();
-        dialogPanel.setLayout(new GridLayout(3, 2, 5, 5)); // 3 linhas e 2 colunas com espaço de 5 pixels
+        String admin = JOptionPane.showInputDialog(this, "Digite a senha de administrador:");
 
-        JLabel userLabel = new JLabel("Usuário:");
-        JTextField userField = new JTextField(15);
-        JLabel passLabel = new JLabel("Senha:");
-        JPasswordField passField = new JPasswordField(15);
+        if(admin.equals("admin")){
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            String usuario = JOptionPane.showInputDialog(this, "Digite o nome do cliente:");
 
-        dialogPanel.add(userLabel);
-        dialogPanel.add(userField);
-        dialogPanel.add(passLabel);
-        dialogPanel.add(passField);
+            if(usuarioDAO.hasUsuario(usuario)){
 
-        int result = JOptionPane.showConfirmDialog(null, dialogPanel, "Digite Usuário e Senha", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            String usuario = userField.getText();
-            String senha = new String(passField.getPassword());
-
-            LoginDAO loginDAO = new LoginDAO();
-
-            if(!loginDAO.realizarLogin(usuario, senha, false)){
                 ClienteDAO clienteDAO = new ClienteDAO();
                 Cliente cliente = clienteDAO.getClasseCliente(usuario);
 
@@ -263,37 +180,16 @@ public class TelaMenuFuncionario extends JFrame {
 
     private void consultarDadosCliente() {
 
-        JPanel dialogPanel = new JPanel();
-        dialogPanel.setLayout(new GridLayout(3, 2, 5, 5)); // 3 linhas e 2 colunas com espaço de 5 pixels
+        String usuario = JOptionPane.showInputDialog(this, "Digite o nome do cliente:");
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-        JLabel userLabel = new JLabel("Usuário:");
-        JTextField userField = new JTextField(15);
-        JLabel passLabel = new JLabel("Senha:");
-        JPasswordField passField = new JPasswordField(15);
+        if(usuarioDAO.hasUsuario(usuario)){
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente cliente = clienteDAO.getClasseCliente(usuario);
 
-        dialogPanel.add(userLabel);
-        dialogPanel.add(userField);
-        dialogPanel.add(passLabel);
-        dialogPanel.add(passField);
-
-        int result = JOptionPane.showConfirmDialog(null, dialogPanel, "Digite Usuário e Senha", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            String usuario = userField.getText();
-            System.out.println("USIUARIO: " + usuario);
-            String senha = new String(passField.getPassword());
-            System.out.println("Senha: " + senha);
-
-            LoginDAO loginDAO = new LoginDAO();
-
-            if(!loginDAO.realizarLogin(usuario, senha, false)){
-                ClienteDAO clienteDAO = new ClienteDAO();
-                Cliente cliente = clienteDAO.getClasseCliente(usuario);
-
-                TelaVisualizarCliente telaVisualizarCliente = new TelaVisualizarCliente(cliente);
-            } else{
-                JOptionPane.showMessageDialog(this, "Cliente não encontrado.");
-            }
+            TelaVisualizarCliente telaVisualizarCliente = new TelaVisualizarCliente(cliente);
+        } else{
+            JOptionPane.showMessageDialog(this, "Cliente não encontrado.");
         }
     }
 
