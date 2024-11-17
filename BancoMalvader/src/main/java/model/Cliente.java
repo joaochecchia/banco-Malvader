@@ -29,4 +29,19 @@ public class Cliente extends Usuario {
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "senha='" + senha + '\'' +
+                ", idCliente=" + idCliente +
+                ", id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", dataDeNascimento=" + dataDeNascimento +
+                ", telefone='" + telefone + '\'' +
+                ", endereco=" + endereco +
+                ", tipo='" + tipo + '\'' +
+                '}';
+    }
 }

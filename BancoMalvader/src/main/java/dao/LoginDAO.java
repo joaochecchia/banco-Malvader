@@ -22,7 +22,7 @@ public class LoginDAO {
 
             stmt.setString(1, senha);
             stmt.setString(2, nome);
-            stmt.setString(3, !empregado ? "EMPREGADO" : "FUNCIONARIO");
+            stmt.setString(3, !empregado ? "CLIENTE" : "FUNCIONARIO");
 
             //resultado da busca
             ResultSet resultado = stmt.executeQuery();
@@ -43,5 +43,12 @@ public class LoginDAO {
 
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        LoginDAO loginDAO = new LoginDAO();
+        boolean valor = loginDAO.realizarLogin("hugo12", "senhaSegura", false);
+
+        System.out.println("asdsadas: " + valor);
     }
 }
