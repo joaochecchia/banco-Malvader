@@ -131,9 +131,10 @@ public class TelaEditarConta extends JFrame {
                         TelaMudarTipoConta telaMudarTipoConta = new TelaMudarTipoConta("CORRENTE", conta.getNumeroConta());
                     }else if(conta instanceof ContaCorrente && tipoContaText.getText().equalsIgnoreCase("POUPANCA")){
                         TelaMudarTipoConta telaMudarTipoConta = new TelaMudarTipoConta("POUPANCA", conta.getNumeroConta());
+                    } else{
+                        JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
                     }
-
-                    JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
+                    
                     dispose();
                 }
             });
