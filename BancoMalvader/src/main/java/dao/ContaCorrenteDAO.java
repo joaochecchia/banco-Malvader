@@ -77,31 +77,17 @@ public class ContaCorrenteDAO {
         return null;
     }
 
-    public void editarContaPoupanca(ContaCorrente conta, int idConta){
-        String sqlConta = "UPDATE conta SET numero_conta = ?, agencia = ?, saldo = ? " +
-                "WHERE id_conta = ?";
-        String sqlContaCorrente = "UPDATE conta_poupanca SET limite = ?, data_vencimento = ?" +
-                "WHERE id_conta = ?";
+    public void editarContaCorrente(int idConta, double limite, LocalDate vencimento){
+        String sql = "INSERT INTO conta_corrente(limite, data_vencimento, id_conta) VALUES (?, ?, ?);";
 
         try(Connection conn = Conexao.conexao()){
-            PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
-            PreparedStatement stmtCorrente = conn.prepareStatement(sqlContaCorrente);
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
-            ContaDAO contaDao = new ContaDAO();
+            stmt.setDouble(1, limite);
+            stmt.setString(2, vencimento.toString());
+            stmt.setInt(3, idConta);
 
-            stmtConta.setString(1, conta.getNumeroConta());
-            stmtConta.setString(2, conta.getAgencia());
-            stmtConta.setDouble(3, conta.getSaldo());
-            stmtConta.setInt(4, idConta);
-
-            stmtConta.executeUpdate();
-
-            stmtCorrente.setDouble(1, conta.getLimite());
-            stmtCorrente.setString(2, conta.getNumeroConta().toString());
-            stmtCorrente.setInt(3, idConta);
-
-            stmtCorrente.executeUpdate();
-
+            stmt.executeUpdate();
         } catch(SQLException e){
             e.printStackTrace();
         }

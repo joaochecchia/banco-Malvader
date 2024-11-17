@@ -1,7 +1,6 @@
 package controller;
 
 import dao.ContaCorrenteDAO;
-import dao.ContaDAO;
 import dao.ContaPoupancaDAO;
 import model.Conta;
 import model.ContaCorrente;

@@ -77,6 +77,20 @@ public class ContaDAO {
         }
     }
 
+    public void deletarConta(int idConta, String tipo_conta){
+        String sql = "DELETE FROM " + tipo_conta + " WHERE id_conta = ?";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idConta);
+
+            stmt.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public int getIDConta(String numeroConta){
         String sql = "SELECT id_conta FROM conta WHERE numero_conta = ?";
 
@@ -101,8 +115,7 @@ public class ContaDAO {
 
     public static void main(String[] args) {
         ContaDAO contaDAO = new ContaDAO();
-        LocalDate localDate = LocalDate.parse("2002-02-02");
-        contaDAO.editarConta("POUPANCA", 72200, localDate, "1234567892", "numeroLegal");
+        contaDAO.deletarConta(19, "conta_poupanca");
     }
 }
 

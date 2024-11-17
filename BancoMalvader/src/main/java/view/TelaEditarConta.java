@@ -2,6 +2,7 @@ package view;
 
 import controller.ContaCorrenteController;
 import dao.ClienteDAO;
+import dao.ContaCorrenteDAO;
 import dao.ContaDAO;
 import model.Conta;
 import model.ContaCorrente;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class TelaEditarConta extends JFrame {
@@ -123,6 +125,12 @@ public class TelaEditarConta extends JFrame {
                         contaCorrente.setDataVencimento(LocalDate.parse(finalVencimentoText.getText()));
                         ContaCorrenteController controller = new ContaCorrenteController();
                         controller.editarContaController(contaCorrente, tipoContaText.getText().toUpperCase(), numeroOriginal);
+                    }
+
+                    if(conta instanceof ContaPoupanca && tipoContaText.getText().equalsIgnoreCase("CORRENTE")){
+                        TelaMudarTipoConta telaMudarTipoConta = new TelaMudarTipoConta("CORRENTE", conta.getNumeroConta());
+                    }else if(conta instanceof ContaCorrente && tipoContaText.getText().equalsIgnoreCase("POUPANCA")){
+                        TelaMudarTipoConta telaMudarTipoConta = new TelaMudarTipoConta("POUPANCA", conta.getNumeroConta());
                     }
 
                     JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");

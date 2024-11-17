@@ -76,6 +76,21 @@ public class ContaPoupancaDAO {
         return null;
     }
 
+    public void editarContaPoupanca(int idConta, double taxa){
+        String sql = "INSERT INTO conta_poupanca(taxa_rendimento, id_conta) VALUES (?, ?);";
+
+        try(Connection conn = Conexao.conexao()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setDouble(1, taxa);
+            stmt.setInt(2, idConta);
+
+            stmt.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public void deletarContaPoupanca(Conta conta){
 
         String sqlpoupanca = "DELETE FROM conta_poupanca WHERE id_conta= ?";

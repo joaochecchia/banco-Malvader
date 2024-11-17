@@ -1,12 +1,10 @@
 package controller;
 
-import dao.ClienteDAO;
-import dao.ContaCorrenteDAO;
-import dao.ContaDAO;
-import dao.UsuarioDAO;
+import dao.*;
 import model.Cliente;
 import model.ContaCorrente;
 import model.Conta;
+import model.ContaPoupanca;
 import util.GerarAgencia;
 import util.GerarNumeroConta;
 
@@ -42,6 +40,23 @@ public class ContaCorrenteController {
         } else{
             LocalDate vazio = LocalDate.parse("1001-01-01");
             contaDAO.editarConta(tipo, 0, vazio, conta.getNumeroConta(), numeroContaOriginal);
+        }
+    }
+
+    public void mudarTipoDeContaController(String tipoNovo, String numero, double taxa, double limite, LocalDate dataVencimento){
+        ContaDAO contaDAO = new ContaDAO();
+        int idConta = contaDAO.getIDConta(numero);
+
+        if(tipoNovo.equalsIgnoreCase("CORRENTE")){
+            ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
+            contaCorrenteDAO.editarContaCorrente(idConta, limite, dataVencimento);
+
+            contaDAO.deletarConta(idConta, "conta_poupanca");
+        } else{
+            ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
+            contaPoupancaDAO.editarContaPoupanca(idConta, taxa);
+
+            contaDAO.deletarConta(idConta, "conta_corrente");
         }
     }
 
