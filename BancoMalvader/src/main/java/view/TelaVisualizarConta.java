@@ -2,12 +2,12 @@ package view;
 
 import model.Cliente;
 import model.Conta;
+import model.ContaCorrente;
 import model.ContaPoupanca;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class TelaVisualizarConta extends JFrame {
@@ -25,7 +25,7 @@ public class TelaVisualizarConta extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Label do cliente
-        JLabel clienteLabel = new JLabel("Cliente: " + contas.get(1).getCliente().getNome());
+        JLabel clienteLabel = new JLabel("Cliente: " + contas.get(0).getCliente().getNome());
         clienteLabel.setFont(new Font("Arial", Font.BOLD, 16));
         clienteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(clienteLabel);
@@ -63,29 +63,7 @@ public class TelaVisualizarConta extends JFrame {
             visualizarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             Conta conta = contas.get(i);
-            visualizarButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String tipo = "";
-                    if(conta instanceof ContaPoupanca){
-                        tipo = "Poupança";
-                    } else{
-                        tipo = "Corrente";
-                    }
-
-                    // Exibir um diálogo com todas as informações detalhadas da conta
-                    JOptionPane.showMessageDialog(
-                            TelaVisualizarConta.this,
-                            "Agência: " + conta.getAgencia() + "\n" +
-                                    "Número da Conta: " + conta.getNumeroConta() + "\n" +
-                                    "Saldo: " + conta.getSaldo() + "\n" + // Exemplo de campo adicional
-                                    "Tipo: " + tipo + "\n" +
-                                    "Senha: " + conta.getCliente().getSenha(), // Mostra a senha real
-                            "Informações da Conta",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
-                }
-            });
+            visualizarButton.addActionListener(e -> mostrarDetalhesConta(conta));
 
             panel.add(visualizarButton);
             panel.add(Box.createVerticalStrut(15));
@@ -94,5 +72,32 @@ public class TelaVisualizarConta extends JFrame {
         add(panel);
 
         setVisible(true);
+    }
+
+    private void mostrarDetalhesConta(Conta conta) {
+        String tipo;
+        String detalhesAdicionais;
+
+        if (conta instanceof ContaPoupanca) {
+            ContaPoupanca contaPoupanca = (ContaPoupanca) conta;
+            tipo = "Poupança";
+            detalhesAdicionais = "Taxa de rendimento: " + contaPoupanca.getTaxaDeRendimento();
+        } else {
+            ContaCorrente contaCorrente = (ContaCorrente) conta;
+            tipo = "Corrente";
+            detalhesAdicionais = "Vencimento: " + contaCorrente.getDataVencimento();
+        }
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Agência: " + conta.getAgencia() + "\n" +
+                        "Número da Conta: " + conta.getNumeroConta() + "\n" +
+                        "Saldo: " + conta.getSaldo() + "\n" +
+                        "Tipo: " + tipo + "\n" +
+                        detalhesAdicionais + "\n" +
+                        "Senha: " + conta.getCliente().getSenha().replaceAll(".", "*"),
+                "Informações da Conta",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 }
