@@ -8,13 +8,16 @@ import model.Cliente;
 import model.Conta;
 import model.ContaPoupanca;
 import model.Transacao;
+import view.TelaExtrato;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TelaMenuCliente extends JFrame {
-    private JLabel saldoLabel;  // Label para exibir o saldo
+    private Map<Conta, JLabel> saldoLabelsMap = new HashMap<>(); // Mapeia contas para suas labels de saldo
 
     public TelaMenuCliente(Cliente cliente) {
         setTitle("Banco Malvader - Visualizar Conta");
@@ -52,7 +55,8 @@ public class TelaMenuCliente extends JFrame {
 
             // Exibe o saldo e guarda a referência em saldoLabel
             infoPanel.add(new JLabel("Saldo:"));
-            saldoLabel = new JLabel(String.valueOf(conta.getSaldo()));
+            JLabel saldoLabel = new JLabel(String.valueOf(conta.getSaldo()));
+            saldoLabelsMap.put(conta, saldoLabel); // Armazena a label no mapa com a conta como chave
             infoPanel.add(saldoLabel);
 
             infoPanel.add(new JLabel("Número da Conta:"));
@@ -96,7 +100,10 @@ public class TelaMenuCliente extends JFrame {
     }
 
     private void atualizarSaldoLabel(Conta conta) {
-        saldoLabel.setText(String.valueOf(conta.getSaldo()));
+        JLabel saldoLabel = saldoLabelsMap.get(conta); // Obtém a label correspondente à conta
+        if (saldoLabel != null) {
+            saldoLabel.setText(String.valueOf(conta.getSaldo())); // Atualiza o texto da label
+        }
     }
 
     private void depositar(Conta conta) {
@@ -110,7 +117,7 @@ public class TelaMenuCliente extends JFrame {
                     TransacaoController transacaoController = new TransacaoController();
                     transacaoController.depositoController(conta.getNumeroConta(), valor);
                     conta.setSaldo(conta.getSaldo() + valor); // Atualiza saldo da conta
-                    atualizarSaldoLabel(conta);  // Atualiza o saldo após depósito
+                    atualizarSaldoLabel(conta); // Atualiza a label correta após o depósito
                     JOptionPane.showMessageDialog(this, "Depósito realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (NumberFormatException e) {
@@ -119,25 +126,19 @@ public class TelaMenuCliente extends JFrame {
         }
     }
 
-    public void sacar(Conta conta) {
+    private void sacar(Conta conta) {
         String input = JOptionPane.showInputDialog(this, "Insira o valor do saque:", "Saque", JOptionPane.PLAIN_MESSAGE);
         if (input != null) {
             try {
                 double valor = Double.parseDouble(input);
-                if (valor <= 0) {
-                    JOptionPane.showMessageDialog(this, "Erro: O valor deve ser maior que 0.", "Erro", JOptionPane.ERROR_MESSAGE);
-
+                if (valor <= 0 || valor > conta.getSaldo()) {
+                    JOptionPane.showMessageDialog(this, "Erro: Valor inválido para saque.", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else {
                     TransacaoController transacaoController = new TransacaoController();
-                    boolean saque = transacaoController.saque(conta.getNumeroConta(), valor);
-
-                    if (saque) {
-                        conta.setSaldo(conta.getSaldo() - valor); // Atualiza saldo da conta
-                        atualizarSaldoLabel(conta);  // Atualiza o saldo após saque
-                        JOptionPane.showMessageDialog(this, "Saque realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Fundos insuficientes.", "Erro", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    transacaoController.saque(conta.getNumeroConta(), valor);
+                    conta.setSaldo(conta.getSaldo() - valor); // Atualiza saldo da conta
+                    atualizarSaldoLabel(conta); // Atualiza a label correta após o saque
+                    JOptionPane.showMessageDialog(this, "Saque realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Erro: O valor inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -145,7 +146,7 @@ public class TelaMenuCliente extends JFrame {
         }
     }
 
-    public void extrato(Conta conta) {
+    private void extrato(Conta conta) {
         TransacaoDAO transacaoDAO = new TransacaoDAO();
         ContaDAO contaDAO = new ContaDAO();
 
@@ -157,11 +158,9 @@ public class TelaMenuCliente extends JFrame {
     }
 
     public static void main(String[] args) {
-        ContaDAO contaDAO = new ContaDAO();
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.getClasseCliente("hugo12");
 
-        TelaMenuCliente telaTeste = new TelaMenuCliente(cliente);
-        telaTeste.setVisible(true);
+        TelaMenuCliente telaMenuCliente = new TelaMenuCliente(cliente);
     }
 }

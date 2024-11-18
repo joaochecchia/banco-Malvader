@@ -68,9 +68,9 @@ public class LoginScreen extends JFrame {
 
                     System.out.print(cliente.toString());
 
-                    TelaMenuCliente telaMenuCliente = new TelaMenuCliente(cliente);
-                    telaMenuCliente.setVisible(true);
-
+                    //TelaMenuCliente telaMenuCliente = new TelaMenuCliente(cliente);
+                    //telaMenuCliente.setVisible(true);
+                    dispose();
                 }
 
             } else {
