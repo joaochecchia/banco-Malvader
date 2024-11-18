@@ -49,7 +49,7 @@ public class LoginScreen extends JFrame {
 
             LoginDAO login = new LoginDAO();
             boolean verify = login.realizarLogin(usuario, senha, isEmployee);
-            System.out.print("Verificacao: " + verify);
+
 
             if (verify) {
                 JOptionPane.showMessageDialog(this, "Login bem-sucedido!");
@@ -66,10 +66,8 @@ public class LoginScreen extends JFrame {
                     ClienteDAO clienteDAO = new ClienteDAO();
                     Cliente cliente = clienteDAO.getClasseCliente(usuario);
 
-                    System.out.print(cliente.toString());
-
-                    //TelaMenuCliente telaMenuCliente = new TelaMenuCliente(cliente);
-                    //telaMenuCliente.setVisible(true);
+                    TelaMenuCliente telaMenuCliente = new TelaMenuCliente(cliente);
+                    telaMenuCliente.setVisible(true);
                     dispose();
                 }
 
