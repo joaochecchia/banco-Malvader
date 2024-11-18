@@ -2,7 +2,6 @@ package view;
 
 import controller.ContaCorrenteController;
 import dao.ClienteDAO;
-import dao.ContaCorrenteDAO;
 import dao.ContaDAO;
 import model.Conta;
 import model.ContaCorrente;
@@ -133,7 +132,7 @@ public class TelaEditarConta extends JFrame {
                     } else {
                         JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
                     }
-                    
+
                     numeroContaLabel.setText(conta.getNumeroConta());
 
                     dispose();
