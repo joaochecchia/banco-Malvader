@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class TelaEditarConta extends JFrame {
@@ -59,7 +58,7 @@ public class TelaEditarConta extends JFrame {
             editarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new TelaEdicaoDadosConta(conta);
+                    new TelaEdicaoDadosConta(conta, numeroContaValor);
                 }
             });
 
@@ -72,7 +71,7 @@ public class TelaEditarConta extends JFrame {
     }
 
     private class TelaEdicaoDadosConta extends JFrame {
-        public TelaEdicaoDadosConta(Conta conta) {
+        public TelaEdicaoDadosConta(Conta conta, JLabel numeroContaLabel) {
             setTitle("Banco Malvader - Edição de Conta");
             setSize(400, 200);
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -82,9 +81,9 @@ public class TelaEditarConta extends JFrame {
             add(panel);
             panel.setLayout(null);
 
-            JLabel numeroContaLabel = new JLabel("Número da Conta:");
-            numeroContaLabel.setBounds(10, 20, 120, 25);
-            panel.add(numeroContaLabel);
+            JLabel numeroContaLabelEdicao = new JLabel("Número da Conta:");
+            numeroContaLabelEdicao.setBounds(10, 20, 120, 25);
+            panel.add(numeroContaLabelEdicao);
 
             JTextField numeroContaText = new JTextField(conta.getNumeroConta());
             numeroContaText.setBounds(140, 20, 165, 25);
@@ -127,13 +126,15 @@ public class TelaEditarConta extends JFrame {
                         controller.editarContaController(contaCorrente, tipoContaText.getText().toUpperCase(), numeroOriginal);
                     }
 
-                    if(conta instanceof ContaPoupanca && tipoContaText.getText().equalsIgnoreCase("CORRENTE")){
+                    if (conta instanceof ContaPoupanca && tipoContaText.getText().equalsIgnoreCase("CORRENTE")) {
                         TelaMudarTipoConta telaMudarTipoConta = new TelaMudarTipoConta("CORRENTE", conta.getNumeroConta());
-                    }else if(conta instanceof ContaCorrente && tipoContaText.getText().equalsIgnoreCase("POUPANCA")){
+                    } else if (conta instanceof ContaCorrente && tipoContaText.getText().equalsIgnoreCase("POUPANCA")) {
                         TelaMudarTipoConta telaMudarTipoConta = new TelaMudarTipoConta("POUPANCA", conta.getNumeroConta());
-                    } else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
                     }
+                    
+                    numeroContaLabel.setText(conta.getNumeroConta());
 
                     dispose();
                 }
