@@ -4,10 +4,10 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 public class Transacao {
-    int idTransacao;
-    String tipoTransacao;
-    double valor;
-    LocalDateTime data;
+    private int idTransacao;
+    private String tipoTransacao;
+    private double valor;
+    private LocalDateTime data;
 
     public Transacao(int idTransacao, String tipoTransacao, double valor, LocalDateTime data) {
         this.idTransacao = idTransacao;
