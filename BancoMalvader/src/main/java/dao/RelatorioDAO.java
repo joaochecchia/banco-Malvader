@@ -14,7 +14,7 @@ public class RelatorioDAO {
         Workbook workbook = new XSSFWorkbook();
 
         // Criando uma nova planilha
-        Sheet sheet = workbook.createSheet("Movimentação Bancária: " + nomeUsuario);
+        Sheet sheet = workbook.createSheet("Movimentação Bancária " + nomeUsuario);
 
         // Criando a linha de cabeçalho
         Row headerRow = sheet.createRow(0);

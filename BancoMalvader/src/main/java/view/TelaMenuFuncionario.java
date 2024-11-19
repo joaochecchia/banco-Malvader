@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import dao.*;
 import model.Cliente;
@@ -280,8 +281,20 @@ public class TelaMenuFuncionario extends JFrame {
     }
 
     private void gerarRelatorio() {
+        String nomeCliente = JOptionPane.showInputDialog(this, "Digite o nome do cliente:");
 
-        JOptionPane.showMessageDialog(this, "Gerar Relatório de Movimentação acionado.");
+        ContaDAO contaDAO = new ContaDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+
+        Cliente cliente = clienteDAO.getClasseCliente(nomeCliente);
+
+        if(cliente != null){
+            ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
+            TelaGerarRelatorio telaGerarRelatorio = new TelaGerarRelatorio(contas, cliente.getNome());
+            telaGerarRelatorio.setVisible(true);
+        } else{
+            JOptionPane.showMessageDialog(this, "Senha incorreta. Acesso negado.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,7 @@
 package view;
 
+import controller.RelatorioController;
+import dao.RelatorioDAO;
 import model.Conta;
 import dao.ClienteDAO;
 import dao.ContaDAO;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 
 public class TelaGerarRelatorio extends JFrame {
 
-    public TelaGerarRelatorio(ArrayList<Conta> contas) {
+    public TelaGerarRelatorio(ArrayList<Conta> contas, String nomeCliente) {
         setTitle("Banco Malvader - Gerar Relatório");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -54,7 +56,7 @@ public class TelaGerarRelatorio extends JFrame {
             gerarRelatorioButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new TelaEscolherDiretorio();
+                    new TelaEscolherDiretorio(conta, nomeCliente);
                 }
             });
 
@@ -67,67 +69,21 @@ public class TelaGerarRelatorio extends JFrame {
     }
 
     private class TelaEscolherDiretorio extends JFrame {
-        public TelaEscolherDiretorio() {
-            setTitle("Banco Malvader - Escolher Diretório");
-            setSize(400, 200);
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setLocationRelativeTo(null);
+        public TelaEscolherDiretorio(Conta conta, String nomeCliente) {
 
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = fileChooser.showOpenDialog(null);
 
-            JLabel instrucoes = new JLabel("Escolha o diretório para salvar o relatório:");
-            instrucoes.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panel.add(instrucoes);
-            panel.add(Box.createVerticalStrut(10));
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedDirectory = fileChooser.getSelectedFile();
+                String caminho = selectedDirectory.getAbsolutePath();
+                RelatorioController relatorioController = new RelatorioController();
 
-            JButton escolherDiretorioButton = new JButton("Escolher Diretório");
-            escolherDiretorioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            escolherDiretorioButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                    int result = fileChooser.showOpenDialog(null);
+                relatorioController.relatorioController(caminho, conta.getNumeroConta(), nomeCliente);
 
-                    if (result == JFileChooser.APPROVE_OPTION) {
-                        File selectedDirectory = fileChooser.getSelectedFile();
-                        String caminho = selectedDirectory.getAbsolutePath();
-                        System.out.println(caminho);
-                        JOptionPane.showMessageDialog(null, "Diretório selecionado: " + caminho);
-                    }
-                }
-            });
-            panel.add(escolherDiretorioButton);
-            panel.add(Box.createVerticalStrut(10));
-
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-            JButton gerarButton = new JButton("Gerar");
-            gerarButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!");
-                    dispose();
-                }
-            });
-            buttonPanel.add(gerarButton);
-
-            JButton cancelarButton = new JButton("Cancelar");
-            cancelarButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
-            buttonPanel.add(cancelarButton);
-
-            panel.add(buttonPanel);
-
-            add(panel);
-            setVisible(true);
+                JOptionPane.showMessageDialog(null, "Arquivo criado em: " + caminho);
+            }
         }
     }
 
@@ -135,7 +91,7 @@ public class TelaGerarRelatorio extends JFrame {
         ContaDAO contaDAO = new ContaDAO();
         ArrayList<Conta> contas = contaDAO.getClasConta(new ClienteDAO().getClasseCliente("hugo12"));
 
-        TelaGerarRelatorio tela = new TelaGerarRelatorio(contas);
+        TelaGerarRelatorio tela = new TelaGerarRelatorio(contas, "hugo12");
         tela.setVisible(true);
     }
 }
