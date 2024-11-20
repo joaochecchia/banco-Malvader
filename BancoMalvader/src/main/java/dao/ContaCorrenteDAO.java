@@ -1,6 +1,7 @@
 package dao;
 
 import model.*;
+import org.example.Main;
 import util.Conexao;
 import util.GerarNumeroConta;
 import util.GerarAgencia;
@@ -115,5 +116,13 @@ public class ContaCorrenteDAO {
         } catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        GerarNumeroConta gerarNumeroConta = new GerarNumeroConta();
+        GerarAgencia gerarAgencia = new GerarAgencia();
+
+        System.out.println(gerarNumeroConta.gerarNumero("CORRENTE"));
+        System.out.println(gerarAgencia.gerarAgencia("GO"));
     }
 }
