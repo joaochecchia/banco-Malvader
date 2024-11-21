@@ -1,7 +1,6 @@
 package dao;
 
 import model.*;
-import org.example.Main;
 import util.Conexao;
 import util.GerarNumeroConta;
 import util.GerarAgencia;
@@ -78,7 +77,7 @@ public class ContaCorrenteDAO {
         return null;
     }
 
-    public void editarContaCorrente(int idConta, double limite, LocalDate vencimento){
+    public void editarParaContaCorrente(int idConta, double limite, LocalDate vencimento){
         String sql = "INSERT INTO conta_corrente(limite, data_vencimento, id_conta) VALUES (?, ?, ?);";
 
         try(Connection conn = Conexao.conexao()){

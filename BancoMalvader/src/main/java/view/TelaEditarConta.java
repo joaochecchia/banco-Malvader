@@ -122,7 +122,12 @@ public class TelaEditarConta extends JFrame {
                         ContaCorrente contaCorrente = (ContaCorrente) conta;
                         contaCorrente.setDataVencimento(LocalDate.parse(finalVencimentoText.getText()));
                         ContaCorrenteController controller = new ContaCorrenteController();
+
                         controller.editarContaController(contaCorrente, tipoContaText.getText().toUpperCase(), numeroOriginal);
+                    } else{
+                        ContaPoupanca contaPoupanca = (ContaPoupanca) conta;
+                        ContaCorrenteController controller = new ContaCorrenteController();
+                        controller.editarContaController(contaPoupanca, tipoContaText.getText().toUpperCase(), numeroOriginal);
                     }
 
                     if (conta instanceof ContaPoupanca && tipoContaText.getText().equalsIgnoreCase("CORRENTE")) {
@@ -130,9 +135,9 @@ public class TelaEditarConta extends JFrame {
                     } else if (conta instanceof ContaCorrente && tipoContaText.getText().equalsIgnoreCase("POUPANCA")) {
                         TelaMudarTipoConta telaMudarTipoConta = new TelaMudarTipoConta("POUPANCA", conta.getNumeroConta());
                     } else {
-                        JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
+                        JOptionPane.showMessageDialog(null, "Conta alterada com sucesso");
                     }
-
+                    
                     numeroContaLabel.setText(conta.getNumeroConta());
 
                     dispose();
