@@ -31,7 +31,7 @@ public class ContaPoupancaDAO {
             stmtConta.setString(1, numeroConta.gerarNumero("POUPANCA"));
             stmtConta.setString(2, numeroAgencia.gerarAgencia(cliente.getEndereco().getEstado()));
             stmtConta.setDouble(3, conta.getSaldo());
-            stmtConta.setString(4, "CORRENTE");
+            stmtConta.setString(4, "POUPANCA");
             stmtConta.setInt(5, cliente.getIdCliente());
 
             stmtConta.executeUpdate();
