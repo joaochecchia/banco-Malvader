@@ -76,7 +76,7 @@ public class ContaPoupancaDAO {
         return null;
     }
 
-    public void editarContaPoupanca(int idConta, double taxa){
+    public void editarParaContaPoupanca(int idConta, double taxa){
         String sql = "INSERT INTO conta_poupanca(taxa_rendimento, id_conta) VALUES (?, ?);";
 
         try(Connection conn = Conexao.conexao()){

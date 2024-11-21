@@ -18,7 +18,7 @@ public class TelaCriarContaCorrente extends JFrame {
     public TelaCriarContaCorrente(String nomeUsuario) {
         setTitle("Banco Malvader - Cadastro de Conta Corrente");
         setSize(350, 250);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();

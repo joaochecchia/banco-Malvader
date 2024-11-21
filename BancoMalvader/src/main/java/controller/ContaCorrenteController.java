@@ -4,13 +4,11 @@ import dao.*;
 import model.Cliente;
 import model.ContaCorrente;
 import model.Conta;
-import model.ContaPoupanca;
 import util.GerarAgencia;
 import util.GerarNumeroConta;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class ContaCorrenteController {
     public void contaCorrenteController(double saldo, double limite
@@ -36,10 +34,10 @@ public class ContaCorrenteController {
         if(conta instanceof ContaCorrente){
             ContaCorrente contaCorrente = (ContaCorrente) conta;
 
-            contaDAO.editarConta(tipo, contaCorrente.getLimite(), contaCorrente.getDataVencimento(), contaCorrente.getNumeroConta(), numeroContaOriginal);
+            contaDAO.alterarConta(tipo, contaCorrente.getLimite(), contaCorrente.getDataVencimento(), contaCorrente.getNumeroConta(), numeroContaOriginal);
         } else{
             LocalDate vazio = LocalDate.parse("1001-01-01");
-            contaDAO.editarConta(tipo, 0, vazio, conta.getNumeroConta(), numeroContaOriginal);
+            contaDAO.alterarConta(tipo, 0, vazio, conta.getNumeroConta(), numeroContaOriginal);
         }
     }
 
@@ -49,12 +47,12 @@ public class ContaCorrenteController {
 
         if(tipoNovo.equalsIgnoreCase("CORRENTE")){
             ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
-            contaCorrenteDAO.editarContaCorrente(idConta, limite, dataVencimento);
+            contaCorrenteDAO.editarParaContaCorrente(idConta, limite, dataVencimento);
 
             contaDAO.deletarConta(idConta, "conta_poupanca");
         } else{
             ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
-            contaPoupancaDAO.editarContaPoupanca(idConta, taxa);
+            contaPoupancaDAO.editarParaContaPoupanca(idConta, taxa);
 
             contaDAO.deletarConta(idConta, "conta_corrente");
         }

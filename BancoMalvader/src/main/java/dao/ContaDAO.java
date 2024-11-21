@@ -1,8 +1,6 @@
 package dao;
 
 import model.Conta;
-import model.ContaCorrente;
-import model.ContaPoupanca;
 import model.Cliente;
 import util.Conexao;
 
@@ -12,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ContaDAO {
     public ArrayList<Conta> getClasConta(Cliente cliente) {
@@ -45,11 +41,12 @@ public class ContaDAO {
         return null;
     }
 
-    public void editarConta(String tipoConta, double limite, LocalDate vencimento, String numeroConta, String numeroContaOriginal){
+    public void alterarConta(String tipoConta, double limite, LocalDate vencimento, String numeroConta, String numeroContaOriginal){
         String sqlConta = "UPDATE conta SET tipo_conta = ?, numero_conta = ? WHERE id_conta = ?";
         String sqlCorrente = "UPDATE conta_corrente SET limite = ?, data_vencimento = ? WHERE id_conta = ?";
 
         try(Connection conn = Conexao.conexao()){
+            System.out.println("este e o tipo da conta: " + tipoConta);
             PreparedStatement stmtConta = conn.prepareStatement(sqlConta);
             PreparedStatement stmtCorrente = conn.prepareStatement(sqlCorrente);
 

@@ -14,7 +14,7 @@ public class TelaCadastroCliente extends JFrame {
     public TelaCadastroCliente() {
         setTitle("Banco Malvader - Cadastro de Cliente");
         setSize(400, 580);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();

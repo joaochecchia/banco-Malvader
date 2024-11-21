@@ -137,7 +137,7 @@ public class TelaEditarConta extends JFrame {
                     } else {
                         JOptionPane.showMessageDialog(null, "Conta alterada com sucesso");
                     }
-                    
+
                     numeroContaLabel.setText(conta.getNumeroConta());
 
                     dispose();
