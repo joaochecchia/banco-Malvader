@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RelatorioDAO {
-    public void gerarRelatorio(ArrayList<Transacao> transacoes, String pastaDestino, String nomeUsuario) {
+    public void gerarRelatorio(ArrayList<Transacao> transacoes, double[] saldos, String pastaDestino, String nomeUsuario) {
         // Criando uma nova pasta de trabalho (workbook)
         Workbook workbook = new XSSFWorkbook();
 
@@ -35,7 +35,9 @@ public class RelatorioDAO {
             dataRow.createCell(0).setCellValue(transacao.getIdTransacao());
             dataRow.createCell(1).setCellValue(transacao.getData().toString());       // Data
             dataRow.createCell(2).setCellValue(transacao.getValor()); // Descrição
-            dataRow.createCell(3).setCellValue(transacao.getTipoTransacao());      // Tipo// Saldo
+            dataRow.createCell(3).setCellValue(transacao.getTipoTransacao());
+            dataRow.createCell(4).setCellValue(saldos[transacoes.lastIndexOf(transacao)]);
+            // Tipo// Saldo
         }
 
         // Ajustando automaticamente o tamanho das colunas
@@ -68,6 +70,6 @@ public class RelatorioDAO {
         // Defina a pasta onde o arquivo será salvo
         String pastaDestino = "C:/Users/jjgab/Documents"; // Exemplo de diretório
 
-        relatorioDAO.gerarRelatorio(a, pastaDestino, "Hugo12");
+       // relatorioDAO.gerarRelatorio(a, pastaDestino, "Hugo12");
     }
 }

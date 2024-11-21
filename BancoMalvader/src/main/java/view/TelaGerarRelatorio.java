@@ -80,7 +80,7 @@ public class TelaGerarRelatorio extends JFrame {
                 String caminho = selectedDirectory.getAbsolutePath();
                 RelatorioController relatorioController = new RelatorioController();
 
-                relatorioController.relatorioController(caminho, conta.getNumeroConta(), nomeCliente);
+                relatorioController.relatorioController(caminho, conta.getNumeroConta(), conta.getSaldo(), nomeCliente);
 
                 JOptionPane.showMessageDialog(null, "Arquivo criado em: " + caminho);
             }
