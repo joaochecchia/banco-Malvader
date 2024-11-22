@@ -30,14 +30,15 @@ public class ContaCorrenteController {
 
     public void editarContaController(Conta conta, String tipo, String numeroContaOriginal){
         ContaDAO contaDAO = new ContaDAO();
+        int idConta = contaDAO.getIDConta(numeroContaOriginal);
 
         if(conta instanceof ContaCorrente){
             ContaCorrente contaCorrente = (ContaCorrente) conta;
 
-            contaDAO.alterarConta(tipo, contaCorrente.getLimite(), contaCorrente.getDataVencimento(), contaCorrente.getNumeroConta(), numeroContaOriginal);
+            contaDAO.alterarConta(tipo, contaCorrente.getLimite(), contaCorrente.getDataVencimento(), contaCorrente.getNumeroConta(), numeroContaOriginal, idConta);
         } else{
             LocalDate vazio = LocalDate.parse("1001-01-01");
-            contaDAO.alterarConta(tipo, 0, vazio, conta.getNumeroConta(), numeroContaOriginal);
+            contaDAO.alterarConta(tipo, 0, vazio, conta.getNumeroConta(), numeroContaOriginal, idConta);
         }
     }
 

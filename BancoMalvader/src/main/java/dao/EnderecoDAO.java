@@ -43,23 +43,26 @@ public class EnderecoDAO {
     }
 
     public Endereco getClassEndereco(int idUsuario){
-
+        //string sql generica
         String sql = "SELECT * FROM endereco WHERE id_usuario = ?";
 
         try(Connection conn = Conexao.conexao()){
+            //prepara a string
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, idUsuario);
-
+            //recebe o resultado da pesquisa
             ResultSet rs = stmt.executeQuery();
-
+            //se tiver alguma linha na pesquisa
             if(rs.next()){
+                //retorne a classe
                 Endereco endereco = new Endereco(rs.getInt(1), rs.getString(2)
                         , rs.getString(3), rs.getInt(4), rs.getString(5)
                         , rs.getString(6), rs.getString(7), rs.getInt(8) );
 
                 return endereco;
             } else{
+                //retorne null
                 return null;
             }
         } catch(SQLException e){

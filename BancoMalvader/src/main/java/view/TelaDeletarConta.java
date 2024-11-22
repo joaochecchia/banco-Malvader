@@ -1,9 +1,6 @@
 package view;
 
 import controller.RemoverContaController;
-import dao.ClienteDAO;
-import dao.ContaDAO;
-import model.Cliente;
 import model.Conta;
 
 import javax.swing.*;
@@ -11,17 +8,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class TelaDeletarConta extends JFrame {
 
     public TelaDeletarConta(ArrayList<Conta> contas) {
-
         setTitle("Banco Malvader - Deletar Conta");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        // Verificar se há contas disponíveis
+        if (contas == null || contas.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Nenhuma conta disponível para deletar.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            dispose();
+            return;
+        }
 
         // Painel principal com layout em coluna
         JPanel panel = new JPanel();
@@ -29,7 +35,7 @@ public class TelaDeletarConta extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Label do cliente
-        JLabel clienteLabel = new JLabel("Cliente: " + contas.get(1).getCliente().getNome());
+        JLabel clienteLabel = new JLabel("Cliente: " + contas.get(0).getCliente().getNome());
         clienteLabel.setFont(new Font("Arial", Font.BOLD, 16));
         clienteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(clienteLabel);
@@ -37,9 +43,10 @@ public class TelaDeletarConta extends JFrame {
 
         // Exibir informações de cada conta do cliente
         for (int i = 0; i < contas.size(); i++) {
-            String agencia = contas.get(i).getAgencia();
-            String numeroConta = contas.get(i).getNumeroConta();
-            String senha = contas.get(i).getCliente().getSenha().replaceAll(".", "*");
+            Conta conta = contas.get(i); // Conta atual
+            String agencia = conta.getAgencia();
+            String numeroConta = conta.getNumeroConta();
+            String senha = conta.getCliente().getSenha().replaceAll(".", "*");
 
             // Painel da conta
             JPanel contaPanel = new JPanel(new GridLayout(0, 2, 10, 5));
@@ -68,11 +75,9 @@ public class TelaDeletarConta extends JFrame {
             deletarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             // Passar a conta atual para o ActionListener
-            Conta conta = contas.get(i);
             deletarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
                     RemoverContaController removerContaController = new RemoverContaController();
                     removerContaController.removerContaController(conta);
 
@@ -90,7 +95,6 @@ public class TelaDeletarConta extends JFrame {
         }
 
         add(panel);
-
         setVisible(true);
     }
 }

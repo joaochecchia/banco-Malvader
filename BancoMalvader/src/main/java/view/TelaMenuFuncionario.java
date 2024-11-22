@@ -34,6 +34,7 @@ public class TelaMenuFuncionario extends JFrame {
         JButton alterarDadosClienteButton = new JButton("Alterar Dados do Cliente");
         JButton cadastrarFuncionarioButton = new JButton("Cadastrar Funcionário");
         JButton gerarRelatorioButton = new JButton("Gerar Relatório de Movimentação");
+        JButton sairButton = new JButton("Sair"); // Botão de Sair
 
         abrirContaButton.addActionListener(e -> abrirConta());
         encerrarContaButton.addActionListener(e -> encerrarConta());
@@ -43,6 +44,7 @@ public class TelaMenuFuncionario extends JFrame {
         alterarDadosClienteButton.addActionListener(e -> alterarDadosCliente());
         cadastrarFuncionarioButton.addActionListener(e -> cadastrarFuncionario());
         gerarRelatorioButton.addActionListener(e -> gerarRelatorio());
+        sairButton.addActionListener(e -> sair());
 
         panel.add(abrirContaButton);
         panel.add(encerrarContaButton);
@@ -52,6 +54,7 @@ public class TelaMenuFuncionario extends JFrame {
         panel.add(alterarDadosClienteButton);
         panel.add(cadastrarFuncionarioButton);
         panel.add(gerarRelatorioButton);
+        panel.add(sairButton);
 
         add(panel);
     }
@@ -147,8 +150,12 @@ public class TelaMenuFuncionario extends JFrame {
 
                     ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
 
-                    TelaDeletarConta telaDeletarConta = new TelaDeletarConta(contas);
-                    telaDeletarConta.setVisible(true);
+                    if(!contas.isEmpty()){
+                        TelaDeletarConta telaDeletarConta = new TelaDeletarConta(contas);
+                        telaDeletarConta.setVisible(true);
+                    } else{
+                        JOptionPane.showMessageDialog(this, "O Cliente não possui contas");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -297,15 +304,9 @@ public class TelaMenuFuncionario extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        FuncionarioDAO b = new FuncionarioDAO();
-
-        Funcionario a = b.getClassFuncionario("João da Silva");
-
-        SwingUtilities.invokeLater(() -> {
-
-            TelaMenuFuncionario frame = new TelaMenuFuncionario(a);
-            frame.setVisible(true);
-        });
+    private void sair(){
+        TelaLogin telaLogin = new TelaLogin();
+        telaLogin.setVisible(true);
+        dispose();
     }
 }

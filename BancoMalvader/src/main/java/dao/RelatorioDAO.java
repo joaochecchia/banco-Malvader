@@ -60,16 +60,4 @@ public class RelatorioDAO {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        TransacaoDAO transacaoDAO = new TransacaoDAO();
-        ArrayList<Transacao> a = transacaoDAO.extratoDAO(28);
-
-        RelatorioDAO relatorioDAO = new RelatorioDAO();
-
-        // Defina a pasta onde o arquivo será salvo
-        String pastaDestino = "C:/Users/jjgab/Documents"; // Exemplo de diretório
-
-       // relatorioDAO.gerarRelatorio(a, pastaDestino, "Hugo12");
-    }
 }

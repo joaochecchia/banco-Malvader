@@ -44,11 +44,4 @@ public class LoginDAO {
             return false;
         }
     }
-
-    public static void main(String[] args) {
-        LoginDAO loginDAO = new LoginDAO();
-        boolean valor = loginDAO.realizarLogin("hugo12", "senhaSegura", false);
-
-        System.out.println("asdsadas: " + valor);
-    }
 }

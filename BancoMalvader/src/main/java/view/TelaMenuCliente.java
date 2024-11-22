@@ -84,7 +84,7 @@ public class TelaMenuCliente extends JFrame {
 
             JButton sairButton = new JButton("Sair");
             sairButton.setPreferredSize(buttonSize);
-            sairButton.addActionListener(e -> dispose());
+            sairButton.addActionListener(e -> sair());
 
             buttonsPanel.add(visualizarButton);
             buttonsPanel.add(depositoButton);
@@ -157,10 +157,9 @@ public class TelaMenuCliente extends JFrame {
         telaExtrato.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.getClasseCliente("hugo12");
-
-        TelaMenuCliente telaMenuCliente = new TelaMenuCliente(cliente);
+    private void sair(){
+        TelaLogin telaLogin = new TelaLogin();
+        telaLogin.setVisible(true);
+        dispose();
     }
 }
