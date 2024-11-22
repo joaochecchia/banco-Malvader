@@ -24,17 +24,4 @@ public class TransacaoController {
         return  transacaoDAO.saqueDAO(valor, idConta);
 
     }
-
-    public ArrayList<Transacao> transacao(Conta conta){
-        TransacaoDAO transacaoDAO = new TransacaoDAO();
-        ContaDAO contaDAO = new ContaDAO();
-        int idConta = contaDAO.getIDConta(conta.getNumeroConta());
-
-        return transacaoDAO.extratoDAO(idConta);
-    }
-
-    public static void main(String[] args) {
-        TransacaoController transacaoController = new TransacaoController();
-        transacaoController.depositoController("numero legal", 1000);
-    }
 }

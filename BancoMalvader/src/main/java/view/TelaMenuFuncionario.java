@@ -20,10 +20,10 @@ public class TelaMenuFuncionario extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 1)); // Layout em coluna
+        panel.setLayout(new GridLayout(0, 1));
 
         JLabel usuarioLabel = new JLabel("Usuário: " + funcionario.getNome() + " | Cargo: " + funcionario.getCargo());
-        usuarioLabel.setHorizontalAlignment(SwingConstants.CENTER); // Centraliza o texto
+        usuarioLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(usuarioLabel);
 
         JButton abrirContaButton = new JButton("Abrir Conta");
@@ -34,7 +34,7 @@ public class TelaMenuFuncionario extends JFrame {
         JButton alterarDadosClienteButton = new JButton("Alterar Dados do Cliente");
         JButton cadastrarFuncionarioButton = new JButton("Cadastrar Funcionário");
         JButton gerarRelatorioButton = new JButton("Gerar Relatório de Movimentação");
-        JButton sairButton = new JButton("Sair"); // Botão de Sair
+        JButton sairButton = new JButton("Sair");
 
         abrirContaButton.addActionListener(e -> abrirConta());
         encerrarContaButton.addActionListener(e -> encerrarConta());

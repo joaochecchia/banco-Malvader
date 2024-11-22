@@ -8,6 +8,7 @@ import model.Endereco;
 import java.time.LocalDate;
 
 public class ClienteController {
+    //classe que cria o cliente fornecido pelo view e nabda a classe par clienteDAO
     public void criarCliente(String nome, String cpf, LocalDate dataNascimento
             , String telefone, String senha, String cep, String local,int numero
             , String bairro, String cidade, String estado){
@@ -26,6 +27,7 @@ public class ClienteController {
         enderecoDAO.registrarEnderecoDAO(endereco, usuarioDAO.usuarioGetId(nome));
     }
 
+    //recebe a classe do view, pega o id e manda para o ClienteDAO
     public void editarClienteController(Cliente cliente){
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         int idUsuario = usuarioDAO.usuarioGetId(cliente.getNome());

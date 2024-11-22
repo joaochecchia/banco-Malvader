@@ -9,6 +9,7 @@ import model.Funcionario;
 import java.time.LocalDate;
 
 public class FuncionarioController {
+    //cria a classe funcionario e passa para DAO
     public void criarFuncionario(String nome, String cpf, LocalDate dataNascimento
             , String telefone, String codigoFuncionario, String cargo, String senha,
             String cep, String local,int numero, String bairro, String cidade, String estado) {

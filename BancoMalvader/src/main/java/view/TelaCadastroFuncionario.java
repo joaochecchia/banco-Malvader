@@ -10,19 +10,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class TelaCadastroFuncionario extends JFrame {
-    private JLabel erroLabel; // Rótulo para mostrar erros
+    private JLabel erroLabel;
 
     public TelaCadastroFuncionario() {
         setTitle("Banco Malvader - Cadastro de Funcionário");
         setSize(400, 600);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // Alterado para DISPOSE_ON_CLOSE
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         add(panel);
         panel.setLayout(null);
 
-        // Definição dos campos
         JLabel nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(10, 20, 80, 25);
         panel.add(nomeLabel);
@@ -43,7 +42,7 @@ public class TelaCadastroFuncionario extends JFrame {
         dataNascimentoLabel.setBounds(10, 80, 120, 25);
         panel.add(dataNascimentoLabel);
 
-        JTextField dataNascimentoText = new JTextField(10); // Formato: YYYY-MM-DD
+        JTextField dataNascimentoText = new JTextField(10);
         dataNascimentoText.setBounds(140, 80, 165, 25);
         panel.add(dataNascimentoText);
 
@@ -136,13 +135,11 @@ public class TelaCadastroFuncionario extends JFrame {
         erroLabel.setBounds(10, 460, 360, 25);
         panel.add(erroLabel);
 
-        // Ação de clique no botão de cadastro
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                erroLabel.setText(""); // Limpa a mensagem de erro
+                erroLabel.setText("");
                 try {
-                    // Validações dos campos
                     if (nomeText.getText().isEmpty() || cpfText.getText().isEmpty() || dataNascimentoText.getText().isEmpty() ||
                             telefoneText.getText().isEmpty() || cepText.getText().isEmpty() || localText.getText().isEmpty() ||
                             numeroCasaText.getText().isEmpty() || bairroText.getText().isEmpty() || cidadeText.getText().isEmpty() ||
@@ -154,7 +151,7 @@ public class TelaCadastroFuncionario extends JFrame {
 
                     String nome = nomeText.getText();
                     String cpf = cpfText.getText();
-                    LocalDate dataNascimento = LocalDate.parse(dataNascimentoText.getText()); // Formato: YYYY-MM-DD
+                    LocalDate dataNascimento = LocalDate.parse(dataNascimentoText.getText());
                     String telefone = telefoneText.getText();
                     String cep = cepText.getText();
                     String local = localText.getText();
@@ -166,7 +163,6 @@ public class TelaCadastroFuncionario extends JFrame {
                     String cargo = cargoText.getText();
                     String senha = new String(senhaText.getPassword());
 
-                    // Validações de formato de dados
                     if (estado.length() > 2) {
                         erroLabel.setText("Preencha o estado com sua UF.");
                         return;
@@ -176,7 +172,7 @@ public class TelaCadastroFuncionario extends JFrame {
                     funcionarioController.criarFuncionario(nome, cpf, dataNascimento, telefone, codigoFuncionario, cargo, senha, cep, local, numeroCasa, bairro, cidade, estado);
 
                     JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
-                    dispose(); // Fecha a tela após o cadastro
+                    dispose();
                 } catch (NumberFormatException ex) {
                     erroLabel.setText("Número inválido em campo(s) numérico(s).");
                 } catch (DateTimeParseException ex) {
@@ -185,13 +181,6 @@ public class TelaCadastroFuncionario extends JFrame {
                     erroLabel.setText("Erro ao cadastrar funcionário: " + ex.getMessage());
                 }
             }
-        });
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            TelaCadastroFuncionario frame = new TelaCadastroFuncionario();
-            frame.setVisible(true);
         });
     }
 }

@@ -19,12 +19,10 @@ public class TelaVisualizarConta extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Painel principal com layout em coluna
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Label do cliente
         JLabel clienteLabel = new JLabel("Cliente: " + contas.get(0).getCliente().getNome());
         clienteLabel.setFont(new Font("Arial", Font.BOLD, 16));
         clienteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -36,7 +34,6 @@ public class TelaVisualizarConta extends JFrame {
             String numeroConta = contas.get(i).getNumeroConta();
             String senha = contas.get(i).getCliente().getSenha().replaceAll(".", "*");
 
-            // Painel da conta
             JPanel contaPanel = new JPanel(new GridLayout(0, 2, 10, 5));
             contaPanel.setBorder(BorderFactory.createTitledBorder("Conta " + (i + 1)));
 
@@ -58,7 +55,6 @@ public class TelaVisualizarConta extends JFrame {
             panel.add(contaPanel);
             panel.add(Box.createVerticalStrut(10));
 
-            // Botão para visualizar informações detalhadas da conta
             JButton visualizarButton = new JButton("Visualizar Informações");
             visualizarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 

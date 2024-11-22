@@ -17,46 +17,50 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TelaMenuCliente extends JFrame {
-    private Map<Conta, JLabel> saldoLabelsMap = new HashMap<>(); // Mapeia contas para suas labels de saldo
+    private Map<Conta, JLabel> saldoLabelsMap = new HashMap<>(); //Mapeia contas para suas labels de saldo
 
     public TelaMenuCliente(Cliente cliente) {
+        //criação da janela
         setTitle("Banco Malvader - Visualizar Conta");
         setSize(400, 325);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JTabbedPane tabbedPane = new JTabbedPane();
-
+        JTabbedPane tabbedPane = new JTabbedPane();//sistema de abas
+        //pega as contas para exibir na tela
         ContaDAO contaDAO = new ContaDAO();
         ArrayList<Conta> contas = contaDAO.getClasConta(cliente);
 
         for (int i = 0; i < contas.size(); i++) {
             Conta conta = contas.get(i);
-
+            //cria o pannel da conta
             JPanel contaPanel = new JPanel();
-            contaPanel.setLayout(new BoxLayout(contaPanel, BoxLayout.Y_AXIS));
+            contaPanel.setLayout(new BoxLayout(contaPanel, BoxLayout.Y_AXIS));//box layout orbanizado verticalmente
             contaPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+            //label cliente
             JLabel clienteLabel = new JLabel("Cliente: " + conta.getCliente().getNome());
             clienteLabel.setFont(new Font("Arial", Font.BOLD, 16));
             clienteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             contaPanel.add(clienteLabel);
             contaPanel.add(Box.createVerticalStrut(15));
 
+            //pega os dados da conta
             String agencia = conta.getAgencia();
             String numeroConta = conta.getNumeroConta();
             String senha = conta.getCliente().getSenha().replaceAll(".", "*");
 
+            //painel da conta
             JPanel infoPanel = new JPanel(new GridLayout(0, 2, 10, 5));
             infoPanel.setBorder(BorderFactory.createTitledBorder("Informações da Conta"));
-
+            //
             infoPanel.add(new JLabel("Agência:"));
             infoPanel.add(new JLabel(agencia));
 
-            // Exibe o saldo e guarda a referência em saldoLabel
+
             infoPanel.add(new JLabel("Saldo:"));
             JLabel saldoLabel = new JLabel(String.valueOf(conta.getSaldo()));
-            saldoLabelsMap.put(conta, saldoLabel); // Armazena a label no mapa com a conta como chave
+            saldoLabelsMap.put(conta, saldoLabel);//atualização da label saldo com saques e depositos
             infoPanel.add(saldoLabel);
 
             infoPanel.add(new JLabel("Número da Conta:"));
@@ -66,7 +70,7 @@ public class TelaMenuCliente extends JFrame {
 
             contaPanel.add(infoPanel);
             contaPanel.add(Box.createVerticalStrut(10));
-
+            //cria e coloca os botões
             JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
             Dimension buttonSize = new Dimension(120, 30);
 
@@ -90,9 +94,9 @@ public class TelaMenuCliente extends JFrame {
             buttonsPanel.add(depositoButton);
             buttonsPanel.add(saqueButton);
             buttonsPanel.add(sairButton);
-
-            contaPanel.add(buttonsPanel);
-            tabbedPane.addTab("Conta " + (i + 1), contaPanel);
+            //adiciona no painel
+            contaPanel.add(buttonsPanel);//botões
+            tabbedPane.addTab("Conta " + (i + 1), contaPanel);//adiciona o tabbed Panne feito
         }
 
         add(tabbedPane);
@@ -100,9 +104,9 @@ public class TelaMenuCliente extends JFrame {
     }
 
     private void atualizarSaldoLabel(Conta conta) {
-        JLabel saldoLabel = saldoLabelsMap.get(conta); // Obtém a label correspondente à conta
+        JLabel saldoLabel = saldoLabelsMap.get(conta); //Obtém a label correspondente à conta
         if (saldoLabel != null) {
-            saldoLabel.setText(String.valueOf(conta.getSaldo())); // Atualiza o texto da label
+            saldoLabel.setText(String.valueOf(conta.getSaldo()));//Atualiza o texto da label
         }
     }
 
@@ -116,8 +120,8 @@ public class TelaMenuCliente extends JFrame {
                 } else {
                     TransacaoController transacaoController = new TransacaoController();
                     transacaoController.depositoController(conta.getNumeroConta(), valor);
-                    conta.setSaldo(conta.getSaldo() + valor); // Atualiza saldo da conta
-                    atualizarSaldoLabel(conta); // Atualiza a label correta após o depósito
+                    conta.setSaldo(conta.getSaldo() + valor);//Atualiza saldo da conta
+                    atualizarSaldoLabel(conta); //Atualiza a label correta após o depósito
                     JOptionPane.showMessageDialog(this, "Depósito realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (NumberFormatException e) {
@@ -136,8 +140,8 @@ public class TelaMenuCliente extends JFrame {
                 } else {
                     TransacaoController transacaoController = new TransacaoController();
                     transacaoController.saque(conta.getNumeroConta(), valor);
-                    conta.setSaldo(conta.getSaldo() - valor); // Atualiza saldo da conta
-                    atualizarSaldoLabel(conta); // Atualiza a label correta após o saque
+                    conta.setSaldo(conta.getSaldo() - valor); //Atualiza saldo da conta
+                    atualizarSaldoLabel(conta); //Atualiza a label correta após o saque
                     JOptionPane.showMessageDialog(this, "Saque realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (NumberFormatException e) {
@@ -149,7 +153,7 @@ public class TelaMenuCliente extends JFrame {
     private void extrato(Conta conta) {
         TransacaoDAO transacaoDAO = new TransacaoDAO();
         ContaDAO contaDAO = new ContaDAO();
-
+        //obtém todas as transacoes e manda para a tela extrato
         int idConta = contaDAO.getIDConta(conta.getNumeroConta());
         ArrayList<Transacao> transacaos = transacaoDAO.extratoDAO(idConta);
 

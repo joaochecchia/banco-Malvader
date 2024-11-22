@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TelaCriarContaPoupanca extends JFrame {
-    private JLabel erroLabel; // Rótulo para mostrar erros
+    private JLabel erroLabel;
 
     public TelaCriarContaPoupanca(String nomeUsuario) {
         setTitle("Banco Malvader - Cadastro de Conta Poupança");
@@ -22,16 +22,6 @@ public class TelaCriarContaPoupanca extends JFrame {
         JPanel panel = new JPanel();
         add(panel);
         panel.setLayout(null);
-
-
-
-        JLabel cpfLabel = new JLabel("CPF Cliente:");
-        cpfLabel.setBounds(10, 50, 100, 25);
-        panel.add(cpfLabel);
-
-        JTextField cpfText = new JTextField(20);
-        cpfText.setBounds(140, 50, 165, 25);
-        panel.add(cpfText);
 
         JLabel saldoLabel = new JLabel("Depósito Inicial:");
         saldoLabel.setBounds(10, 80, 100, 25);
@@ -64,12 +54,11 @@ public class TelaCriarContaPoupanca extends JFrame {
                 erroLabel.setText("");
                 try {
 
-                    if (cpfText.getText().isEmpty() || saldoText.getText().isEmpty() || taxaText.getText().isEmpty()) {
+                    if (saldoText.getText().isEmpty() || taxaText.getText().isEmpty()) {
                         erroLabel.setText("Preencha todos os campos corretamente.");
                         return;
                     }
 
-                    String cpfCliente = cpfText.getText();
                     double saldoInicial = Double.parseDouble(saldoText.getText());
                     double taxaRendimento = Double.parseDouble(taxaText.getText());
 

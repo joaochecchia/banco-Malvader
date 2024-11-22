@@ -3,8 +3,7 @@ package model;
 import view.TelaLogin;
 
 public class BancoMalvader {
-    String nome = "Banco Malvader";
-
+    //inicialização do sistema
     public void iniciarSistema(){
         TelaLogin telaLogin = new TelaLogin();
         telaLogin.setVisible(true);

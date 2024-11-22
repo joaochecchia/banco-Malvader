@@ -12,7 +12,6 @@ public class RemoverContaController {
         ContaDAO contaDAO = new ContaDAO();
         int idConta = contaDAO.getIDConta(conta.getNumeroConta());
 
-        System.out.println("IDCONTA" + idConta);
 
         if(conta instanceof ContaCorrente){
             System.out.println("CONTA CORRENTE");

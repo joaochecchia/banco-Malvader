@@ -17,12 +17,10 @@ public class TelaExtrato extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Painel principal com layout em coluna
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Título da tela
         JLabel tituloLabel = new JLabel("Extrato de Transações");
         tituloLabel.setFont(new Font("Arial", Font.BOLD, 16));
         tituloLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -32,7 +30,6 @@ public class TelaExtrato extends JFrame {
         for (int i = 0; i < transacoes.size(); i++) {
             Transacao transacao = transacoes.get(i);
 
-            // Painel de cada transação
             JPanel transacaoPanel = new JPanel(new GridLayout(0, 2, 10, 5));
             transacaoPanel.setBorder(BorderFactory.createTitledBorder("Transação " + (i + 1)));
 
@@ -79,7 +76,6 @@ public class TelaExtrato extends JFrame {
             panel.add(Box.createVerticalStrut(15));
         }
 
-        // Adiciona o painel dentro de um JScrollPane para rolagem
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

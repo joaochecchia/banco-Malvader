@@ -18,13 +18,10 @@ public class TelaEditarCliente extends JFrame {
         setSize(400, 580);
         setLocationRelativeTo(null);
 
-        // Não fechar a aplicação ao clicar no "X" da tela
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        // Ouvinte para a ação de fechar a janela
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                // Apenas fechar esta janela e voltar para a anterior (se houver)
                 dispose();
             }
         });
@@ -33,117 +30,103 @@ public class TelaEditarCliente extends JFrame {
         add(panel);
         panel.setLayout(null);
 
-        // Nome
         JLabel nomeLabel = new JLabel("Nome:");
         nomeLabel.setBounds(10, 20, 80, 25);
         panel.add(nomeLabel);
 
-        JTextField nomeText = new JTextField(cliente.getNome()); // Inicializa com o nome do cliente
+        JTextField nomeText = new JTextField(cliente.getNome());
         nomeText.setBounds(140, 20, 165, 25);
         panel.add(nomeText);
 
-        // CPF
         JLabel cpfLabel = new JLabel("CPF:");
         cpfLabel.setBounds(10, 50, 80, 25);
         panel.add(cpfLabel);
 
-        JTextField cpfText = new JTextField(cliente.getCpf()); // Inicializa com o CPF do cliente
+        JTextField cpfText = new JTextField(cliente.getCpf());
         cpfText.setBounds(140, 50, 165, 25);
         panel.add(cpfText);
 
-        // Data de Nascimento
         JLabel dataNascimentoLabel = new JLabel("Nascimento:");
         dataNascimentoLabel.setBounds(10, 80, 120, 25);
         panel.add(dataNascimentoLabel);
 
-        JTextField dataNascimentoText = new JTextField(cliente.getDataDeNascimento().toString()); // Inicializa com a data de nascimento
+        JTextField dataNascimentoText = new JTextField(cliente.getDataDeNascimento().toString());
         dataNascimentoText.setBounds(140, 80, 165, 25);
         panel.add(dataNascimentoText);
 
-        // Telefone
         JLabel telefoneLabel = new JLabel("Telefone:");
         telefoneLabel.setBounds(10, 110, 80, 25);
         panel.add(telefoneLabel);
 
-        JTextField telefoneText = new JTextField(cliente.getTelefone()); // Inicializa com o telefone
+        JTextField telefoneText = new JTextField(cliente.getTelefone());
         telefoneText.setBounds(140, 110, 165, 25);
         panel.add(telefoneText);
 
-        // CEP
         JLabel cepLabel = new JLabel("CEP:");
         cepLabel.setBounds(10, 140, 80, 25);
         panel.add(cepLabel);
 
-        JTextField cepText = new JTextField(cliente.getEndereco().getCep()); // Inicializa com o CEP
+        JTextField cepText = new JTextField(cliente.getEndereco().getCep());
         cepText.setBounds(140, 140, 165, 25);
         panel.add(cepText);
 
-        // Local
         JLabel localLabel = new JLabel("Local:");
         localLabel.setBounds(10, 170, 80, 25);
         panel.add(localLabel);
 
-        JTextField localText = new JTextField(cliente.getEndereco().getLocal()); // Inicializa com o local
+        JTextField localText = new JTextField(cliente.getEndereco().getLocal());
         localText.setBounds(140, 170, 165, 25);
         panel.add(localText);
 
-        // Número da Casa
         JLabel numeroCasaLabel = new JLabel("Número:");
         numeroCasaLabel.setBounds(10, 200, 80, 25);
         panel.add(numeroCasaLabel);
 
-        JTextField numeroCasaText = new JTextField(String.valueOf(cliente.getEndereco().getNumeroCasa())); // Inicializa com o número da casa
+        JTextField numeroCasaText = new JTextField(String.valueOf(cliente.getEndereco().getNumeroCasa()));
         numeroCasaText.setBounds(140, 200, 165, 25);
         panel.add(numeroCasaText);
 
-        // Bairro
         JLabel bairroLabel = new JLabel("Bairro:");
         bairroLabel.setBounds(10, 230, 80, 25);
         panel.add(bairroLabel);
 
-        JTextField bairroText = new JTextField(cliente.getEndereco().getBairro()); // Inicializa com o bairro
+        JTextField bairroText = new JTextField(cliente.getEndereco().getBairro());
         bairroText.setBounds(140, 230, 165, 25);
         panel.add(bairroText);
 
-        // Cidade
         JLabel cidadeLabel = new JLabel("Cidade:");
         cidadeLabel.setBounds(10, 260, 80, 25);
         panel.add(cidadeLabel);
 
-        JTextField cidadeText = new JTextField(cliente.getEndereco().getCidade()); // Inicializa com a cidade
+        JTextField cidadeText = new JTextField(cliente.getEndereco().getCidade());
         cidadeText.setBounds(140, 260, 165, 25);
         panel.add(cidadeText);
 
-        // Estado
         JLabel estadoLabel = new JLabel("Estado:");
         estadoLabel.setBounds(10, 290, 80, 25);
         panel.add(estadoLabel);
 
-        JTextField estadoText = new JTextField(cliente.getEndereco().getEstado()); // Inicializa com o estado
+        JTextField estadoText = new JTextField(cliente.getEndereco().getEstado());
         estadoText.setBounds(140, 290, 165, 25);
         panel.add(estadoText);
 
-        // Senha
         JLabel senhaLabel = new JLabel("Senha:");
         senhaLabel.setBounds(10, 320, 80, 25);
         panel.add(senhaLabel);
 
-        JPasswordField senhaText = new JPasswordField(cliente.getSenha()); // Inicializa com a senha
+        JPasswordField senhaText = new JPasswordField(cliente.getSenha());
         senhaText.setBounds(140, 320, 165, 25);
         panel.add(senhaText);
 
-        // Botão de Cadastro
         JButton cadastrarButton = new JButton("Atualizar");
         cadastrarButton.setBounds(140, 360, 120, 25);
         panel.add(cadastrarButton);
 
-        // Mensagem de Erro
         erroLabel = new JLabel("", SwingConstants.CENTER);
         erroLabel.setForeground(Color.RED);
         erroLabel.setBounds(10, 400, 360, 25);
         panel.add(erroLabel);
 
-        // Ação do Botão
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,7 +145,6 @@ public class TelaEditarCliente extends JFrame {
                         return;
                     }
 
-                    // Atualizar cliente
                     cliente.setNome(nomeText.getText());
                     cliente.setCpf(cpfText.getText());
                     cliente.setDataDeNascimento(LocalDate.parse(dataNascimentoText.getText()));

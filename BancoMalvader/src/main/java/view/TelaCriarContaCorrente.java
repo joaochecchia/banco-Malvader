@@ -8,9 +8,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 import controller.ContaCorrenteController;
-import dao.ClienteDAO;
-import model.Cliente;
-import model.ContaCorrente;
 
 public class TelaCriarContaCorrente extends JFrame {
     private JLabel erroLabel;
@@ -24,8 +21,6 @@ public class TelaCriarContaCorrente extends JFrame {
         JPanel panel = new JPanel();
         add(panel);
         panel.setLayout(null);
-
-        // Remover as labels e os campos para número e agência
 
         JLabel saldoLabel = new JLabel("Saldo:");
         saldoLabel.setBounds(10, 20, 80, 25);
@@ -51,14 +46,6 @@ public class TelaCriarContaCorrente extends JFrame {
         dataVencimentoText.setBounds(140, 80, 165, 25);
         panel.add(dataVencimentoText);
 
-        JLabel cpfClienteLabel = new JLabel("CPF do Cliente:");
-        cpfClienteLabel.setBounds(10, 110, 120, 25);
-        panel.add(cpfClienteLabel);
-
-        JTextField cpfClienteText = new JTextField(20);
-        cpfClienteText.setBounds(140, 110, 165, 25);
-        panel.add(cpfClienteText);
-
         JButton cadastrarButton = new JButton("Cadastrar");
         cadastrarButton.setBounds(115, 150, 120, 25);
         panel.add(cadastrarButton);
@@ -74,7 +61,7 @@ public class TelaCriarContaCorrente extends JFrame {
                 erroLabel.setText("");
                 try {
 
-                    if (saldoText.getText().isEmpty() || limiteText.getText().isEmpty() || dataVencimentoText.getText().isEmpty() || cpfClienteText.getText().isEmpty()) {
+                    if (saldoText.getText().isEmpty() || limiteText.getText().isEmpty() || dataVencimentoText.getText().isEmpty()) {
                         erroLabel.setText("Preencha todos os campos corretamente.");
                         return;
                     }
@@ -82,10 +69,9 @@ public class TelaCriarContaCorrente extends JFrame {
                     double saldo = Double.parseDouble(saldoText.getText());
                     double limite = Double.parseDouble(limiteText.getText());
                     LocalDate dataVencimento = LocalDate.parse(dataVencimentoText.getText());
-                    String cpfCliente = cpfClienteText.getText();
 
                     ContaCorrenteController contaCorrenteController = new ContaCorrenteController();
-                    contaCorrenteController.contaCorrenteController(saldo, limite, dataVencimento , nomeUsuario);
+                    contaCorrenteController.registrarContaCorrenteController(saldo, limite, dataVencimento , nomeUsuario);
 
                     JOptionPane.showMessageDialog(null, "Conta Corrente cadastrada com sucesso!");
                     dispose();

@@ -22,6 +22,8 @@ public class RelatorioController {
         double[] saldoExtrato = new double[extrato.size()];
         saldoExtrato[saldoExtrato.length - 1] = saldo;
 
+        //algoritimo que calcula o saldo relativo a cada transacão na tela
+        //pelo saldo atual da conta
         for(int i = saldoExtrato.length - 2; i >= 0; i--){
             Transacao transacaoA = extrato.get(i);
             if(transacaoA.getTipoTransacao().equals("SAQUE")){
@@ -34,12 +36,7 @@ public class RelatorioController {
                System.out.println("Saldo1: " + saldo);
            }
        }
-
+        //passagem dos dados
         relatorioDAO.gerarRelatorio(extrato, saldoExtrato, caminho, nomeCliente);
-    }
-
-    public static void main(String[] args) {
-        RelatorioController relatorioController = new RelatorioController();
-        relatorioController.relatorioController("", "111111", 1000, "adasdas");
     }
 }
