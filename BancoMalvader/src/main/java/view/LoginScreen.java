@@ -7,6 +7,8 @@ import dao.FuncionarioDAO;
 import dao.LoginDAO;
 import model.Cliente;
 import model.Funcionario;
+import java.io.InputStream;
+import java.io.IOException;
 
 public class LoginScreen extends JFrame {
     public LoginScreen() {
@@ -19,11 +21,8 @@ public class LoginScreen extends JFrame {
         add(panel);
         panel.setLayout(null);
 
-        // Adiciona a imagem redimensionada acima dos campos
-        ImageIcon originalIcon = new ImageIcon("C:\\Users\\jjgab\\OneDrive\\Documentos\\GitHub\\banco-Malvader\\BancoMalvader\\src\\main\\resources\\ImageIcon.png"); // Substitua pelo caminho correto
-        Image originalImage = originalIcon.getImage();
-        Image resizedImage = originalImage.getScaledInstance(64, 64, Image.SCALE_SMOOTH); // Define a largura e altura
-        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+        // Carregar a imagem dinamicamente a partir do diretório de recursos
+        ImageIcon resizedIcon = loadImageIcon("ImageIcon.png"); // Nome do arquivo na pasta resources
 
         JLabel imageLabel = new JLabel(resizedIcon);
         imageLabel.setBounds(110, 10, 64, 64); // Ajusta a posição da imagem
@@ -84,6 +83,26 @@ public class LoginScreen extends JFrame {
                 JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos.");
             }
         });
+    }
+
+    // Método para carregar a imagem do diretório de recursos
+    private ImageIcon loadImageIcon(String fileName) {
+        // Carregar a imagem a partir do diretório de recursos
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
+        if (inputStream != null) {
+            try {
+                // Criação do ImageIcon a partir do InputStream
+                ImageIcon icon = new ImageIcon(inputStream.readAllBytes());
+                Image image = icon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+                return new ImageIcon(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return new ImageIcon();  // Retorna um ImageIcon vazio se falhar
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Imagem não encontrada.");
+            return new ImageIcon();  // Retorna um ImageIcon vazio se não encontrar
+        }
     }
 
     public static void main(String[] args) {
