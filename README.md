@@ -106,3 +106,17 @@ O Banco Malvader é uma aplicação bancária desenvolvida em **Java** com inter
 2. Crie uma branch para sua feature:  
    ```bash
    git checkout -b feature/nova-feature
+
+---
+
+## Contato
+
+Em caso de dúvidas ou sugestões, entre em contato:
+
+- **Desenvolvedor**: João Gabriel Brito Checchia
+    - Email: [Contato](mailto:seuemail@exemplo.com)
+    - LinkedIn: [Perfil no LinkedIn](https://www.linkedin.com/in/joão-gabriel-brito-checchia-2976b4297/)
+
+- **Desenvolvedor**: Guilherme Fiorelli Braz Rodrigues
+    - Email: [Contato](mailto:fiorellidev@hotmail.com)
+    - LinkedIn: [Perfil no LinkedIn](https://www.linkedin.com/in/fiorellizz/)
