@@ -1,9 +1,6 @@
 package controller;
 
-import dao.ClienteDAO;
-import dao.ContaCorrenteDAO;
-import dao.ContaDAO;
-import dao.UsuarioDAO;
+import dao.*;
 import model.Cliente;
 import model.ContaCorrente;
 import model.Conta;
@@ -12,11 +9,11 @@ import util.GerarNumeroConta;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class ContaCorrenteController {
-    public void contaCorrenteController(double saldo, double limite
+    public void registrarContaCorrenteController(double saldo, double limite
             , LocalDate dataDeVencimento, String nomeCliente){
+        //recebe os dados referente a tabela conta_corrente, gera a agencia  e numero
         GerarAgencia gerarAgencia = new GerarAgencia();
         GerarNumeroConta gerarNumeroConta = new GerarNumeroConta();
 
@@ -26,43 +23,45 @@ public class ContaCorrenteController {
         String agencia = gerarAgencia.gerarAgencia(cliente.getEndereco().getEstado());
         String numeroConta = gerarNumeroConta.gerarNumero("CORRENTE");
 
-        ContaCorrente contaCorrenteNova = new ContaCorrente("1asd", agencia, saldo, cliente, limite, dataDeVencimento);
-
+        //cria uma conta corrente
+        ContaCorrente contaCorrenteNova = new ContaCorrente("1111", agencia, saldo, cliente, limite, dataDeVencimento);
+        //passa para DAO
         ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
         contaCorrenteDAO.registrarContaCorrente(contaCorrenteNova, cliente);
     }
 
-    public void editarContaController(Conta conta, String tipo){
+    public void editarContaController(Conta conta, String tipo, String numeroContaOriginal){
+        //recebe os dados a serem editados
         ContaDAO contaDAO = new ContaDAO();
+        int idConta = contaDAO.getIDConta(numeroContaOriginal);
 
+        //passa a instancia correta da conta para seu DAO em específico
         if(conta instanceof ContaCorrente){
             ContaCorrente contaCorrente = (ContaCorrente) conta;
 
-            contaDAO.editarConta(tipo, contaCorrente.getLimite(), contaCorrente.getDataVencimento(), contaCorrente.getNumeroConta());
+            contaDAO.alterarConta(tipo, contaCorrente.getLimite(), contaCorrente.getDataVencimento(), contaCorrente.getNumeroConta(), numeroContaOriginal, idConta);
         } else{
-            LocalDate vazio = LocalDate.parse("0000-00-00");
-            contaDAO.editarConta(tipo, 0, vazio, conta.getNumeroConta());
+            LocalDate vazio = LocalDate.parse("1001-01-01");
+            contaDAO.alterarConta(tipo, 0, vazio, conta.getNumeroConta(), numeroContaOriginal, idConta);
         }
     }
 
-    public static void main(String[] args) {
-        ClienteDAO clienteDao = new ClienteDAO();
-        Cliente cliente = clienteDao.getClasseCliente("hugo12");
-
+    public void mudarTipoDeContaController(String tipoNovo, String numero, double taxa, double limite, LocalDate dataVencimento){
+        //pega o id da conta a ser alterada
         ContaDAO contaDAO = new ContaDAO();
-        ArrayList<Conta> a = contaDAO.getClasConta(cliente);
+        int idConta = contaDAO.getIDConta(numero);
 
-        System.out.println(a.size());
+        if(tipoNovo.equalsIgnoreCase("CORRENTE")){
+            //edita os dados que mudaram
+            ContaCorrenteDAO contaCorrenteDAO = new ContaCorrenteDAO();
+            contaCorrenteDAO.editarParaContaCorrente(idConta, limite, dataVencimento);
+            //deleta o tipo anterior da conta
+            contaDAO.deletarConta(idConta, "conta_poupanca");
+        } else{
+            ContaPoupancaDAO contaPoupancaDAO = new ContaPoupancaDAO();
+            contaPoupancaDAO.editarParaContaPoupanca(idConta, taxa);
 
-        Conta b = a.get(0);
-        ContaCorrente conta = (ContaCorrente) b;
-
-        conta.setNumeroConta("NumeroLegal");
-
-        System.out.println(conta.getLimite());
-        System.out.println(conta.getDataVencimento().toString());
-        System.out.println(conta.getNumeroConta());
-
-        contaDAO.editarConta("CORRENTE", conta.getLimite(), conta.getDataVencimento(), conta.getNumeroConta());
+            contaDAO.deletarConta(idConta, "conta_corrente");
+        }
     }
 }

@@ -10,7 +10,7 @@ public class GerarNumeroConta {
         String codigo = "";
 
         for(int i = 0; i < 10; i++){
-            codigo += random.nextInt(1);
+            codigo += random.nextInt(10);
         }
 
         if(tipo.equals("CORRENTE")){

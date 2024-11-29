@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class Conexao {
     public static Connection conexao() {
-        String url = "jdbc:mysql://localhost/banco_malvader2";
+        String url = "jdbc:mysql://localhost/banco_malvader";
         String usuario = "root";
-        String senha = "5desetembro";
+        String senha = ""; //Coloque a Senha do Banco
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

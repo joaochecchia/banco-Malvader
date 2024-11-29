@@ -1,10 +1,10 @@
 package controller;
 
-import view.LoginScreen;
+import view.TelaLogin;
 
 public class BancoMalvader {
     void iniciarSistema() {
-        LoginScreen loginScreen = new LoginScreen();
+        TelaLogin loginScreen = new TelaLogin();
         loginScreen.setVisible(true);
     }
 

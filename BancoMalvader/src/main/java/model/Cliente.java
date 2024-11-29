@@ -4,8 +4,8 @@ package model;
 import java.time.LocalDate;
 
 public class Cliente extends Usuario {
-    String senha;
-    int idCliente;
+    private String senha;
+    private int idCliente;
 
     public Cliente(int id, String nome, String cpf, LocalDate dataDeNascimento, String telefone,
                    Endereco endereco, String tipo, String senha, int idCliente) {
@@ -28,5 +28,20 @@ public class Cliente extends Usuario {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "senha='" + senha + '\'' +
+                ", idCliente=" + idCliente +
+                ", id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", dataDeNascimento=" + dataDeNascimento +
+                ", telefone='" + telefone + '\'' +
+                ", endereco=" + endereco +
+                ", tipo='" + tipo + '\'' +
+                '}';
     }
 }

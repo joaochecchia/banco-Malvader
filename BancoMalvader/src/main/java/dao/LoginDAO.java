@@ -22,7 +22,7 @@ public class LoginDAO {
 
             stmt.setString(1, senha);
             stmt.setString(2, nome);
-            stmt.setString(3, !empregado ? "EMPREGADO" : "FUNCIONARIO");
+            stmt.setString(3, !empregado ? "CLIENTE" : "FUNCIONARIO");
 
             //resultado da busca
             ResultSet resultado = stmt.executeQuery();

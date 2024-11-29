@@ -11,6 +11,7 @@ import util.GerarNumeroConta;
 import util.GerarAgencia;
 
 public class ContaPoupancaController {
+    //cria a classe conta poupança e passa para a DAO
     public void criarContaPoupanca(double saldo, double taxaDeRendimeto, String nomeCliente){
         GerarAgencia gerarAgencia = new GerarAgencia();
 

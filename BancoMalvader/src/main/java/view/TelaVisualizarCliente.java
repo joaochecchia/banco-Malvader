@@ -15,23 +15,19 @@ public class TelaVisualizarCliente extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Painel principal com layout em coluna
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Label do cliente
         JLabel clienteLabel = new JLabel("Cliente: " + cliente.getNome());
         clienteLabel.setFont(new Font("Arial", Font.BOLD, 16));
         clienteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(clienteLabel);
         panel.add(Box.createVerticalStrut(15));
 
-        // Painel de informações do cliente
         JPanel clientePanel = new JPanel(new GridLayout(0, 2, 10, 5));
         clientePanel.setBorder(BorderFactory.createTitledBorder("Informações do Cliente"));
 
-        // Labels e valores do cliente
         JLabel nomeLabel = new JLabel("Nome:");
         JLabel cpfLabel = new JLabel("CPF:");
         JLabel telefoneLabel = new JLabel("Telefone:");
@@ -47,7 +43,6 @@ public class TelaVisualizarCliente extends JFrame {
         clientePanel.add(telefoneLabel);
         clientePanel.add(telefoneValor);
 
-        // Adicionando informações de endereço
         Endereco endereco = cliente.getEndereco();
         JLabel cepLabel = new JLabel("CEP:");
         JLabel localLabel = new JLabel("Local:");

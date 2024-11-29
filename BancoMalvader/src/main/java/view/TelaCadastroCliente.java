@@ -9,25 +9,27 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class TelaCadastroCliente extends JFrame {
-    private JLabel erroLabel;
+    private JLabel erroLabel;//label de erro para tratar entradas inesperadas
 
     public TelaCadastroCliente() {
+        //criação da tela
         setTitle("Banco Malvader - Cadastro de Cliente");
         setSize(400, 580);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         add(panel);
-        panel.setLayout(null);
+        panel.setLayout(null);//sem layout
 
+        //criação das labes e textField de cada campo do cliente
         JLabel nomeLabel = new JLabel("Nome:");
-        nomeLabel.setBounds(10, 20, 80, 25);
-        panel.add(nomeLabel);
+        nomeLabel.setBounds(10, 20, 80, 25);//tamanho da label e posicao
+        panel.add(nomeLabel);//adiciona no panel
 
         JTextField nomeText = new JTextField(20);
-        nomeText.setBounds(140, 20, 165, 25);
-        panel.add(nomeText);
+        nomeText.setBounds(140, 20, 165, 25);//posicão do textFiel e tamanho
+        panel.add(nomeText);//adiciona no panel
 
         JLabel cpfLabel = new JLabel("CPF:");
         cpfLabel.setBounds(10, 50, 80, 25);
@@ -113,11 +115,13 @@ public class TelaCadastroCliente extends JFrame {
         cadastrarButton.setBounds(140, 360, 120, 25);
         panel.add(cadastrarButton);
 
+        //string "" para setar em cada caso
         erroLabel = new JLabel("", SwingConstants.CENTER);
         erroLabel.setForeground(Color.RED);
-        erroLabel.setBounds(10, 400, 360, 25);
+        erroLabel.setBounds(10, 400, 360, 25);//posicao
         panel.add(erroLabel);
 
+        //gatilho do botão
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -127,10 +131,11 @@ public class TelaCadastroCliente extends JFrame {
                             telefoneText.getText().isEmpty() || cepText.getText().isEmpty() || localText.getText().isEmpty() ||
                             numeroCasaText.getText().isEmpty() || bairroText.getText().isEmpty() || cidadeText.getText().isEmpty() ||
                             estadoText.getText().isEmpty() || new String(senhaText.getPassword()).isEmpty()) {
-                        erroLabel.setText("Preencha todos os campos corretamente.");
+                        erroLabel.setText("Preencha todos os campos corretamente.");//se os campos obrigatorios nao forem preenchidos coloque a label
                         return;
                     }
 
+                    //pega o texto
                     String nome = nomeText.getText();
                     String cpf = cpfText.getText();
                     LocalDate dataNascimento = LocalDate.parse(dataNascimentoText.getText());
@@ -142,12 +147,13 @@ public class TelaCadastroCliente extends JFrame {
                     String cidade = cidadeText.getText();
                     String estado = estadoText.getText();
                     String senha = new String(senhaText.getPassword());
-
+                    //uf do estado ser preenchida corretamente
                     if (estado.length() > 2) {
                         erroLabel.setText("Preencha o estado com sua UF");
                         return;
                     }
 
+                    //passar os dados para o controller
                     ClienteController clienteNovo = new ClienteController();
 
                     clienteNovo.criarCliente(nome, cpf, dataNascimento, telefone, senha,
@@ -156,18 +162,11 @@ public class TelaCadastroCliente extends JFrame {
                     JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
                     dispose();
                 } catch (NumberFormatException ex) {
-                    erroLabel.setText("Número inválido em campo(s) numérico(s).");
-                } catch (DateTimeParseException ex) {
+                    erroLabel.setText("Número inválido em campo(s) numérico(s).");// preencher campo numerico corretamente
+                } catch (DateTimeParseException ex) {//preencher o formato da data corretamente
                     erroLabel.setText("Data de nascimento em formato inválido. Use AAAA-MM-DD.");
                 }
             }
-        });
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            TelaCadastroCliente frame = new TelaCadastroCliente();
-            frame.setVisible(true);
         });
     }
 }

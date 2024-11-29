@@ -49,5 +49,15 @@ public abstract class Conta {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    @Override
+    public String toString() {
+        return "Conta{" +
+                "numeroConta='" + numeroConta + '\'' +
+                ", agencia='" + agencia + '\'' +
+                ", saldo=" + saldo +
+                ", cliente=" + cliente +
+                '}';
+    }
 }
 

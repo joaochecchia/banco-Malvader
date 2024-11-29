@@ -1,0 +1,58 @@
+<component name="libraryTable">
+  <library name="batik-script-1.14">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-script-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-ext-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-svg-dom-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-svggen-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-parser-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-i18n-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-gvt-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-dom-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-css-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-codec-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-bridge-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-constants-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-awt-util-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-anim-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-svgrasterizer-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-transcoder-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-util-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/batik-xml-1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/bcpkix-jdk15on-1.70.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/bcprov-jdk15on-1.70.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/bcutil-jdk15on-1.70.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/commons-codec-1.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/commons-collections4-4.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/commons-compress-1.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/commons-io-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/commons-math3-3.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/curvesapi-1.07.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/fontbox-2.0.26.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/graphics2d-0.40.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/jakarta.activation-2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/jakarta.xml.bind-api-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/log4j-api-2.18.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/pdfbox-2.0.26.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/poi-examples-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/poi-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/poi-excelant-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/poi-ooxml-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/poi-ooxml-full-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/poi-ooxml-lite-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/slf4j-api-1.7.36.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/poi-scratchpad-5.2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/SparseBitSet-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/xml-apis-1.4.01.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/xml-apis-ext-1.3.04.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/xmlbeans-5.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/xmlsec-3.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/xmlgraphics-commons-2.6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/BancoMalvader/POI/poi-javadoc-5.2.3.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

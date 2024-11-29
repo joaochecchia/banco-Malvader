@@ -1,7 +1,7 @@
 package model;
 
 public class ContaPoupanca extends Conta {
-    double taxaDeRendimento;
+    private double taxaDeRendimento;
 
     public ContaPoupanca(String numero, String agencia, double saldo, Cliente cliente, double taxaDeRendimento){
         super(numero, agencia, saldo, cliente);
@@ -24,5 +24,16 @@ public class ContaPoupanca extends Conta {
 
     public void setTaxaDeRendimento(double taxaDeRendimento) {
         this.taxaDeRendimento = taxaDeRendimento;
+    }
+
+    @Override
+    public String toString() {
+        return "ContaPoupanca{" +
+                "taxaDeRendimento=" + taxaDeRendimento +
+                ", numeroConta='" + numeroConta + '\'' +
+                ", agencia='" + agencia + '\'' +
+                ", saldo=" + saldo +
+                ", cliente=" + cliente +
+                '}';
     }
 }

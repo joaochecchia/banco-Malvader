@@ -1,14 +1,14 @@
 package model;
 
 public class Endereco {
-    int idEndereco;
-    String cep;
-    String local;
-    int numeroCasa;
-    String bairro;
-    String cidade;
-    String estado;
-    int idUsuario;
+    private int idEndereco;
+    private String cep;
+    private String local;
+    private int numeroCasa;
+    private String bairro;
+    private String cidade;
+    private String estado;
+    private int idUsuario;
 
     public Endereco(int idEndereco,  String cep, String local, int numeroCasa, String bairro
             , String cidade, String estado, int idUsuario) {

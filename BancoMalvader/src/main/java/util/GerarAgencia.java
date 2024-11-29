@@ -8,4 +8,9 @@ public class GerarAgencia {
 
         return agencia;
     }
+
+    public static void main(String[] args) {
+        GerarAgencia gerarAgencia = new GerarAgencia();
+        System.out.println(gerarAgencia.gerarAgencia("GO"));
+    }
 }
