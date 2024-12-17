@@ -1,6 +1,5 @@
-package com.example.BancoMalvaderWeb.Endereco;
+package com.example.Teste;
 
-import com.example.BancoMalvaderWeb.Usuario.UsuarioModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +14,10 @@ public class EnderecoDTO {
     private String bairro;
     private String local;
     private int numeroCasa;
-    private UsuarioModel usuario;
+
+    public static void main(String[] args) {
+        EnderecoDTO e = new EnderecoDTO();
+        e.getId();
+    }
+
 }

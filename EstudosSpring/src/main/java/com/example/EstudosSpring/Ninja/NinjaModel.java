@@ -1,6 +1,7 @@
-package Ninja;
+package com.example.EstudosSpring.Ninja;
 
-import Missoes.MissoesModel;
+import com.example.EstudosSpring.Missoes.MissoesModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +27,15 @@ public class NinjaModel {
 
     @Column (name = "img_url")
     private String imgUrl;
+
     @Column (name = "idade")
     private int idade;
+
+    @Column (name = "rank")
+    private String rank;
+
+    @Column (name = "vila")
+    private String vila;
 
     //Um ninja tem uma unica missao
     @ManyToOne

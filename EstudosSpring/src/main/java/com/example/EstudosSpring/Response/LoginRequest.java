@@ -1,4 +1,4 @@
 package com.example.EstudosSpring.Response;
 
-public record LoginRequest() {
+public record LoginRequest(String username, String password) {
 }

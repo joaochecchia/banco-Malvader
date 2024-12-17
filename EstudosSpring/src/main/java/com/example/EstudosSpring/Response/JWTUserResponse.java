@@ -1,4 +1,7 @@
 package com.example.EstudosSpring.Response;
 
-public class JWTUserResponse {
+import lombok.Builder;
+
+@Builder
+public record JWTUserResponse (Long id, String username, String email){
 }

@@ -1,4 +1,4 @@
-package Ninja;
+package com.example.EstudosSpring.Ninja;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
