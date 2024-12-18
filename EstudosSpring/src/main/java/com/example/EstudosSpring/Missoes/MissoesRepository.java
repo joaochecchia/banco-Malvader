@@ -1,4 +1,4 @@
-package com.example.EstudosSpring.Missoes;
+package Missoes;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
